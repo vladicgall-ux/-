@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Трансляция с телефона</title>
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="card">
+    <h1>Трансляция с телефона</h1>
+    <p class="subtitle" id="subtitle">Нажмите кнопку, чтобы начать трансляцию</p>
+    <video id="localVideo" autoplay playsinline muted style="display:none"></video>
+    <div id="iosWarning" class="warning" style="display:none">
+      Захват экрана из браузера недоступен на iOS (ограничение Apple/Safari).
+      Вместо экрана будет транслироваться камера телефона.
+    </div>
+    <button id="startBtn">Начать трансляцию</button>
+    <div class="status" id="status"></div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const room = params.get('room');
+    const statusEl = document.getElementById('status');
+    const subtitleEl = document.getElementById('subtitle');
+    const iosWarning = document.getElementById('iosWarning');
+    const startBtn = document.getElementById('startBtn');
+    const localVideo = document.getElementById('localVideo');
+
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const canCaptureScreen = !!(navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) && !isIOS;
+
+    if (!room) {
+      statusEl.textContent = 'Ссылка недействительна: не указана комната. Отсканируйте QR ещё раз.';
+      startBtn.disabled = true;
+    }
+
+    if (isIOS) {
+      iosWarning.style.display = 'block';
+    }
+
+    const rtcConfig = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] };
+    let pc;
+    let ws;
+    let stream;
+
+    async function start() {
+      startBtn.disabled = true;
+      try {
+        if (canCaptureScreen) {
+          stream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: false });
+        } else {
+          stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' }, audio: false });
+        }
+      } catch (err) {
+        statusEl.textContent = 'Доступ не предоставлен: ' + err.message;
+        startBtn.disabled = false;
+        return;
+      }
+
+      localVideo.srcObject = stream;
+      localVideo.style.display = 'block';
+      subtitleEl.textContent = 'Подключение к зрителю…';
+
+      const wsProto = location.protocol === 'https:' ? 'wss' : 'ws';
+      ws = new WebSocket(`${wsProto}://${location.host}/ws?room=${room}&role=broadcaster`);
+
+      ws.onopen = async () => {
+        pc = new RTCPeerConnection(rtcConfig);
+        stream.getTracks().forEach((track) => pc.addTrack(track, stream));
+
+        pc.onicecandidate = (e) => {
+          if (e.candidate) ws.send(JSON.stringify({ type: 'ice', candidate: e.candidate }));
+        };
+        pc.onconnectionstatechange = () => {
+          if (pc.connectionState === 'connected') {
+            statusEl.textContent = 'В эфире';
+            statusEl.classList.add('live');
+          }
+        };
+
+        const offer = await pc.createOffer();
+        await pc.setLocalDescription(offer);
+        ws.send(JSON.stringify({ type: 'offer', sdp: offer }));
+      };
+
+      ws.onmessage = async (event) => {
+        const msg = JSON.parse(event.data);
+        if (msg.type === 'answer') {
+          await pc.setRemoteDescription(new RTCSessionDescription(msg.sdp));
+        } else if (msg.type === 'ice' && msg.candidate) {
+          try { await pc.addIceCandidate(msg.candidate); } catch (e) { console.warn(e); }
+        }
+      };
+
+      stream.getVideoTracks()[0].onended = stopBroadcast;
+    }
+
+    function stopBroadcast() {
+      statusEl.textContent = 'Трансляция остановлена';
+      statusEl.classList.remove('live');
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({ type: 'bye' }));
+        ws.close();
+      }
+      if (pc) pc.close();
+      startBtn.disabled = false;
+    }
+
+    startBtn.addEventListener('click', start);
+    window.addEventListener('beforeunload', stopBroadcast);
+  </script>
+</body>
+</html>

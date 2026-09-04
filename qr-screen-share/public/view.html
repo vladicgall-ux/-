@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Трансляция экрана — QR</title>
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="card">
+    <h1>Отсканируйте QR телефоном</h1>
+    <p class="subtitle">Телефон откроет страницу трансляции и запросит доступ к экрану (Android) или камере (iOS)</p>
+    <div class="qr-box"><img id="qr" alt="QR код" /></div>
+    <div class="link" id="link"></div>
+    <div class="status" id="status">Ожидание подключения телефона…</div>
+    <video id="remoteVideo" autoplay playsinline style="display:none"></video>
+  </div>
+
+  <script>
+    const statusEl = document.getElementById('status');
+    const qrEl = document.getElementById('qr');
+    const linkEl = document.getElementById('link');
+    const video = document.getElementById('remoteVideo');
+
+    const rtcConfig = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] };
+    let pc;
+    let ws;
+
+    async function init() {
+      const res = await fetch('/api/room');
+      const { room, broadcastUrl, qrDataUrl } = await res.json();
+      qrEl.src = qrDataUrl;
+      linkEl.textContent = broadcastUrl;
+
+      const wsProto = location.protocol === 'https:' ? 'wss' : 'ws';
+      ws = new WebSocket(`${wsProto}://${location.host}/ws?room=${room}&role=viewer`);
+
+      pc = new RTCPeerConnection(rtcConfig);
+      pc.ontrack = (e) => {
+        video.srcObject = e.streams[0];
+        video.style.display = 'block';
+        statusEl.textContent = 'В эфире';
+        statusEl.classList.add('live');
+      };
+      pc.onicecandidate = (e) => {
+        if (e.candidate) ws.send(JSON.stringify({ type: 'ice', candidate: e.candidate }));
+      };
+
+      ws.onmessage = async (event) => {
+        const msg = JSON.parse(event.data);
+        if (msg.type === 'offer') {
+          await pc.setRemoteDescription(new RTCSessionDescription(msg.sdp));
+          const answer = await pc.createAnswer();
+          await pc.setLocalDescription(answer);
+          ws.send(JSON.stringify({ type: 'answer', sdp: answer }));
+          statusEl.textContent = 'Телефон подключился, устанавливаем соединение…';
+        } else if (msg.type === 'ice' && msg.candidate) {
+          try { await pc.addIceCandidate(msg.candidate); } catch (e) { console.warn(e); }
+        } else if (msg.type === 'bye') {
+          statusEl.textContent = 'Телефон завершил трансляцию';
+          statusEl.classList.remove('live');
+          video.style.display = 'none';
+        }
+      };
+    }
+
+    init();
+  </script>
+</body>
+</html>
