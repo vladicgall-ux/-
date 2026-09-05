@@ -6,6 +6,11 @@
       "headers": {
         "x-api-key": "${API_KEY_21ST}"
       }
+    },
+    "headroom": {
+      "type": "stdio",
+      "command": "headroom",
+      "args": ["mcp", "serve"]
     }
   }
 }
