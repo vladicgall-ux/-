@@ -41,14 +41,15 @@ export const AvatarScene: React.FC<{
           <div
             style={{
               fontFamily,
-              fontSize: 26,
+              fontSize: 24,
               fontWeight: 800,
-              color: claude.accentLight,
-              backgroundColor: "rgba(11,11,11,0.7)",
-              border: `2px solid ${claude.accent}`,
+              color: claude.gold,
+              backgroundColor: "rgba(10,9,8,0.75)",
+              border: `1.5px solid ${claude.gold}`,
               borderRadius: 999,
-              padding: "8px 26px",
-              letterSpacing: 1,
+              padding: "9px 28px",
+              letterSpacing: 2,
+              boxShadow: "0 0 20px rgba(230,195,116,0.25)",
             }}
           >
             {tag}
@@ -61,19 +62,28 @@ export const AvatarScene: React.FC<{
           style={{
             width: cardSize,
             height: cardSize,
-            borderRadius: 40,
-            overflow: "hidden",
-            border: `3px solid ${claude.border}`,
-            boxShadow: "0 30px 60px rgba(0,0,0,0.6)",
+            borderRadius: 44,
+            padding: 4,
+            background: `linear-gradient(135deg, ${claude.gold} 0%, ${claude.goldDeep} 45%, ${claude.gold} 100%)`,
+            boxShadow: "0 30px 70px rgba(0,0,0,0.65), 0 0 40px rgba(230,195,116,0.18)",
             scale: entrance,
             transform: `scale(${slowZoom})`,
           }}
         >
-          <Video
-            src={staticFile(`video/${segmentId}.mp4`)}
-            objectFit="cover"
-            style={{ width: "100%", height: "100%" }}
-          />
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              borderRadius: 40,
+              overflow: "hidden",
+            }}
+          >
+            <Video
+              src={staticFile(`video/${segmentId}.mp4`)}
+              objectFit="cover"
+              style={{ width: "100%", height: "100%" }}
+            />
+          </div>
         </div>
       </AbsoluteFill>
 
@@ -84,12 +94,12 @@ export const AvatarScene: React.FC<{
               fontFamily,
               fontSize: 44,
               fontWeight: 900,
-              color: "#0b0b0b",
-              backgroundColor: claude.accentLight,
-              padding: "14px 40px",
+              color: "#171410",
+              background: `linear-gradient(135deg, ${claude.accentLight} 0%, ${claude.gold} 50%, ${claude.goldDeep} 100%)`,
+              padding: "14px 44px",
               borderRadius: 999,
-              border: "4px solid #0b0b0b",
-              boxShadow: "8px 10px 0 rgba(0,0,0,0.6)",
+              boxShadow:
+                "0 14px 30px rgba(0,0,0,0.55), 0 0 32px rgba(230,195,116,0.4)",
               scale: interpolate(
                 frame,
                 [ctaBadgeFrom, ctaBadgeFrom + 12],

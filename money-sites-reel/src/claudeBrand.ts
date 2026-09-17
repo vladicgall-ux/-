@@ -1,13 +1,15 @@
 export const claude = {
-  bg: "#1a1a19",
-  panel: "#21201d",
-  panelLight: "#2b2a27",
-  border: "#3a3935",
-  accent: "#d97757",
-  accentLight: "#e8a87c",
-  text: "#f0eee6",
-  muted: "#9a978f",
-  green: "#4fae6b",
+  bg: "#141311",
+  panel: "#1c1a17",
+  panelLight: "#272420",
+  border: "#4a4030",
+  accent: "#d4af6a",
+  accentLight: "#f3d99a",
+  gold: "#e6c374",
+  goldDeep: "#a9822f",
+  text: "#f7f2e7",
+  muted: "#a89f8d",
+  green: "#5fbf8a",
 };
 
 export const uiFont =

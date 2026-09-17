@@ -13,7 +13,8 @@ export const WindowChrome: React.FC<{
         height,
         backgroundColor: claude.panel,
         borderRadius: 20,
-        border: `1px solid ${claude.border}`,
+        border: `1px solid rgba(230,195,116,0.35)`,
+        boxShadow: "0 0 26px rgba(230,195,116,0.10)",
         overflow: "hidden",
       }}
     >

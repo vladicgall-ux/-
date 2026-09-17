@@ -1,6 +1,7 @@
 import { Easing, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
 import { captionsBySegment } from "./captions";
-import { fontFamily } from "./fonts";
+import { claude, uiFont } from "./claudeBrand";
+import { fontFamily, serifFontFamily } from "./fonts";
 import { SegmentId } from "./timeline";
 
 export const Captions: React.FC<{ segmentId: SegmentId; top: number }> = ({
@@ -12,21 +13,31 @@ export const Captions: React.FC<{ segmentId: SegmentId; top: number }> = ({
   const t = frame / fps;
 
   const caps = captionsBySegment[segmentId];
-  const active = caps.find((c) => t >= c.start && t < c.end);
-  if (!active) return null;
+  const idx = caps.findIndex((c) => t >= c.start && t < c.end);
+  if (idx === -1) return null;
+  const active = caps[idx];
 
   const localFrame = frame - Math.round(active.start * fps);
-  const scale = interpolate(localFrame, [0, 6], [0.6, 1.08], {
-    easing: Easing.out(Easing.back(2)),
+  const rotate = idx % 2 === 0 ? -2.2 : 2.2;
+
+  const scale = interpolate(localFrame, [0, 7], [0.55, 1.1], {
+    easing: Easing.out(Easing.back(2.4)),
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     output: "perceptual-scale",
   });
-  const settle = interpolate(localFrame, [6, 10], [1.08, 1], {
+  const settle = interpolate(localFrame, [7, 12], [1.1, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     output: "perceptual-scale",
   });
+  const liveScale = localFrame < 7 ? scale : settle;
+
+  const shimmer = interpolate(frame % 50, [0, 25, 50], [0.75, 1, 0.75], {
+    easing: Easing.inOut(Easing.sin),
+  });
+
+  const isAccentWord = active.text.length <= 7;
 
   return (
     <div
@@ -42,22 +53,49 @@ export const Captions: React.FC<{ segmentId: SegmentId; top: number }> = ({
     >
       <div
         style={{
-          fontFamily,
-          fontSize: 56,
-          fontWeight: 900,
-          color: "#ffffff",
-          backgroundColor: "#0b0b0b",
-          padding: "14px 34px",
-          borderRadius: 14,
-          textAlign: "center",
-          maxWidth: 920,
-          lineHeight: 1.05,
-          scale: localFrame < 6 ? scale : settle,
-          boxShadow: "0 14px 30px rgba(0,0,0,0.5)",
+          position: "relative",
+          scale: liveScale,
+          rotate: `${rotate}deg`,
         }}
       >
-        {active.text}
+        <div
+          style={{
+            fontFamily: isAccentWord ? serifFontFamily : fontFamily,
+            fontStyle: isAccentWord ? "italic" : "normal",
+            fontWeight: 900,
+            fontSize: isAccentWord ? 72 : 54,
+            textAlign: "center",
+            lineHeight: 1.05,
+            padding: "16px 40px",
+            borderRadius: 18,
+            color: claude.gold,
+            background:
+              "linear-gradient(180deg, rgba(20,18,15,0.92) 0%, rgba(10,9,8,0.92) 100%)",
+            border: `2px solid rgba(230,195,116,${0.35 + shimmer * 0.4})`,
+            boxShadow: `0 18px 34px rgba(0,0,0,0.55), 0 0 ${
+              18 + shimmer * 22
+            }px rgba(230,195,116,${0.25 + shimmer * 0.25})`,
+            textShadow: `0 0 18px rgba(230,195,116,${0.4 + shimmer * 0.3}), 0 4px 0 rgba(0,0,0,0.4)`,
+            maxWidth: 940,
+          }}
+        >
+          {active.text}
+        </div>
+        <div
+          style={{
+            position: "absolute",
+            bottom: -8,
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "60%",
+            height: 3,
+            background: `linear-gradient(90deg, transparent, ${claude.gold}, transparent)`,
+            opacity: 0.8,
+          }}
+        />
       </div>
     </div>
   );
 };
+
+export const uiFontFamily = uiFont;

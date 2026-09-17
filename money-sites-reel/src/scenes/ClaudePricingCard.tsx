@@ -20,7 +20,8 @@ export const ClaudePricingCard: React.FC = () => {
       style={{
         width: 560,
         backgroundColor: claude.panel,
-        border: `1px solid ${claude.border}`,
+        border: `1px solid rgba(230,195,116,0.35)`,
+        boxShadow: "0 0 26px rgba(230,195,116,0.10)",
         borderRadius: 24,
         padding: "34px 38px",
         fontFamily: uiFont,
