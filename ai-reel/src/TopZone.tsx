@@ -1,8 +1,10 @@
 import { AbsoluteFill, interpolate, Sequence, useCurrentFrame } from "remotion";
-import { MoneyCounter } from "./scenes/MoneyCounter";
-import { NetworkGraph } from "./scenes/NetworkGraph";
-import { OrderFlow } from "./scenes/OrderFlow";
-import { WebsiteBuilder } from "./scenes/WebsiteBuilder";
+import { claude } from "./claudeBrand";
+import { ClaudeBuilderCard } from "./scenes/ClaudeBuilderCard";
+import { ClaudeChatCard } from "./scenes/ClaudeChatCard";
+import { ClaudePricingCard } from "./scenes/ClaudePricingCard";
+import { ClaudeTerminalCard } from "./scenes/ClaudeTerminalCard";
+import { Tilt3D } from "./Tilt3D";
 
 const FadeWrap: React.FC<{ duration: number; children: React.ReactNode }> = ({
   duration,
@@ -23,36 +25,50 @@ export const TopZone: React.FC<{ height: number }> = ({ height }) => {
     <AbsoluteFill style={{ height }}>
       <AbsoluteFill
         style={{
-          background: "linear-gradient(160deg, #1c1d20 0%, #0b0b0d 100%)",
+          background: `linear-gradient(160deg, ${claude.bg} 0%, #0e0d0c 100%)`,
         }}
       >
         <AbsoluteFill
           style={{
             backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
+              "radial-gradient(rgba(217,119,87,0.10) 1px, transparent 1px)",
+            backgroundSize: "34px 34px",
+          }}
+        />
+        <AbsoluteFill
+          style={{
+            background:
+              "radial-gradient(ellipse 900px 500px at 50% 0%, rgba(217,119,87,0.16) 0%, rgba(0,0,0,0) 65%)",
           }}
         />
       </AbsoluteFill>
 
       <Sequence from={0} durationInFrames={201} layout="none">
         <FadeWrap duration={201}>
-          <NetworkGraph />
+          <Tilt3D>
+            <ClaudeTerminalCard />
+          </Tilt3D>
         </FadeWrap>
       </Sequence>
       <Sequence from={201} durationInFrames={297} layout="none">
         <FadeWrap duration={297}>
-          <OrderFlow />
+          <Tilt3D>
+            <ClaudeChatCard />
+          </Tilt3D>
         </FadeWrap>
       </Sequence>
       <Sequence from={498} durationInFrames={207} layout="none">
         <FadeWrap duration={207}>
-          <WebsiteBuilder />
+          <Tilt3D>
+            <ClaudeBuilderCard />
+          </Tilt3D>
         </FadeWrap>
       </Sequence>
       <Sequence from={705} durationInFrames={98} layout="none">
         <FadeWrap duration={98}>
-          <MoneyCounter />
+          <Tilt3D>
+            <ClaudePricingCard />
+          </Tilt3D>
         </FadeWrap>
       </Sequence>
     </AbsoluteFill>
