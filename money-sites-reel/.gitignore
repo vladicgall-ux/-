@@ -5,6 +5,3 @@ dist
 
 # Ignore the output video from Git but not videos you import into src/.
 out
-
-# Placeholder/generated avatar clips - added once final render is ready
-public/video/*.mp4
