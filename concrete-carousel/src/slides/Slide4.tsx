@@ -1,49 +1,44 @@
 import { AbsoluteFill } from "remotion";
-import { ConcreteBackground } from "../Background";
+import { HookBackground } from "../Background";
 import { PageDots } from "../ComicArrow";
 import { fontFamily } from "../fonts";
-import { MarkerBadge } from "../MarkerBadge";
+import { MarkerBadge, PunchText } from "../MarkerBadge";
+import { Starburst } from "../Starburst";
 
 export const Slide4: React.FC = () => {
   return (
     <AbsoluteFill style={{ fontFamily }}>
-      <ConcreteBackground />
+      <HookBackground />
       <PageDots total={4} active={3} />
+
+      <AbsoluteFill style={{ alignItems: "center", justifyContent: "center" }}>
+        <Starburst size={1000} />
+      </AbsoluteFill>
 
       <AbsoluteFill
         style={{
           alignItems: "center",
           justifyContent: "center",
-          paddingLeft: 90,
-          paddingRight: 90,
+          paddingLeft: 80,
+          paddingRight: 80,
         }}
       >
-        <div
-          style={{
-            fontSize: 84,
-            fontWeight: 900,
-            color: "#ffffff",
-            textAlign: "center",
-            lineHeight: 1.1,
-            textShadow: "0 6px 20px rgba(0,0,0,0.5)",
-          }}
-        >
-          ХОЧЕШЬ ТАК ЖЕ?
-        </div>
+        <PunchText fontSize={82}>ХОЧЕШЬ ТАК ЖЕ?</PunchText>
 
-        <div style={{ marginTop: 54 }}>
-          <MarkerBadge fontSize={58} rotate={-3}>
+        <div style={{ marginTop: 56 }}>
+          <MarkerBadge fontSize={54} rotate={-3}>
             ПИШИ В ЛС 🔥
           </MarkerBadge>
         </div>
 
         <div
           style={{
-            marginTop: 60,
-            fontSize: 38,
+            marginTop: 56,
+            fontSize: 36,
             fontWeight: 700,
-            color: "#ffd400",
+            color: "#ffe000",
             textAlign: "center",
+            WebkitTextStroke: "1.5px #0b0b0b",
           }}
         >
           Сохрани пост, чтобы не потерять 📌
@@ -54,16 +49,17 @@ export const Slide4: React.FC = () => {
         style={{
           justifyContent: "flex-end",
           alignItems: "center",
-          paddingBottom: 70,
+          paddingBottom: 64,
         }}
       >
         <div
           style={{
             fontFamily,
-            fontSize: 30,
-            fontWeight: 800,
-            color: "rgba(255,212,0,0.85)",
-            letterSpacing: 3,
+            fontSize: 28,
+            fontWeight: 700,
+            color: "#ffffff",
+            letterSpacing: 2,
+            WebkitTextStroke: "1px #0b0b0b",
           }}
         >
           ЗАРАБОТОК НА БЕТОНЕ
