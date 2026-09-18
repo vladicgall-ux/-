@@ -320,3 +320,132 @@ export const Frame: React.FC<{ children: React.ReactNode }> = ({
     {children}
   </div>
 );
+
+/* ---------- editorial layer for the photographic slides ---------------- */
+
+/** Slide index, set like a film slate. */
+export const Slate: React.FC<{ index: number; total: number; label: string }> = ({
+  index,
+  total,
+  label,
+}) => (
+  <div
+    style={{
+      position: "absolute",
+      top: 60,
+      left: 56,
+      right: 56,
+      display: "flex",
+      alignItems: "baseline",
+      justifyContent: "space-between",
+      zIndex: 20,
+    }}
+  >
+    <div
+      style={{
+        fontFamily,
+        fontSize: 22,
+        fontWeight: 700,
+        letterSpacing: 10,
+        color: theme.accent,
+        textTransform: "uppercase",
+        textShadow: "0 2px 12px rgba(0,0,0,0.9)",
+      }}
+    >
+      {label}
+    </div>
+    <div
+      style={{
+        fontFamily: serifFontFamily,
+        fontStyle: "italic",
+        fontWeight: 900,
+        fontSize: 34,
+        color: "rgba(242,246,250,0.7)",
+        textShadow: "0 2px 12px rgba(0,0,0,0.9)",
+      }}
+    >
+      0{index}
+      <span style={{ fontSize: 20, opacity: 0.6 }}> / 0{total}</span>
+    </div>
+  </div>
+);
+
+/** Bottom-anchored editorial block: rule, headline, body. */
+export const Lower: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <div
+    style={{
+      position: "absolute",
+      left: 56,
+      right: 56,
+      bottom: 140,
+      display: "flex",
+      flexDirection: "column",
+      gap: 20,
+      zIndex: 15,
+    }}
+  >
+    {children}
+  </div>
+);
+
+/** Small caps line above a headline. */
+export const Eyebrow: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => (
+  <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+    <div style={{ width: 46, height: 2, background: theme.accent }} />
+    <div
+      style={{
+        fontFamily,
+        fontSize: 22,
+        fontWeight: 700,
+        letterSpacing: 8,
+        color: theme.accentLight,
+        textTransform: "uppercase",
+        textShadow: "0 2px 12px rgba(0,0,0,0.9)",
+      }}
+    >
+      {children}
+    </div>
+  </div>
+);
+
+/** Cinematic headline: tight, heavy, soft-shadowed rather than extruded. */
+export const Headline: React.FC<{
+  children: React.ReactNode;
+  size?: number;
+}> = ({ children, size = 100 }) => (
+  <div
+    style={{
+      fontFamily,
+      fontSize: size,
+      fontWeight: 900,
+      lineHeight: 0.95,
+      letterSpacing: -1.5,
+      color: theme.text,
+      textTransform: "uppercase",
+      textShadow: "0 6px 34px rgba(0,0,0,0.95), 0 2px 6px rgba(0,0,0,0.8)",
+    }}
+  >
+    {children}
+  </div>
+);
+
+export const Body: React.FC<{ children: React.ReactNode; size?: number }> = ({
+  children,
+  size = 31,
+}) => (
+  <div
+    style={{
+      fontFamily,
+      fontSize: size,
+      fontWeight: 700,
+      lineHeight: 1.32,
+      color: "rgba(226,234,243,0.82)",
+      maxWidth: 650,
+      textShadow: "0 2px 14px rgba(0,0,0,0.95)",
+    }}
+  >
+    {children}
+  </div>
+);
