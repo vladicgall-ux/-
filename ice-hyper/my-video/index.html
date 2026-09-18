@@ -217,20 +217,33 @@
         background-image: linear-gradient(
           177deg,
           #ffffff 0%,
-          #eaf8ff 34%,
-          #c3e8ff 66%,
-          #8ec9ef 100%
+          #ffffff 30%,
+          #e4f6ff 62%,
+          #bee6ff 86%,
+          #a2d8f7 100%
         );
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
         color: transparent;
+        text-shadow:
+          0 1px 0 rgb(80, 139, 184),
+          0 2px 0 rgb(74, 129, 172),
+          0 3px 0 rgb(68, 119, 160),
+          0 4px 0 rgb(62, 109, 148),
+          0 5px 0 rgb(56, 98, 136),
+          0 6px 0 rgb(50, 88, 124),
+          0 7px 0 rgb(44, 78, 112),
+          0 8px 0 rgb(38, 68, 100),
+          0 12px 20px rgba(2, 16, 30, 0.6);
       }
 
       /* caption group: a small grey lead-in, one glowing hero word, a small
          grey tail. The hero sits where the subject is, so the matte layer
          above can carry it behind him. */
       .capgrp {
+        perspective: 1100px;
+        perspective-origin: 50% 40%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -270,11 +283,10 @@
         letter-spacing: -3px;
         text-transform: uppercase;
         color: transparent;
+        transform-style: preserve-3d;
         /* hard extrude under the glyphs, then a halo wide enough to bloom
            across the frame the way the reference does */
         filter:
-          drop-shadow(0 4px 0 rgba(12, 52, 86, 0.95))
-          drop-shadow(0 8px 0 rgba(9, 40, 68, 0.85))
           drop-shadow(0 0 34px rgba(150, 220, 255, 1))
           drop-shadow(0 0 80px rgba(90, 190, 255, 0.85))
           drop-shadow(0 0 150px rgba(60, 170, 255, 0.55))
@@ -282,18 +294,30 @@
       }
       .hero .ch {
         display: inline-block;
-        /* solid ice, no ribbing */
+        /* face: light at the crown, deep ice at the base */
         background-image: linear-gradient(
           177deg,
           #ffffff 0%,
-          #eaf8ff 34%,
-          #c3e8ff 66%,
-          #8ec9ef 100%
+          #ffffff 30%,
+          #e4f6ff 62%,
+          #bee6ff 86%,
+          #a2d8f7 100%
         );
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
         color: transparent;
+        /* the side wall of the letter, stacked and darkening with depth */
+        text-shadow:
+          0 1px 0 rgb(80, 139, 184),
+          0 2px 0 rgb(74, 129, 172),
+          0 3px 0 rgb(68, 119, 160),
+          0 4px 0 rgb(62, 109, 148),
+          0 5px 0 rgb(56, 98, 136),
+          0 6px 0 rgb(50, 88, 124),
+          0 7px 0 rgb(44, 78, 112),
+          0 8px 0 rgb(38, 68, 100),
+          0 12px 20px rgba(2, 16, 30, 0.6);
         will-change: transform, opacity;
       }
 
@@ -1399,6 +1423,27 @@
         );
         // and keeps breathing instead of freezing
         tl.to("#hero" + i, { scale: 1.045, duration: Math.max(0.4, dur - 0.7), ease: "none" }, at + 0.5);
+
+        // the word turns slowly in space so the extruded wall catches light
+        tl.fromTo(
+          "#hero" + i,
+          { rotationY: -11, rotationX: 7 },
+          { rotationY: 11, rotationX: -4, duration: dur, ease: "sine.inOut" },
+          at,
+        );
+        // and each letter breathes out of phase, so the line never sits dead
+        chars.forEach((c, j) => {
+          tl.to(
+            "#" + c.id,
+            {
+              y: j % 2 ? -5 : 5,
+              duration: Math.max(0.5, dur - 0.5),
+              ease: "sine.inOut",
+            },
+            at + 0.34 + (j % 4) * 0.05,
+          );
+        });
+
         // exit: pull down and out
         tl.to(
           "#hero" + i,
