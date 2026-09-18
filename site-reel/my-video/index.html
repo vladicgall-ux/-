@@ -41,14 +41,16 @@
       }
 
       :root {
-        --ink: #06070a;
-        --ink2: #0d1017;
-        --amber: #e8955a;
-        --amber-hi: #ffc48a;
-        --paper: #f6f2ec;
-        --muted: #c8cedb;
-        --line: rgba(246, 242, 236, 0.14);
-        --ok: #7fe0a8;
+        --ink: #0a0418;
+        --ink2: #150a2b;
+        --amber: #a274ff;      /* primary neon violet */
+        --amber-hi: #cbb0ff;   /* highlight */
+        --magenta: #d86bff;
+        --paper: #f4f0ff;
+        --muted: #c3b8e6;
+        --line: rgba(190, 160, 255, 0.2);
+        --ok: #7ff0c4;
+        --glass: rgba(140, 100, 235, 0.16);
       }
 
       #root {
@@ -56,7 +58,10 @@
         width: 1080px;
         height: 1920px;
         overflow: hidden;
-        background: radial-gradient(ellipse at 50% 18%, #141b26 0%, #06070a 62%);
+        background:
+          radial-gradient(ellipse at 74% 8%, rgba(216, 107, 255, 0.28) 0%, transparent 52%),
+          radial-gradient(ellipse at 22% 30%, rgba(120, 78, 230, 0.32) 0%, transparent 55%),
+          linear-gradient(180deg, #1a0b35 0%, #0a0418 64%);
         font-family: "Unbounded", sans-serif;
       }
 
@@ -68,8 +73,8 @@
         width: 100%;
         height: 760px;
         background-image:
-          linear-gradient(rgba(232, 149, 90, 0.07) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(232, 149, 90, 0.07) 1px, transparent 1px);
+          linear-gradient(rgba(170, 130, 255, 0.11) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(170, 130, 255, 0.11) 1px, transparent 1px);
         background-size: 60px 60px;
         -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%);
         mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%);
@@ -110,9 +115,9 @@
         z-index: 25;
         border-radius: 34px 34px 0 0;
         background:
-          linear-gradient(180deg, rgba(6, 7, 10, 0.86) 0%, rgba(6, 7, 10, 0) 22%),
-          linear-gradient(190deg, rgba(232, 149, 90, 0.12) 0%, rgba(10, 16, 26, 0.18) 60%,
-            rgba(4, 6, 10, 0.5) 100%);
+          linear-gradient(180deg, rgba(10, 4, 24, 0.88) 0%, rgba(10, 4, 24, 0) 22%),
+          linear-gradient(190deg, rgba(162, 116, 255, 0.16) 0%, rgba(26, 11, 53, 0.2) 58%,
+            rgba(8, 3, 20, 0.55) 100%);
       }
       #footage-edge {
         position: absolute;
@@ -121,8 +126,9 @@
         width: 1080px;
         height: 6px;
         z-index: 26;
-        background: linear-gradient(90deg, transparent, var(--amber), transparent);
-        opacity: 0.75;
+        background: linear-gradient(90deg, transparent, var(--magenta), var(--amber), transparent);
+        opacity: 0.85;
+        filter: drop-shadow(0 0 12px rgba(180, 110, 255, 0.9));
         transform-origin: center;
       }
 
@@ -145,7 +151,7 @@
         justify-content: center;
         gap: 16px;
         /* bottom room reserved for the seam captions */
-        padding: 0 70px 140px;
+        padding: 0 26px 140px;
         will-change: transform, opacity, filter;
       }
 
@@ -154,11 +160,12 @@
         position: relative;
         width: 100%;
         border-radius: 16px;
-        background: linear-gradient(180deg, #151a24 0%, #0c1018 100%);
+        background: linear-gradient(165deg, rgba(48, 26, 92, 0.92) 0%, rgba(17, 8, 38, 0.95) 100%);
         border: 1px solid var(--line);
         box-shadow:
-          0 40px 90px rgba(0, 0, 0, 0.75),
-          inset 0 1px 0 rgba(255, 255, 255, 0.05);
+          0 46px 110px rgba(0, 0, 0, 0.7),
+          0 0 70px rgba(140, 90, 255, 0.24),
+          inset 0 1px 0 rgba(255, 255, 255, 0.08);
         overflow: hidden;
         transform-origin: center center;
       }
@@ -252,10 +259,12 @@
         gap: 24px;
         padding: 24px 30px;
         border-radius: 14px;
-        background: rgba(13, 16, 23, 0.82);
+        background: var(--glass);
         border: 1px solid var(--line);
-        border-left: 3px solid rgba(232, 149, 90, 0.35);
-        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+        border-left: 3px solid rgba(162, 116, 255, 0.55);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        box-shadow: 0 28px 70px rgba(0, 0, 0, 0.6), 0 0 44px rgba(140, 90, 255, 0.2);
         transform-origin: left center;
       }
       .step .n {
@@ -264,7 +273,7 @@
         font-weight: 900;
         font-size: 54px;
         line-height: 1;
-        color: rgba(246, 242, 236, 0.4);
+        color: rgba(203, 176, 255, 0.55);
         min-width: 78px;
       }
       .step .tx {
@@ -289,8 +298,8 @@
         opacity: 0;
       }
       .step.on {
-        border-left-color: var(--amber);
-        background: rgba(24, 19, 16, 0.9);
+        border-left-color: var(--magenta);
+        background: rgba(60, 30, 110, 0.55);
       }
       .step.on .n {
         color: var(--amber);
@@ -304,9 +313,9 @@
         width: 100%;
         border-radius: 18px;
         padding: 34px 40px;
-        background: linear-gradient(160deg, rgba(36, 25, 18, 0.95), rgba(12, 14, 20, 0.95));
-        border: 1px solid rgba(232, 149, 90, 0.34);
-        box-shadow: 0 40px 90px rgba(0, 0, 0, 0.7);
+        background: linear-gradient(160deg, rgba(74, 40, 140, 0.8), rgba(18, 8, 40, 0.94));
+        border: 1px solid rgba(190, 150, 255, 0.4);
+        box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7), 0 0 80px rgba(160, 100, 255, 0.3);
         position: relative;
         overflow: hidden;
       }
@@ -319,7 +328,7 @@
         background: linear-gradient(
           100deg,
           transparent,
-          rgba(255, 220, 180, 0.22),
+          rgba(230, 205, 255, 0.3),
           transparent
         );
       }
@@ -359,7 +368,9 @@
         gap: 16px;
         padding: 10px 24px;
         border-radius: 3px;
-        background: rgba(4, 6, 10, 0.78);
+        background: rgba(20, 8, 42, 0.8);
+        border: 1px solid rgba(190, 160, 255, 0.24);
+        box-shadow: 0 0 30px rgba(140, 90, 255, 0.24);
         font-family: "Unbounded", sans-serif;
         font-weight: 700;
         font-size: 24px;
@@ -383,10 +394,11 @@
         color: var(--paper);
         text-transform: uppercase;
         text-shadow:
-          0 2px 0 rgba(20, 12, 6, 0.9),
-          0 5px 0 rgba(16, 10, 5, 0.75),
-          0 8px 0 rgba(12, 8, 4, 0.6),
-          0 16px 40px rgba(0, 0, 0, 0.9);
+          0 2px 0 rgba(30, 14, 56, 0.95),
+          0 5px 0 rgba(24, 11, 46, 0.8),
+          0 8px 0 rgba(18, 8, 36, 0.65),
+          0 16px 40px rgba(0, 0, 0, 0.9),
+          0 0 46px rgba(162, 116, 255, 0.45);
       }
       .headline em {
         font-style: normal;
@@ -451,13 +463,79 @@
         position: absolute;
         inset: -40px;
         border-radius: 50%;
-        background: radial-gradient(circle, rgba(232, 149, 90, 0.34) 0%, transparent 68%);
+        background: radial-gradient(circle, rgba(178, 120, 255, 0.5) 0%, transparent 68%);
         z-index: -1;
+      }
+
+      /* ---- reference look: floating glass, depth, dotted links ---------- */
+      .orb {
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+        filter: blur(38px);
+        z-index: -2;
+      }
+      .orb.a {
+        width: 420px;
+        height: 420px;
+        left: -120px;
+        top: -60px;
+        background: radial-gradient(circle, rgba(140, 80, 255, 0.55), transparent 70%);
+      }
+      .orb.b {
+        width: 360px;
+        height: 360px;
+        right: -110px;
+        top: 120px;
+        background: radial-gradient(circle, rgba(216, 107, 255, 0.45), transparent 70%);
+      }
+      .fchip {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 14px 20px;
+        border-radius: 14px;
+        background: var(--glass);
+        border: 1px solid rgba(200, 170, 255, 0.3);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        box-shadow:
+          0 24px 60px rgba(0, 0, 0, 0.55),
+          0 0 40px rgba(150, 100, 255, 0.3);
+        will-change: transform, opacity;
+      }
+      .fchip b {
+        font-family: "Unbounded", sans-serif;
+        font-weight: 900;
+        font-size: 34px;
+        line-height: 1;
+        color: var(--paper);
+        text-shadow: 0 0 22px rgba(180, 120, 255, 0.7);
+      }
+      .fchip span {
+        font-family: "Unbounded", sans-serif;
+        font-weight: 700;
+        font-size: 14px;
+        letter-spacing: 3px;
+        color: var(--muted);
+        text-transform: uppercase;
+      }
+      .fchip.ic {
+        flex-direction: row;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 18px;
+      }
+      .fchip.ic span {
+        font-size: 15px;
+        letter-spacing: 2px;
+        color: var(--paper);
       }
 
       /* ---- the example site inside the browser mock ---------------------- */
       .site {
-        background: linear-gradient(180deg, #14100d 0%, #0b0e14 100%);
+        background: linear-gradient(180deg, rgba(31, 16, 61, 0.96) 0%, rgba(13, 6, 30, 0.98) 100%);
         padding: 0;
       }
       .site-nav {
@@ -483,7 +561,7 @@
         width: 54px;
         height: 8px;
         border-radius: 4px;
-        background: rgba(246, 242, 236, 0.34);
+        background: rgba(200, 175, 255, 0.4);
       }
       .site-nav .nav-cta {
         font-family: "Unbounded", sans-serif;
@@ -491,9 +569,10 @@
         font-size: 14px;
         letter-spacing: 2px;
         color: #140c06;
-        background: var(--amber);
+        background: linear-gradient(100deg, var(--amber), var(--magenta));
         padding: 8px 16px;
         border-radius: 999px;
+        box-shadow: 0 0 22px rgba(180, 110, 255, 0.55);
       }
       .site-hero {
         display: flex;
@@ -527,8 +606,9 @@
         border-radius: 999px;
       }
       .hero-btns .btn-a {
-        background: var(--amber);
-        color: #140c06;
+        background: linear-gradient(100deg, var(--amber), var(--magenta));
+        color: #12061f;
+        box-shadow: 0 0 24px rgba(180, 110, 255, 0.5);
       }
       .hero-btns .btn-b {
         border: 1px solid rgba(246, 242, 236, 0.28);
@@ -539,8 +619,8 @@
         height: 132px;
         border-radius: 14px;
         background:
-          radial-gradient(circle at 34% 34%, rgba(255, 210, 160, 0.5), transparent 58%),
-          linear-gradient(150deg, #a8622f 0%, #3a2418 100%);
+          radial-gradient(circle at 34% 34%, rgba(240, 200, 255, 0.55), transparent 58%),
+          linear-gradient(150deg, #8b4ddb 0%, #2a1250 100%);
         box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
         transform-origin: center;
       }
@@ -553,8 +633,8 @@
         flex: 1;
         border-radius: 12px;
         padding: 12px 16px;
-        background: rgba(246, 242, 236, 0.06);
-        border: 1px solid rgba(246, 242, 236, 0.1);
+        background: rgba(160, 120, 255, 0.14);
+        border: 1px solid rgba(190, 160, 255, 0.24);
         transform-origin: center bottom;
       }
       .scard b {
@@ -611,7 +691,8 @@
         margin-top: 16px;
         height: 56px;
         border-radius: 10px;
-        background: linear-gradient(100deg, var(--amber), #c8743f);
+        background: linear-gradient(100deg, var(--amber), var(--magenta));
+        box-shadow: 0 0 30px rgba(180, 110, 255, 0.55);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -619,7 +700,7 @@
         font-weight: 700;
         font-size: 23px;
         letter-spacing: 4px;
-        color: #140c06;
+        color: #12061f;
       }
       .okline {
         margin-top: 18px;
@@ -681,12 +762,13 @@
         color: var(--paper);
         padding: 18px 46px;
         border-radius: 6px;
-        background: rgba(4, 6, 10, 0.62);
+        background: rgba(16, 6, 36, 0.66);
         backdrop-filter: blur(14px);
         -webkit-backdrop-filter: blur(14px);
         text-shadow:
-          0 3px 0 rgba(10, 7, 4, 0.95),
-          0 10px 28px rgba(0, 0, 0, 0.9);
+          0 3px 0 rgba(24, 10, 48, 0.95),
+          0 10px 28px rgba(0, 0, 0, 0.9),
+          0 0 40px rgba(162, 116, 255, 0.3);
       }
       .cap-tx b {
         color: var(--amber-hi);
@@ -702,7 +784,7 @@
         background: radial-gradient(
           ellipse at center,
           transparent 46%,
-          rgba(0, 0, 0, 0.55) 100%
+          rgba(6, 2, 16, 0.6) 100%
         );
       }
       #grain {
@@ -725,7 +807,8 @@
         height: 5px;
         width: 100%;
         transform-origin: left center;
-        background: linear-gradient(90deg, var(--amber) 0%, var(--amber-hi) 100%);
+        background: linear-gradient(90deg, var(--amber) 0%, var(--magenta) 100%);
+        box-shadow: 0 0 16px rgba(180, 110, 255, 0.8);
         z-index: 110;
       }
       #flash {
@@ -733,7 +816,7 @@
         inset: 0;
         pointer-events: none;
         z-index: 95;
-        background: #ffd9b3;
+        background: #e3ccff;
         opacity: 0;
       }
     </style>
@@ -859,12 +942,12 @@
 
       <!-- 1 · a real landing page assembles itself in 3D -->
       <div class="panel clip" id="p1" data-start="0.15" data-duration="3.45" data-track-index="20">
-        <div class="panel-in" id="p1-in">
+        <div class="panel-in" id="p1-in"><div class="orb a"></div><div class="orb b"></div>
           <div class="kicker" id="p1-k"><i></i>с нуля<i></i></div>
           <div class="headline" id="p1-h" style="font-size: 60px">КАК СДЕЛАТЬ <em>САЙТ</em></div>
           <div class="scene3d">
             <div class="deck" id="p1-deck">
-              <div class="win" id="p1-win" style="max-width: 800px">
+              <div class="win" id="p1-win" style="max-width: 700px">
                 <div class="win-bar">
                   <div class="dot"></div>
                   <div class="dot"></div>
@@ -895,13 +978,20 @@
                 </div>
               </div>
             </div>
+
+          </div>
+          <div class="fchip" id="fc1" style="left: 42px; top: 168px">
+            <b>0₽</b><span>за вёрстку</span>
+          </div>
+          <div class="fchip" id="fc2" style="right: 42px; top: 392px">
+            <b>1 час</b><span>на сайт</span>
           </div>
         </div>
       </div>
 
       <!-- 2 · the tool: the real Claude icon turns in space -->
       <div class="panel clip" id="p2" data-start="3.65" data-duration="2.7" data-track-index="20">
-        <div class="panel-in" id="p2-in">
+        <div class="panel-in" id="p2-in"><div class="orb a"></div><div class="orb b"></div>
           <div class="kicker" id="p2-k"><i></i>инструмент<i></i></div>
           <div class="scene3d">
             <div class="deck" id="p2-deck">
@@ -909,7 +999,7 @@
                 <img src="assets/claude-icon.png" alt="Claude" class="cicon" />
                 <div class="icon-glow"></div>
               </div>
-              <div class="win" id="p2-win" style="max-width: 720px">
+              <div class="win" id="p2-win" style="max-width: 660px">
                 <div class="win-bar">
                   <div class="dot"></div>
                   <div class="dot"></div>
@@ -927,6 +1017,13 @@
                 </div>
               </div>
             </div>
+
+          </div>
+          <div class="fchip ic" id="fc3" style="left: 22px; top: 180px">
+            <span>в терминале</span>
+          </div>
+          <div class="fchip ic" id="fc4" style="right: 22px; top: 300px">
+            <span>пишет код сам</span>
           </div>
           <div class="headline" id="p2-h" style="font-size: 58px">
             НА <em>CLAUDE CODE</em>
@@ -936,7 +1033,7 @@
 
       <!-- 3 · the checklist flies in on three planes -->
       <div class="panel clip" id="p3" data-start="6.45" data-duration="2.8" data-track-index="20">
-        <div class="panel-in" id="p3-in">
+        <div class="panel-in" id="p3-in"><div class="orb a"></div><div class="orb b"></div>
           <div class="kicker" id="p3-k"><i></i>что нужно<i></i></div>
           <div class="scene3d">
             <div class="deck steps" id="p3-deck">
@@ -962,7 +1059,7 @@
 
       <!-- 4 · step 01 — the login screen -->
       <div class="panel clip" id="p4" data-start="9.35" data-duration="2.7" data-track-index="20">
-        <div class="panel-in" id="p4-in">
+        <div class="panel-in" id="p4-in"><div class="orb a"></div><div class="orb b"></div>
           <div class="kicker" id="p4-k"><i></i>шаг 01<i></i></div>
           <div class="scene3d">
             <div class="deck" id="p4-deck">
@@ -990,7 +1087,7 @@
 
       <!-- 5 · step 02 — the plan card flips over -->
       <div class="panel clip" id="p5" data-start="12.15" data-duration="3.2" data-track-index="20">
-        <div class="panel-in" id="p5-in">
+        <div class="panel-in" id="p5-in"><div class="orb a"></div><div class="orb b"></div>
           <div class="kicker" id="p5-k"><i></i>шаг 02<i></i></div>
           <div class="scene3d">
             <div class="deck" id="p5-deck">
@@ -1013,7 +1110,7 @@
 
       <!-- 6 · step 03 — the prompt ships the site -->
       <div class="panel clip" id="p6" data-start="15.45" data-duration="3.18" data-track-index="20">
-        <div class="panel-in" id="p6-in">
+        <div class="panel-in" id="p6-in"><div class="orb a"></div><div class="orb b"></div>
           <div class="kicker" id="p6-k"><i></i>шаг 03<i></i></div>
           <div class="headline" id="p6-h" style="font-size: 54px">И <em>ПРОГРАММИРУЙ</em></div>
           <div class="scene3d">
@@ -1213,11 +1310,24 @@
       // the browser hinges in on its own axis, then settles level
       tl.fromTo(
         "#p1-deck",
-        { opacity: 0, rotationX: -34, rotationY: 16, z: -420, y: 60 },
-        { opacity: 1, rotationX: 8, rotationY: -6, z: 0, y: 0, duration: 0.75, ease: "power3.out" },
+        { opacity: 0, rotationX: -38, rotationY: 30, rotationZ: 6, z: -520, y: 70 },
+        {
+          opacity: 1,
+          rotationX: 15,
+          rotationY: -17,
+          rotationZ: 2,
+          z: 0,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+        },
         0.9,
       );
-      tl.to("#p1-deck", { rotationX: 2, rotationY: 3, duration: 1.8, ease: "sine.inOut" }, 1.7);
+      tl.to(
+        "#p1-deck",
+        { rotationX: 9, rotationY: -9, rotationZ: 0, duration: 1.8, ease: "sine.inOut" },
+        1.75,
+      );
 
       // page parts land one by one, each on its own plane
       tl.fromTo("#s1-nav", { opacity: 0, y: -22 }, { opacity: 1, y: 0, duration: 0.26, ease: "power3.out" }, 1.45);
@@ -1232,6 +1342,37 @@
           2.4 + i * 0.16,
         );
       });
+
+
+      // floating glass chips drift on their own planes, linked by dashed runs
+      tl.fromTo(
+        "#fc1",
+        { opacity: 0, x: -70, y: -30, scale: 0.72 },
+        { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.5)" },
+        1.62,
+      );
+      tl.to("#fc1", { y: -14, duration: 1.5, ease: "sine.inOut" }, 2.15);
+      tl.fromTo(
+        "#fc2",
+        { opacity: 0, x: 70, y: 30, scale: 0.72 },
+        { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.5)" },
+        2.42,
+      );
+      tl.to("#fc2", { y: 12, duration: 1.0, ease: "sine.inOut" }, 2.9);
+
+      // the orbs breathe under every panel so the background never sits still
+      tl.fromTo(
+        ".orb.a",
+        { scale: 0.85, opacity: 0.55 },
+        { scale: 1.12, opacity: 0.9, duration: 9.3, ease: "sine.inOut" },
+        0,
+      );
+      tl.fromTo(
+        ".orb.b",
+        { scale: 1.1, opacity: 0.85 },
+        { scale: 0.88, opacity: 0.55, duration: 9.3, ease: "sine.inOut" },
+        0,
+      );
 
       // ---- panel 2: the tool ----------------------------------------------
       panelIn("#p2-in", 3.65);
@@ -1263,6 +1404,21 @@
         { opacity: 1, scale: 1, duration: 0.36, ease: "power4.out" },
         5.1,
       );
+
+      tl.fromTo(
+        "#fc3",
+        { opacity: 0, x: -60, scale: 0.78 },
+        { opacity: 1, x: 0, scale: 1, duration: 0.45, ease: "back.out(1.6)" },
+        4.2,
+      );
+      tl.to("#fc3", { y: -12, duration: 1.4, ease: "sine.inOut" }, 4.65);
+      tl.fromTo(
+        "#fc4",
+        { opacity: 0, x: 60, scale: 0.78 },
+        { opacity: 1, x: 0, scale: 1, duration: 0.45, ease: "back.out(1.6)" },
+        4.55,
+      );
+      tl.to("#fc4", { y: 10, duration: 1.2, ease: "sine.inOut" }, 5.0);
 
       // ---- panel 3: the checklist ------------------------------------------
       panelIn("#p3-in", 6.45);
