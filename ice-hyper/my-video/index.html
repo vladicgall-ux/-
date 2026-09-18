@@ -270,9 +270,16 @@
         line-height: 0.98;
         letter-spacing: -2px;
         text-transform: uppercase;
-        /* ribbing over a graded base: the stripes are the texture the
-           reference uses, but they sit on the ice gradient instead of
-           replacing it, so the letters keep their depth */
+        color: transparent;
+        filter:
+          drop-shadow(0 3px 0 rgba(10, 46, 78, 0.95))
+          drop-shadow(0 6px 0 rgba(8, 34, 60, 0.8))
+          drop-shadow(0 0 26px rgba(120, 205, 255, 0.95))
+          drop-shadow(0 0 62px rgba(60, 170, 255, 0.7))
+          drop-shadow(0 10px 28px rgba(0, 0, 0, 0.9));
+      }
+      .hero .ch {
+        display: inline-block;
         background-image:
           repeating-linear-gradient(
             91deg,
@@ -292,13 +299,9 @@
         background-clip: text;
         -webkit-text-fill-color: transparent;
         color: transparent;
-        filter:
-          drop-shadow(0 3px 0 rgba(10, 46, 78, 0.95))
-          drop-shadow(0 6px 0 rgba(8, 34, 60, 0.8))
-          drop-shadow(0 0 26px rgba(120, 205, 255, 0.95))
-          drop-shadow(0 0 62px rgba(60, 170, 255, 0.7))
-          drop-shadow(0 10px 28px rgba(0, 0, 0, 0.9));
+        will-change: transform, opacity;
       }
+
       .hero.sm {
         font-size: 74px;
       }
@@ -1333,19 +1336,95 @@
         );
       }
 
-      // every hero word pulses once as it lands
+      // captions are kinetic: letters land one after another, the word
+      // settles with a counter-move, then leaves rather than cutting
       document.querySelectorAll(".hero").forEach((el, i) => {
         const clip = el.closest(".clip");
         if (!clip) return;
         const at = parseFloat(clip.getAttribute("data-start"));
+        const dur = parseFloat(clip.getAttribute("data-duration"));
         el.id = "hero" + i;
+
+        // split into per-letter boxes, keeping <br> line breaks intact
+        const html = el.innerHTML;
+        el.innerHTML = html
+          .split(/(<br\s*\/?>)/i)
+          .map((part) =>
+            /^<br/i.test(part)
+              ? part
+              : Array.from(part)
+                  .map((c) =>
+                    c === " "
+                      ? '<span class="ch">&nbsp;</span>'
+                      : `<span class="ch">${c}</span>`,
+                  )
+                  .join(""),
+          )
+          .join("");
+
+        const chars = el.querySelectorAll(".ch");
+        chars.forEach((c, j) => (c.id = "h" + i + "c" + j));
+        const ids = Array.from(chars).map((c) => "#" + c.id);
+
         tl.fromTo(
-          "#hero" + i,
-          { scale: 1.22, y: 10 },
-          { scale: 1, y: 0, duration: 0.24, ease: "back.out(2.4)" },
+          ids,
+          { y: 46, scale: 0.5, opacity: 0, rotation: -10 },
+          {
+            y: 0,
+            scale: 1,
+            opacity: 1,
+            rotation: 0,
+            duration: 0.34,
+            ease: "back.out(3)",
+            stagger: 0.028,
+          },
           at,
         );
-        tl.to("#hero" + i, { scale: 1.035, duration: 0.7, ease: "none" }, at + 0.24);
+        // the whole word overshoots and settles
+        tl.fromTo(
+          "#hero" + i,
+          { scale: 1.14 },
+          { scale: 1, duration: 0.42, ease: "elastic.out(1, 0.55)" },
+          at + 0.1,
+        );
+        // and keeps breathing instead of freezing
+        tl.to("#hero" + i, { scale: 1.045, duration: Math.max(0.4, dur - 0.7), ease: "none" }, at + 0.5);
+        // exit: pull down and out
+        tl.to(
+          "#hero" + i,
+          { scale: 0.86, opacity: 0, y: -18, duration: 0.2, ease: "power2.in" },
+          at + dur - 0.2,
+        );
+      });
+
+      // the small tiers slide in from opposite sides and leave the same way
+      document.querySelectorAll(".lead").forEach((el, i) => {
+        const clip = el.closest(".clip");
+        if (!clip) return;
+        const at = parseFloat(clip.getAttribute("data-start"));
+        const dur = parseFloat(clip.getAttribute("data-duration"));
+        el.id = "lead" + i;
+        tl.fromTo(
+          "#lead" + i,
+          { x: -70, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.3, ease: "power3.out" },
+          at,
+        );
+        tl.to("#lead" + i, { x: 26, opacity: 0, duration: 0.18, ease: "power2.in" }, at + dur - 0.18);
+      });
+      document.querySelectorAll(".tail").forEach((el, i) => {
+        const clip = el.closest(".clip");
+        if (!clip) return;
+        const at = parseFloat(clip.getAttribute("data-start"));
+        const dur = parseFloat(clip.getAttribute("data-duration"));
+        el.id = "tail" + i;
+        tl.fromTo(
+          "#tail" + i,
+          { x: 70, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.3, ease: "power3.out" },
+          at + 0.08,
+        );
+        tl.to("#tail" + i, { x: -26, opacity: 0, duration: 0.18, ease: "power2.in" }, at + dur - 0.18);
       });
 
       window.__timelines["main"] = tl;
