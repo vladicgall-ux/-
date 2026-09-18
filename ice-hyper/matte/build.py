@@ -24,7 +24,7 @@ reader = subprocess.Popen(
 writer = subprocess.Popen(
     ["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgba",
      "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
-     "-c:v", "libvpx-vp9", "-pix_fmt", "yuva420p", "-b:v", "0", "-crf", "30",
+     "-c:v", "libvpx-vp9", "-pix_fmt", "yuva420p", "-b:v", "0", "-crf", "14",
      "-auto-alt-ref", "0", OUT],
     stdin=subprocess.PIPE,
 )
