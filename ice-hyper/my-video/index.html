@@ -216,16 +216,34 @@
           0 0 60px rgba(127, 211, 255, 0.35);
       }
       .title.gold {
-        color: #e8f7ff;
-        text-shadow:
-          0 2px 0 rgba(8, 40, 68, 0.95),
-          0 4px 0 rgba(7, 34, 58, 0.85),
-          0 6px 0 rgba(6, 28, 48, 0.72),
-          0 8px 0 rgba(5, 22, 40, 0.6),
-          0 10px 0 rgba(4, 18, 32, 0.5),
-          0 14px 34px rgba(0, 0, 0, 0.88),
-          0 0 30px rgba(127, 211, 255, 0.9),
-          0 0 78px rgba(60, 170, 255, 0.6);
+        /* the glyphs are individually animated, so the fill lives on them.
+           inline-block glyphs grow the line box, so two-line titles need
+           their leading opened back up */
+        line-height: 1.06;
+        color: transparent;
+        text-shadow: none;
+        filter:
+          drop-shadow(0 4px 0 rgba(12, 52, 86, 0.95))
+          drop-shadow(0 8px 0 rgba(9, 40, 68, 0.85))
+          drop-shadow(0 0 34px rgba(150, 220, 255, 1))
+          drop-shadow(0 0 80px rgba(90, 190, 255, 0.85))
+          drop-shadow(0 0 150px rgba(60, 170, 255, 0.5))
+          drop-shadow(0 12px 30px rgba(0, 0, 0, 0.85));
+      }
+      .title.gold .g {
+        display: inline-block;
+        background-image:
+          repeating-linear-gradient(
+            90deg,
+            #f4fbff 0px,
+            #f4fbff 2px,
+            #8cc6e6 2px,
+            #8cc6e6 5px
+          );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
       }
 
       /* caption group: a small grey lead-in, one glowing hero word, a small
@@ -265,35 +283,33 @@
       .hero {
         font-family: "Display", sans-serif;
         font-weight: 900;
-        font-size: 104px;
-        max-width: 960px;
-        line-height: 0.98;
-        letter-spacing: -2px;
+        font-size: 118px;
+        max-width: 1000px;
+        line-height: 0.96;
+        letter-spacing: -3px;
         text-transform: uppercase;
         color: transparent;
+        /* hard extrude under the glyphs, then a halo wide enough to bloom
+           across the frame the way the reference does */
         filter:
-          drop-shadow(0 3px 0 rgba(10, 46, 78, 0.95))
-          drop-shadow(0 6px 0 rgba(8, 34, 60, 0.8))
-          drop-shadow(0 0 26px rgba(120, 205, 255, 0.95))
-          drop-shadow(0 0 62px rgba(60, 170, 255, 0.7))
-          drop-shadow(0 10px 28px rgba(0, 0, 0, 0.9));
+          drop-shadow(0 4px 0 rgba(12, 52, 86, 0.95))
+          drop-shadow(0 8px 0 rgba(9, 40, 68, 0.85))
+          drop-shadow(0 0 34px rgba(150, 220, 255, 1))
+          drop-shadow(0 0 80px rgba(90, 190, 255, 0.85))
+          drop-shadow(0 0 150px rgba(60, 170, 255, 0.55))
+          drop-shadow(0 12px 30px rgba(0, 0, 0, 0.85));
       }
       .hero .ch {
         display: inline-block;
+        /* two tones of the same ice, the way the reference ribs its gold:
+           the stripes read as a milled material, not as white slashes */
         background-image:
           repeating-linear-gradient(
-            91deg,
-            rgba(255, 255, 255, 0.92) 0px,
-            rgba(255, 255, 255, 0.92) 2px,
-            rgba(255, 255, 255, 0) 2px,
-            rgba(255, 255, 255, 0) 5px
-          ),
-          linear-gradient(
-            177deg,
-            #eaf8ff 0%,
-            #cdebff 32%,
-            #9fd6f5 66%,
-            #71b8e0 100%
+            90deg,
+            #f4fbff 0px,
+            #f4fbff 2px,
+            #8cc6e6 2px,
+            #8cc6e6 5px
           );
         -webkit-background-clip: text;
         background-clip: text;
@@ -303,10 +319,10 @@
       }
 
       .hero.sm {
-        font-size: 74px;
+        font-size: 84px;
       }
       .hero.md {
-        font-size: 88px;
+        font-size: 100px;
       }
       .caption {
         font-family: "Unbounded", sans-serif;
@@ -1077,6 +1093,24 @@
     </div>
 
     <script>
+      // titles carry their fill on per-glyph spans; the outro title is not
+      // animated per letter, so it gets the same wrapping for the fill alone
+      document.querySelectorAll(".title.gold").forEach((el) => {
+        if (el.querySelector(".g")) return;
+        el.innerHTML = el.innerHTML
+          .split(/(<br\s*\/?>)/i)
+          .map((part) =>
+            /^<br/i.test(part)
+              ? part
+              : Array.from(part)
+                  .map((c) =>
+                    c === " " ? '<span class="g">&nbsp;</span>' : `<span class="g">${c}</span>`,
+                  )
+                  .join(""),
+          )
+          .join("");
+      });
+
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
 
