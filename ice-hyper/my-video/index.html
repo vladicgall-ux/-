@@ -13,6 +13,11 @@
         font-style: normal;
       }
 
+      @property --wave {
+        syntax: "<percentage>";
+        inherits: false;
+        initial-value: 0%;
+      }
       @property --ring-p {
         syntax: "<percentage>";
         inherits: false;
@@ -210,14 +215,22 @@
       }
       .title.gold .g {
         display: inline-block;
+        /* ocean sweep: deep water through cyan to a white crest and back,
+           wide enough that only part of it sits on a letter at a time */
         background-image: linear-gradient(
-          177deg,
-          #ffffff 0%,
-          #ffffff 30%,
-          #e4f6ff 62%,
-          #bee6ff 86%,
-          #a2d8f7 100%
+          100deg,
+          #06405f 0%,
+          #0d6f99 12%,
+          #2bb4de 24%,
+          #8fe9ff 34%,
+          #ffffff 42%,
+          #9ff0ff 50%,
+          #35c0e8 62%,
+          #0f7ea8 76%,
+          #06405f 100%
         );
+        background-size: 320% 100%;
+        background-position: var(--wave) 0;
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -288,14 +301,22 @@
       .hero .ch {
         display: inline-block;
         /* face: light at the crown, deep ice at the base */
+        /* ocean sweep: deep water through cyan to a white crest and back,
+           wide enough that only part of it sits on a letter at a time */
         background-image: linear-gradient(
-          177deg,
-          #ffffff 0%,
-          #ffffff 30%,
-          #e4f6ff 62%,
-          #bee6ff 86%,
-          #a2d8f7 100%
+          100deg,
+          #06405f 0%,
+          #0d6f99 12%,
+          #2bb4de 24%,
+          #8fe9ff 34%,
+          #ffffff 42%,
+          #9ff0ff 50%,
+          #35c0e8 62%,
+          #0f7ea8 76%,
+          #06405f 100%
         );
+        background-size: 320% 100%;
+        background-position: var(--wave) 0;
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -1421,6 +1442,22 @@
           { rotationY: 11, rotationX: -4, duration: dur, ease: "sine.inOut" },
           at,
         );
+
+        // the sweep runs along the word: each letter starts the wave a little
+        // later, so the colour travels instead of pulsing in place
+        chars.forEach((c, j) => {
+          tl.fromTo(
+            "#" + c.id,
+            { "--wave": `${-j * 14}%` },
+            {
+              "--wave": `${-j * 14 - 300}%`,
+              duration: Math.max(1.2, dur),
+              ease: "none",
+            },
+            at,
+          );
+        });
+
         // and each letter breathes out of phase, so the line never sits dead
         chars.forEach((c, j) => {
           tl.to(
@@ -1470,6 +1507,24 @@
           at + 0.08,
         );
         tl.to("#tail" + i, { x: -26, opacity: 0, duration: 0.18, ease: "power2.in" }, at + dur - 0.18);
+      });
+
+
+      // the reveal and outro titles ride the same ocean sweep
+      document.querySelectorAll(".title.gold").forEach((el, i) => {
+        const clip = el.closest(".clip");
+        if (!clip) return;
+        const at = parseFloat(clip.getAttribute("data-start"));
+        const dur = parseFloat(clip.getAttribute("data-duration"));
+        el.querySelectorAll(".g").forEach((g, j) => {
+          g.id = "tg" + i + "_" + j;
+          tl.fromTo(
+            "#" + g.id,
+            { "--wave": `${-j * 14}%` },
+            { "--wave": `${-j * 14 - 300}%`, duration: Math.max(1.2, dur), ease: "none" },
+            at,
+          );
+        });
       });
 
       window.__timelines["main"] = tl;
