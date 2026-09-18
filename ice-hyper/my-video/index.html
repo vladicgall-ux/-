@@ -7,28 +7,10 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
     <style>
       @font-face {
-        font-family: "Unbounded";
-        src: url("assets/fonts/Unbounded900.ttf") format("truetype");
-        font-weight: 900;
+        font-family: "Roadkill";
+        src: url("assets/fonts/RoadkillHeavy.otf") format("opentype");
+        font-weight: 400 900;
         font-style: normal;
-      }
-      @font-face {
-        font-family: "Unbounded";
-        src: url("assets/fonts/Unbounded700.ttf") format("truetype");
-        font-weight: 700;
-        font-style: normal;
-      }
-      @font-face {
-        font-family: "Display";
-        src: url("assets/fonts/Montserrat900.ttf") format("truetype");
-        font-weight: 900;
-        font-style: normal;
-      }
-      @font-face {
-        font-family: "PlayfairDisplay";
-        src: url("assets/fonts/PlayfairDisplay900.ttf") format("truetype");
-        font-weight: 900;
-        font-style: italic;
       }
 
       @property --ring-p {
@@ -67,7 +49,7 @@
         height: 1920px;
         overflow: hidden;
         background: var(--deep);
-        font-family: "Unbounded", sans-serif;
+        font-family: "Roadkill", sans-serif;
       }
 
       /* ---- footage layer ---------------------------------------------- */
@@ -160,7 +142,7 @@
         background: rgba(4, 9, 15, 0.72);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        font-family: "Unbounded", sans-serif;
+        font-family: "Roadkill", sans-serif;
         font-weight: 700;
         font-size: 26px;
         letter-spacing: 8px;
@@ -200,7 +182,7 @@
         z-index: -1;
       }
       .title {
-        font-family: "Unbounded", sans-serif;
+        font-family: "Roadkill", sans-serif;
         font-weight: 900;
         line-height: 0.92;
         letter-spacing: -0.01em;
@@ -262,7 +244,7 @@
          Both small lines sit on a dark plate so they hold over bright ice. */
       .lead,
       .tail {
-        font-family: "Display", sans-serif;
+        font-family: "Roadkill", sans-serif;
         font-weight: 900;
         font-size: 29px;
         letter-spacing: 7px;
@@ -281,10 +263,10 @@
         color: #e6f4ff;
       }
       .hero {
-        font-family: "Display", sans-serif;
+        font-family: "Roadkill", sans-serif;
         font-weight: 900;
-        font-size: 118px;
-        max-width: 1000px;
+        font-size: 138px;
+        max-width: 1010px;
         line-height: 0.96;
         letter-spacing: -3px;
         text-transform: uppercase;
@@ -319,13 +301,13 @@
       }
 
       .hero.sm {
-        font-size: 84px;
-      }
-      .hero.md {
         font-size: 100px;
       }
+      .hero.md {
+        font-size: 118px;
+      }
       .caption {
-        font-family: "Unbounded", sans-serif;
+        font-family: "Roadkill", sans-serif;
         font-weight: 900;
         font-size: 74px;
         line-height: 1.02;
@@ -351,7 +333,7 @@
         background: rgba(4, 9, 15, 0.75);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
-        font-family: "Unbounded", sans-serif;
+        font-family: "Roadkill", sans-serif;
         font-weight: 700;
         font-size: 28px;
         letter-spacing: 6px;
@@ -381,8 +363,7 @@
         will-change: transform, opacity;
       }
       .card .v {
-        font-family: "PlayfairDisplay", serif;
-        font-style: italic;
+        font-family: "Roadkill", sans-serif;
         font-weight: 900;
         font-size: 104px;
         line-height: 0.98;
@@ -398,7 +379,7 @@
         transform-origin: left center;
       }
       .card .l {
-        font-family: "Unbounded", sans-serif;
+        font-family: "Roadkill", sans-serif;
         font-weight: 700;
         font-size: 24px;
         letter-spacing: 6px;
@@ -442,8 +423,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-family: "PlayfairDisplay", serif;
-        font-style: italic;
+        font-family: "Roadkill", sans-serif;
         font-weight: 900;
         font-size: 58px;
         color: var(--frost);
@@ -495,9 +475,9 @@
         z-index: -1;
       }
       .drill-lead {
-        font-family: "Unbounded", sans-serif;
+        font-family: "Roadkill", sans-serif;
         font-weight: 900;
-        font-size: 46px;
+        font-size: 52px;
         letter-spacing: 12px;
         color: var(--frost);
         text-shadow:
@@ -505,8 +485,7 @@
           0 4px 18px rgba(0, 0, 0, 0.95);
       }
       .drill-depth {
-        font-family: "PlayfairDisplay", serif;
-        font-style: italic;
+        font-family: "Roadkill", sans-serif;
         font-weight: 900;
         font-size: 76px;
         color: #dff3ff;
