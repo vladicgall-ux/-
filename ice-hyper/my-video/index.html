@@ -221,20 +221,68 @@
           0 0 70px rgba(240, 196, 106, 0.45);
       }
 
+      /* caption group: a small grey lead-in, one glowing hero word, a small
+         grey tail. The hero sits where the subject is, so the matte layer
+         above can carry it behind him. */
+      .capgrp {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+        padding: 0 60px;
+        text-align: center;
+      }
+      .lead,
+      .tail {
+        font-family: "Unbounded", sans-serif;
+        font-weight: 700;
+        font-size: 32px;
+        letter-spacing: 7px;
+        text-transform: uppercase;
+        color: rgba(240, 248, 255, 0.92);
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95);
+      }
+      .hero {
+        font-family: "Unbounded", sans-serif;
+        font-weight: 900;
+        font-size: 108px;
+        max-width: 960px;
+        line-height: 0.98;
+        letter-spacing: -0.5px;
+        text-transform: uppercase;
+        font-style: italic;
+        color: #ffe6a8;
+        text-shadow:
+          0 0 18px rgba(255, 196, 92, 0.95),
+          0 0 44px rgba(255, 168, 40, 0.8),
+          0 0 92px rgba(255, 140, 20, 0.55),
+          0 4px 0 rgba(70, 40, 4, 0.85),
+          0 8px 26px rgba(0, 0, 0, 0.9);
+      }
+      .hero.sm {
+        font-size: 74px;
+      }
+      .hero.md {
+        font-size: 88px;
+      }
+      .hero.ice {
+        color: #dff2ff;
+        text-shadow:
+          0 0 18px rgba(150, 220, 255, 0.95),
+          0 0 44px rgba(90, 190, 255, 0.75),
+          0 0 92px rgba(40, 150, 255, 0.5),
+          0 4px 0 rgba(6, 30, 50, 0.85),
+          0 8px 26px rgba(0, 0, 0, 0.9);
+      }
       .caption {
         font-family: "Unbounded", sans-serif;
         font-weight: 900;
         font-size: 74px;
         line-height: 1.02;
-        letter-spacing: 0.01em;
         color: var(--frost);
         text-transform: uppercase;
         text-align: center;
         padding: 0 70px;
-        text-shadow:
-          0 3px 0 rgba(6, 18, 30, 0.95),
-          0 6px 0 rgba(5, 14, 24, 0.75),
-          0 12px 30px rgba(0, 0, 0, 0.9);
       }
       .caption b {
         color: var(--ice);
@@ -318,8 +366,8 @@
           from -90deg,
           var(--ice) 0%,
           var(--ice) var(--ring-p),
-          rgba(234, 246, 255, 0.14) var(--ring-p),
-          rgba(234, 246, 255, 0.14) 100%
+          rgba(234, 246, 255, 0.2) var(--ring-p),
+          rgba(234, 246, 255, 0.2) 100%
         );
         -webkit-mask: radial-gradient(
           circle,
@@ -350,6 +398,86 @@
         font-size: 58px;
         color: var(--frost);
         text-shadow: 0 8px 22px rgba(0, 0, 0, 0.8);
+      }
+
+      /* the fisherman cut out of his own footage; sits above the captions so
+         they run behind him, and carries the same camera move as the shot */
+      .matte {
+        position: absolute;
+        inset: 0;
+        z-index: 45;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .matte-in {
+        position: absolute;
+        inset: 0;
+        will-change: transform;
+      }
+      .matte-in video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      /* the drilling gauge is the beat of the piece, so it plays centre frame */
+      .ring-wrap.big {
+        width: 420px;
+        height: 420px;
+      }
+      .ring-wrap.big .ring {
+        width: 420px;
+        height: 420px;
+        filter: drop-shadow(0 0 22px rgba(127, 211, 255, 0.95));
+        -webkit-mask: radial-gradient(circle, transparent 0 168px, #000 168px 190px, transparent 190px);
+        mask: radial-gradient(circle, transparent 0 168px, #000 168px 190px, transparent 190px);
+      }
+      .ring-wrap.big .ring-val {
+        font-size: 108px;
+      }
+      .ring-halo {
+        position: absolute;
+        inset: -70px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(127, 211, 255, 0.34) 0%, transparent 66%);
+        z-index: -1;
+      }
+      .drill-lead {
+        font-family: "Unbounded", sans-serif;
+        font-weight: 900;
+        font-size: 46px;
+        letter-spacing: 12px;
+        color: var(--frost);
+        text-shadow:
+          0 0 26px rgba(127, 211, 255, 0.9),
+          0 4px 18px rgba(0, 0, 0, 0.95);
+      }
+      .drill-depth {
+        font-family: "PlayfairDisplay", serif;
+        font-style: italic;
+        font-weight: 900;
+        font-size: 76px;
+        color: var(--gold);
+        text-shadow:
+          0 0 32px rgba(240, 196, 106, 0.8),
+          0 6px 20px rgba(0, 0, 0, 0.95);
+      }
+
+      /* drifting frost: deterministic specks that keep the frame alive */
+      #frost {
+        position: absolute;
+        inset: 0;
+        z-index: 48;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .flake {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(226, 244, 255, 0.85);
+        box-shadow: 0 0 10px rgba(180, 225, 255, 0.9);
       }
 
       /* atmosphere */
@@ -711,13 +839,13 @@
 
       <!-- captions -->
       <div class="ov clip" id="ov4" data-start="2.62" data-duration="1" data-track-index="22">
-        <div class="ov-in cap" style="justify-content: flex-end; padding-bottom: 470px">
-          <div class="caption">ЗДРАВСТВУЙТЕ</div>
+        <div class="ov-in cap" style="justify-content: flex-start; padding-top: 516px">
+          <div class="capgrp"><div class="hero ice sm">ЗДРАВСТВУЙТЕ</div></div>
         </div>
       </div>
       <div class="ov clip" id="ov5" data-start="3.65" data-duration="1.6" data-track-index="22">
-        <div class="ov-in cap" style="justify-content: flex-end; padding-bottom: 470px">
-          <div class="caption">УВАЖАЕМЫЕ <b>РЫБАКИ</b></div>
+        <div class="ov-in cap" style="justify-content: flex-start; padding-top: 516px">
+          <div class="capgrp"><div class="lead">УВАЖАЕМЫЕ</div><div class="hero">РЫБАКИ</div></div>
         </div>
       </div>
 
@@ -735,18 +863,18 @@
       </div>
 
       <div class="ov clip" id="ov7" data-start="5.55" data-duration="0.75" data-track-index="22">
-        <div class="ov-in cap" style="justify-content: flex-end; padding-bottom: 470px">
-          <div class="caption">СЕГОДНЯ</div>
+        <div class="ov-in cap" style="justify-content: flex-start; padding-top: 516px">
+          <div class="capgrp"><div class="hero ice">СЕГОДНЯ</div></div>
         </div>
       </div>
       <div class="ov clip" id="ov8" data-start="6.35" data-duration="1.2" data-track-index="22">
-        <div class="ov-in cap" style="justify-content: flex-end; padding-bottom: 470px">
-          <div class="caption"><b>21 НОЯБРЯ</b></div>
+        <div class="ov-in cap" style="justify-content: flex-start; padding-top: 516px">
+          <div class="capgrp"><div class="lead">СЕГОДНЯ</div><div class="hero md">21 НОЯБРЯ</div></div>
         </div>
       </div>
       <div class="ov clip" id="ov9" data-start="7.6" data-duration="1.3" data-track-index="22">
-        <div class="ov-in cap" style="justify-content: flex-end; padding-bottom: 470px">
-          <div class="caption">ВЫШЛИ НА ЛЁД</div>
+        <div class="ov-in cap" style="justify-content: flex-start; padding-top: 516px">
+          <div class="capgrp"><div class="lead">ВЫШЛИ</div><div class="hero ice">НА ЛЁД</div><div class="tail">ПРОВЕРЯТЬ</div></div>
         </div>
       </div>
 
@@ -764,18 +892,18 @@
       </div>
 
       <div class="ov clip" id="ov11" data-start="9.15" data-duration="0.9" data-track-index="22">
-        <div class="ov-in cap" style="justify-content: flex-start; padding-top: 940px">
-          <div class="caption">ОТОШЛИ</div>
+        <div class="ov-in cap" style="justify-content: flex-start; padding-top: 516px">
+          <div class="capgrp"><div class="hero ice">ОТОШЛИ</div></div>
         </div>
       </div>
       <div class="ov clip" id="ov12" data-start="10.1" data-duration="1.2" data-track-index="22">
-        <div class="ov-in cap" style="justify-content: flex-start; padding-top: 940px">
-          <div class="caption"><b>МЕТРОВ 500</b></div>
+        <div class="ov-in cap" style="justify-content: flex-start; padding-top: 516px">
+          <div class="capgrp"><div class="hero md">МЕТРОВ 500</div><div class="tail">ОТ БЕРЕГА</div></div>
         </div>
       </div>
       <div class="ov clip" id="ov13" data-start="11.35" data-duration="0.85" data-track-index="22">
-        <div class="ov-in cap" style="justify-content: flex-start; padding-top: 940px">
-          <div class="caption">ОТ БЕРЕГА</div>
+        <div class="ov-in cap" style="justify-content: flex-start; padding-top: 516px">
+          <div class="capgrp"><div class="hero ice">ОТ БЕРЕГА</div></div>
         </div>
       </div>
 
@@ -786,8 +914,8 @@
         </div>
       </div>
       <div class="ov clip" id="ov15" data-start="12.6" data-duration="1.6" data-track-index="22">
-        <div class="ov-in cap" style="justify-content: flex-end; padding-bottom: 470px">
-          <div class="caption" style="font-size: 66px">СКОЛЬКО <b>САНТИМЕТРОВ?</b></div>
+        <div class="ov-in cap" style="justify-content: flex-start; padding-top: 516px">
+          <div class="capgrp"><div class="lead">НУ-КА, СКОЛЬКО</div><div class="hero sm">САНТИМЕТРОВ?</div></div>
         </div>
       </div>
 
@@ -801,13 +929,15 @@
         <div
           class="ov-in"
           id="o7r"
-          style="align-items: center; justify-content: flex-start; padding-top: 1290px; gap: 20px"
+          style="align-items: center; justify-content: center; gap: 26px"
         >
-          <div class="ring-wrap">
+          <div class="drill-lead">БУРИМ ЛУНКУ</div>
+          <div class="ring-wrap big">
+            <div class="ring-halo" id="ring-halo"></div>
             <div class="ring" id="ring"></div>
             <div class="ring-val" id="ring-val">0%</div>
           </div>
-          <div class="chip" style="color: var(--ice)"><i></i>БУРИМ ЛУНКУ<i></i></div>
+          <div class="drill-depth" id="drill-depth">0 СМ</div>
         </div>
       </div>
 
@@ -830,13 +960,13 @@
 
       <!-- weekend captions -->
       <div class="ov clip" id="ov19" data-start="24.5" data-duration="1.1" data-track-index="22">
-        <div class="ov-in cap" style="justify-content: flex-end; padding-bottom: 470px">
-          <div class="caption warn"><b>К ВЫХОДНЫМ</b></div>
+        <div class="ov-in cap" style="justify-content: flex-start; padding-top: 516px">
+          <div class="capgrp"><div class="lead">НУ ДА,</div><div class="hero md">К ВЫХОДНЫМ</div></div>
         </div>
       </div>
       <div class="ov clip" id="ov20" data-start="25.7" data-duration="1.2" data-track-index="22">
-        <div class="ov-in cap" style="justify-content: flex-end; padding-bottom: 470px">
-          <div class="caption">БУДЕТ САМОЕ ТО</div>
+        <div class="ov-in cap" style="justify-content: flex-start; padding-top: 516px">
+          <div class="capgrp"><div class="hero ice sm">БУДЕТ САМОЕ ТО</div></div>
         </div>
       </div>
 
@@ -872,7 +1002,40 @@
       <div class="grade teaser" id="grade-teaser"></div>
       <div class="lift"></div>
 
+      <!-- the fisherman, cut out, laid back over the type: reveal + weekend -->
+      <div class="matte">
+        <div class="matte-in" id="m8-in" data-layout-allow-overflow>
+          <video
+            id="m8"
+            class="clip"
+            src="assets/person-matte.webm"
+            data-start="19.06"
+            data-duration="4.2"
+            data-media-start="0"
+            data-track-index="5"
+            muted
+            playsinline
+          ></video>
+        </div>
+      </div>
+      <div class="matte">
+        <div class="matte-in" id="m9-in" data-layout-allow-overflow>
+          <video
+            id="m9"
+            class="clip"
+            src="assets/person-matte.webm"
+            data-start="23.26"
+            data-duration="3.65"
+            data-media-start="4.2"
+            data-track-index="5"
+            muted
+            playsinline
+          ></video>
+        </div>
+      </div>
+
       <!-- atmosphere -->
+      <div id="frost"><div class="flake" id="fl0" style="left: 0%; top: 0%; width: 4px; height: 4px"></div><div class="flake" id="fl1" style="left: 37%; top: 73%; width: 6px; height: 6px"></div><div class="flake" id="fl2" style="left: 74%; top: 46%; width: 8px; height: 8px"></div><div class="flake" id="fl3" style="left: 11%; top: 19%; width: 10px; height: 10px"></div><div class="flake" id="fl4" style="left: 48%; top: 92%; width: 4px; height: 4px"></div><div class="flake" id="fl5" style="left: 85%; top: 65%; width: 6px; height: 6px"></div><div class="flake" id="fl6" style="left: 22%; top: 38%; width: 8px; height: 8px"></div><div class="flake" id="fl7" style="left: 59%; top: 11%; width: 10px; height: 10px"></div><div class="flake" id="fl8" style="left: 96%; top: 84%; width: 4px; height: 4px"></div><div class="flake" id="fl9" style="left: 33%; top: 57%; width: 6px; height: 6px"></div><div class="flake" id="fl10" style="left: 70%; top: 30%; width: 8px; height: 8px"></div><div class="flake" id="fl11" style="left: 7%; top: 3%; width: 10px; height: 10px"></div><div class="flake" id="fl12" style="left: 44%; top: 76%; width: 4px; height: 4px"></div><div class="flake" id="fl13" style="left: 81%; top: 49%; width: 6px; height: 6px"></div><div class="flake" id="fl14" style="left: 18%; top: 22%; width: 8px; height: 8px"></div><div class="flake" id="fl15" style="left: 55%; top: 95%; width: 10px; height: 10px"></div></div>
       <div id="flash"></div>
       <div id="vignette"></div>
       <div id="grain"></div>
@@ -943,6 +1106,34 @@
           { xPercent: i % 2 === 0 ? -0.6 : 0.6 },
           { xPercent: i % 2 === 0 ? 0.6 : -0.6, duration: s.d, ease: "sine.inOut" },
           s.t,
+        );
+      });
+
+
+      // the cut-out layer copies its shot's camera move to the pixel, otherwise
+      // the silhouette drifts off the man underneath
+      const MATTE = [
+        { id: "m8-in", t: 19.06, d: 4.2, z: [1.26, 1.1], y: [-20, 0], x: [0.6, -0.6] },
+        { id: "m9-in", t: 23.26, d: 3.65, z: [1.1, 1.24], y: [0, -16], x: [-0.6, 0.6] },
+      ];
+      MATTE.forEach((m) => {
+        tl.fromTo(
+          "#" + m.id,
+          { scale: m.z[0], y: m.y[0] },
+          { scale: m.z[1], y: m.y[1], duration: m.d, ease: "none" },
+          m.t,
+        );
+        tl.fromTo(
+          "#" + m.id,
+          { xPercent: m.x[0] },
+          { xPercent: m.x[1], duration: m.d, ease: "sine.inOut" },
+          m.t,
+        );
+        tl.fromTo(
+          "#" + m.id,
+          { filter: "blur(16px) brightness(1.5)" },
+          { filter: "blur(0px) brightness(1)", duration: 0.2, ease: "power3.out" },
+          m.t,
         );
       });
 
@@ -1019,24 +1210,42 @@
       riseIn("#o7", 15.62, -18);
       riseIn("#o7r", 15.68, 26);
 
-      // drilling ring fills and counts from one value
+      // drilling gauge: one value drives the arc, the percentage and the depth
       const ring = { p: 0 };
       tl.to(
         ring,
         {
           p: 100,
-          duration: 3.0,
+          duration: 2.9,
           ease: "power1.inOut",
           onUpdate: () => {
             const v = Math.round(ring.p);
             const el = document.querySelector("#ring");
             const lbl = document.querySelector("#ring-val");
+            const dep = document.querySelector("#drill-depth");
             if (el) el.style.setProperty("--ring-p", v + "%");
             if (lbl) lbl.textContent = v + "%";
+            if (dep) dep.textContent = Math.round((v / 100) * 9) + " СМ";
           },
         },
-        15.75,
+        15.8,
       );
+      tl.fromTo(
+        "#ring-halo",
+        { scale: 0.7, opacity: 0.4 },
+        { scale: 1.12, opacity: 1, duration: 0.7, ease: "sine.inOut", repeat: 3, yoyo: true },
+        15.8,
+      );
+      tl.fromTo(
+        ".ring-wrap.big",
+        { scale: 0.7, opacity: 0, rotation: -30 },
+        { scale: 1, opacity: 1, rotation: 0, duration: 0.55, ease: "back.out(1.6)" },
+        15.7,
+      );
+      riseIn(".drill-lead", 15.72, 20, 0.34);
+      riseIn("#drill-depth", 15.95, 22, 0.34);
+      tl.to("#drill-depth", { scale: 1.16, duration: 0.16, ease: "power3.out" }, 18.6);
+      tl.to("#drill-depth", { scale: 1, duration: 0.4, ease: "power2.out" }, 18.76);
 
       // the reveal — the money frame
       slamIn("#o8", 19.42, 1.14);
@@ -1073,6 +1282,40 @@
 
       slamIn("#o10", 27.07, 1.12);
       riseIn("#o10s", 27.6, 16);
+
+
+      // frost drifts on fixed paths, so every render matches the last
+      for (let i = 0; i < 16; i++) {
+        const drift = 60 + (i % 5) * 34;
+        const fall = 120 + (i % 7) * 60;
+        tl.fromTo(
+          "#fl" + i,
+          { x: -drift, y: -fall, opacity: 0 },
+          {
+            x: drift,
+            y: fall,
+            opacity: 0.55 + (i % 3) * 0.15,
+            duration: 29.6,
+            ease: "none",
+          },
+          0,
+        );
+      }
+
+      // every hero word pulses once as it lands
+      document.querySelectorAll(".hero").forEach((el, i) => {
+        const clip = el.closest(".clip");
+        if (!clip) return;
+        const at = parseFloat(clip.getAttribute("data-start"));
+        el.id = "hero" + i;
+        tl.fromTo(
+          "#hero" + i,
+          { scale: 1.22, y: 10 },
+          { scale: 1, y: 0, duration: 0.24, ease: "back.out(2.4)" },
+          at,
+        );
+        tl.to("#hero" + i, { scale: 1.035, duration: 0.7, ease: "none" }, at + 0.24);
+      });
 
       window.__timelines["main"] = tl;
       tl.seek(0);

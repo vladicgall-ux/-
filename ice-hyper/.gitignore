@@ -2,3 +2,7 @@ my-video/assets/source.mp4
 my-video/renders/
 my-video/node_modules/
 my-video/.hyperframes/
+my-video/assets/person-matte.webm
+sfx/wav/
+matte/__pycache__/
+my-video/.transcode-cache/
