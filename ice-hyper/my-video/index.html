@@ -13,11 +13,6 @@
         font-style: normal;
       }
 
-      @property --wave {
-        syntax: "<percentage>";
-        inherits: false;
-        initial-value: 0%;
-      }
       @property --ring-p {
         syntax: "<percentage>";
         inherits: false;
@@ -206,7 +201,6 @@
            inline-block glyphs grow the line box, so two-line titles need
            their leading opened back up */
         line-height: 1.06;
-        color: transparent;
         text-shadow: none;
         filter:
           drop-shadow(0 4px 0 rgba(12, 52, 86, 0.95))
@@ -215,33 +209,19 @@
       }
       .title.gold .g {
         display: inline-block;
-background-image: linear-gradient(
-          100deg,
-          #dfe8f1 0%,
-          #f2f7fb 14%,
-          #ffffff 26%,
-          #ffffff 40%,
-          #f7fafd 52%,
-          #e6eef6 66%,
-          #ffffff 82%,
-          #dfe8f1 100%
-        );
-        background-size: 320% 100%;
-        background-position: var(--wave) 0;
-        -webkit-background-clip: text;
-        background-clip: text;
+        color: var(--frost);
         filter:
-          drop-shadow(0 1px 0 rgb(80, 139, 184))
-          drop-shadow(0 2px 0 rgb(74, 129, 172))
-          drop-shadow(0 3px 0 rgb(68, 119, 160))
-          drop-shadow(0 4px 0 rgb(62, 109, 148))
-          drop-shadow(0 5px 0 rgb(56, 98, 136))
-          drop-shadow(0 6px 0 rgb(50, 88, 124))
-          drop-shadow(0 7px 0 rgb(44, 78, 112))
-          drop-shadow(0 8px 0 rgb(38, 68, 100))
-          drop-shadow(0 12px 18px rgba(2, 16, 30, 0.55));
-        -webkit-text-fill-color: transparent;
-        color: transparent;
+          drop-shadow(0 1px 0 rgba(11, 33, 54, 0.91))
+          drop-shadow(0 2px 0 rgba(10, 31, 50, 0.88))
+          drop-shadow(0 3px 0 rgba(9, 29, 47, 0.84))
+          drop-shadow(0 4px 0 rgba(9, 27, 43, 0.81))
+          drop-shadow(0 5px 0 rgba(8, 25, 40, 0.77))
+          drop-shadow(0 6px 0 rgba(7, 22, 36, 0.74))
+          drop-shadow(0 7px 0 rgba(7, 20, 32, 0.7))
+          drop-shadow(0 8px 0 rgba(6, 18, 29, 0.67))
+          drop-shadow(0 9px 0 rgba(5, 16, 25, 0.64))
+          drop-shadow(0 10px 0 rgba(5, 14, 22, 0.6))
+          drop-shadow(0 14px 30px rgba(0, 0, 0, 0.85));
       }
 
       /* caption group: a small grey lead-in, one glowing hero word, a small
@@ -288,7 +268,6 @@ background-image: linear-gradient(
         line-height: 0.96;
         letter-spacing: -3px;
         text-transform: uppercase;
-        color: transparent;
         transform-style: preserve-3d;
         /* hard extrude under the glyphs, then a halo wide enough to bloom
            across the frame the way the reference does */
@@ -297,37 +276,21 @@ background-image: linear-gradient(
       }
       .hero .ch {
         display: inline-block;
-        /* face: light at the crown, deep ice at the base */
-        /* ocean sweep: deep water through cyan to a white crest and back,
-           wide enough that only part of it sits on a letter at a time */
-background-image: linear-gradient(
-          100deg,
-          #dfe8f1 0%,
-          #f2f7fb 14%,
-          #ffffff 26%,
-          #ffffff 40%,
-          #f7fafd 52%,
-          #e6eef6 66%,
-          #ffffff 82%,
-          #dfe8f1 100%
-        );
-        background-size: 320% 100%;
-        background-position: var(--wave) 0;
-        -webkit-background-clip: text;
-        background-clip: text;
+        /* same treatment as the opening title: flat frost face over a dark
+           navy wall, nothing else */
+        color: var(--frost);
         filter:
-          drop-shadow(0 1px 0 rgb(80, 139, 184))
-          drop-shadow(0 2px 0 rgb(74, 129, 172))
-          drop-shadow(0 3px 0 rgb(68, 119, 160))
-          drop-shadow(0 4px 0 rgb(62, 109, 148))
-          drop-shadow(0 5px 0 rgb(56, 98, 136))
-          drop-shadow(0 6px 0 rgb(50, 88, 124))
-          drop-shadow(0 7px 0 rgb(44, 78, 112))
-          drop-shadow(0 8px 0 rgb(38, 68, 100))
-          drop-shadow(0 12px 18px rgba(2, 16, 30, 0.55));
-        -webkit-text-fill-color: transparent;
-        color: transparent;
-        /* the side wall of the letter, stacked and darkening with depth */
+          drop-shadow(0 1px 0 rgba(11, 33, 54, 0.91))
+          drop-shadow(0 2px 0 rgba(10, 31, 50, 0.88))
+          drop-shadow(0 3px 0 rgba(9, 29, 47, 0.84))
+          drop-shadow(0 4px 0 rgba(9, 27, 43, 0.81))
+          drop-shadow(0 5px 0 rgba(8, 25, 40, 0.77))
+          drop-shadow(0 6px 0 rgba(7, 22, 36, 0.74))
+          drop-shadow(0 7px 0 rgba(7, 20, 32, 0.7))
+          drop-shadow(0 8px 0 rgba(6, 18, 29, 0.67))
+          drop-shadow(0 9px 0 rgba(5, 16, 25, 0.64))
+          drop-shadow(0 10px 0 rgba(5, 14, 22, 0.6))
+          drop-shadow(0 14px 30px rgba(0, 0, 0, 0.85));
         will-change: transform, opacity;
       }
 
@@ -1403,20 +1366,6 @@ background-image: linear-gradient(
           at,
         );
 
-        // the sweep runs along the word: each letter starts the wave a little
-        // later, so the colour travels instead of pulsing in place
-        chars.forEach((c, j) => {
-          tl.fromTo(
-            "#" + c.id,
-            { "--wave": `${-j * 14}%` },
-            {
-              "--wave": `${-j * 14 - 300}%`,
-              duration: Math.max(1.2, dur),
-              ease: "none",
-            },
-            at,
-          );
-        });
 
         // and each letter breathes out of phase, so the line never sits dead
         chars.forEach((c, j) => {
@@ -1470,22 +1419,6 @@ background-image: linear-gradient(
       });
 
 
-      // the reveal and outro titles ride the same ocean sweep
-      document.querySelectorAll(".title.gold").forEach((el, i) => {
-        const clip = el.closest(".clip");
-        if (!clip) return;
-        const at = parseFloat(clip.getAttribute("data-start"));
-        const dur = parseFloat(clip.getAttribute("data-duration"));
-        el.querySelectorAll(".g").forEach((g, j) => {
-          g.id = "tg" + i + "_" + j;
-          tl.fromTo(
-            "#" + g.id,
-            { "--wave": `${-j * 14}%` },
-            { "--wave": `${-j * 14 - 300}%`, duration: Math.max(1.2, dur), ease: "none" },
-            at,
-          );
-        });
-      });
 
       window.__timelines["main"] = tl;
       tl.seek(0);
