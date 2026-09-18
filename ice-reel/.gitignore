@@ -8,3 +8,4 @@ out
 
 # Upscaled working copy of the source clip (regenerated from the original upload)
 public/video/source.mp4
+public/video/source_ai.mp4
