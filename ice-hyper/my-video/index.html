@@ -235,23 +235,32 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 2px;
+        gap: 10px;
         padding: 0 60px;
         text-align: center;
       }
+      /* three-tone caption model, all drawn from the piece's cold palette:
+         hero = polished ice, lead = bright cyan, tail = frost white.
+         Both small lines sit on a dark plate so they hold over bright ice. */
       .lead,
       .tail {
         font-family: "Display", sans-serif;
         font-weight: 900;
-        font-size: 30px;
+        font-size: 29px;
         letter-spacing: 7px;
         text-transform: uppercase;
-        color: #f2faff;
-        /* the ice behind is bright, so these need a real edge to survive */
-        text-shadow:
-          0 2px 4px rgba(4, 20, 36, 0.95),
-          0 0 14px rgba(4, 20, 36, 0.9),
-          0 0 30px rgba(6, 26, 44, 0.8);
+        padding: 7px 18px;
+        border-radius: 3px;
+        background: rgba(5, 18, 32, 0.62);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+      }
+      .lead {
+        color: #5fd0ff;
+      }
+      .tail {
+        color: #e6f4ff;
       }
       .hero {
         font-family: "Display", sans-serif;
