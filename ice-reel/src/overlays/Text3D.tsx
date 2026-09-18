@@ -21,23 +21,40 @@ export const Title3D: React.FC<{
 }> = ({ text, fontSize = 128, delay = 0, tone = "ice", serif = false }) => {
   const frame = useCurrentFrame() - delay;
 
-  const pop = interpolate(frame, [0, 13], [0.55, 1], {
-    easing: Easing.out(Easing.back(2.2)),
+  // Cinematic push-in: oversized + motion-blurred, settling into place.
+  const pop = interpolate(frame, [0, 26], [1.42, 1], {
+    easing: Easing.out(Easing.cubic),
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     output: "perceptual-scale",
   });
-  const rotX = interpolate(frame, [0, 16], [78, 0], {
+  const rotX = interpolate(frame, [0, 26], [26, 0], {
     easing: Easing.out(Easing.cubic),
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  const opacity = interpolate(frame, [0, 6], [0, 1], {
+  const motionBlur = interpolate(frame, [0, 14], [18, 0], {
+    easing: Easing.out(Easing.cubic),
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const tracking = interpolate(frame, [0, 34], [26, serif ? 0 : -1], {
+    easing: Easing.out(Easing.cubic),
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const opacity = interpolate(frame, [0, 8], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
   const glow = interpolate(frame % 90, [0, 45, 90], [0.4, 0.85, 0.4], {
     easing: Easing.inOut(Easing.sin),
+  });
+  // Specular sweep across the letters.
+  const sweep = interpolate(frame, [12, 58], [-140, 240], {
+    easing: Easing.inOut(Easing.cubic),
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
   });
 
   const base: React.CSSProperties = {
@@ -46,7 +63,7 @@ export const Title3D: React.FC<{
     fontWeight: 900,
     fontSize,
     lineHeight: 1.0,
-    letterSpacing: serif ? 0 : -1,
+    letterSpacing: tracking,
     textAlign: "center",
     whiteSpace: "pre-line",
   };
@@ -54,7 +71,7 @@ export const Title3D: React.FC<{
   return (
     <div
       style={{
-        perspective: 900,
+        perspective: 1100,
         opacity,
       }}
     >
@@ -63,13 +80,14 @@ export const Title3D: React.FC<{
           position: "relative",
           transform: `scale(${pop}) rotateX(${rotX}deg)`,
           transformStyle: "preserve-3d",
+          filter: motionBlur > 0.4 ? `blur(${motionBlur}px)` : undefined,
         }}
       >
         <div
           style={{
             ...base,
             color: "rgba(3,7,12,0.95)",
-            textShadow: extrude(14),
+            textShadow: extrude(20),
           }}
         >
           {text}
@@ -83,11 +101,29 @@ export const Title3D: React.FC<{
             WebkitBackgroundClip: "text",
             backgroundClip: "text",
             color: "transparent",
-            filter: `drop-shadow(0 0 ${14 + glow * 26}px ${
+            filter: `drop-shadow(0 0 ${18 + glow * 34}px ${
               tone === "gold"
-                ? `rgba(230,195,116,${0.35 + glow * 0.3})`
-                : `rgba(159,220,255,${0.35 + glow * 0.3})`
+                ? `rgba(230,195,116,${0.4 + glow * 0.35})`
+                : `rgba(159,220,255,${0.4 + glow * 0.35})`
             })`,
+          }}
+        >
+          {text}
+        </div>
+        <div
+          style={{
+            ...base,
+            position: "absolute",
+            inset: 0,
+            background: `linear-gradient(105deg, rgba(255,255,255,0) ${
+              sweep - 26
+            }%, rgba(255,255,255,0.95) ${sweep}%, rgba(255,255,255,0) ${
+              sweep + 26
+            }%)`,
+            WebkitBackgroundClip: "text",
+            backgroundClip: "text",
+            color: "transparent",
+            mixBlendMode: "screen",
           }}
         >
           {text}

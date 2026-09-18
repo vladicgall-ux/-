@@ -199,76 +199,40 @@ export const ShotOverlays: React.FC<{ shot: Shot }> = ({ shot }) => {
       return (
         <>
           <IceParticles intensity={0.8} />
-          <div
-            style={{
-              position: "absolute",
-              top: 300,
-              left: 0,
-              right: 0,
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <Title3D text={"К ВЫХОДНЫМ" + "\n" + "БУДЕТ САМОЕ ТО"} fontSize={70} tone="gold" delay={8} />
-          </div>
           <KineticCaption words={words} />
         </>
       );
 
     case "outro": {
-      const pop = interpolate(frame, [6, 24], [0, 1], {
-        easing: Easing.out(Easing.back(1.8)),
-        extrapolateLeft: "clamp",
-        extrapolateRight: "clamp",
-        output: "perceptual-scale",
-      });
-      const glow = interpolate(frame % 70, [0, 35, 70], [0.4, 1, 0.4], {
-        easing: Easing.inOut(Easing.sin),
-      });
       return (
         <>
           <IceParticles intensity={1.4} />
           <Grid3D opacity={0.26} />
-          <Center gap={34}>
-            <Title3D text="ЕДЕМ НА ВЫХОДНЫХ?" fontSize={82} tone="ice" />
-            <div style={{ scale: pop }}>
-              <div
-                style={{
-                  fontFamily,
-                  fontSize: 46,
-                  fontWeight: 900,
-                  color: "#14100a",
-                  background: `linear-gradient(135deg, ${theme.goldLight} 0%, ${theme.gold} 50%, ${theme.goldDeep} 100%)`,
-                  padding: "20px 52px",
-                  borderRadius: 999,
-                  boxShadow: `0 16px 34px rgba(0,0,0,0.6), 0 0 ${
-                    22 + glow * 30
-                  }px rgba(230,195,116,${0.35 + glow * 0.35})`,
-                  letterSpacing: 1,
-                }}
-              >
-                ПОДПИШИСЬ 🎣
-              </div>
-            </div>
+          <Center gap={40}>
+            <Title3D
+              text={"К ВЫХОДНЫМ" + "\n" + "БУДЕТ САМОЕ ТО"}
+              fontSize={72}
+              tone="gold"
+            />
             <div
               style={{
                 fontFamily,
-                fontSize: 28,
+                fontSize: 30,
                 fontWeight: 800,
                 color: theme.frost,
-                letterSpacing: 3,
-                backgroundColor: "rgba(5,9,14,0.72)",
+                letterSpacing: 4,
+                backgroundColor: "rgba(5,9,14,0.7)",
                 border: `1px solid ${theme.ice}55`,
                 borderRadius: 999,
-                padding: "12px 30px",
+                padding: "13px 34px",
                 textShadow: extrude(3),
-                opacity: interpolate(frame, [30, 46], [0, 1], {
+                opacity: interpolate(frame, [34, 52], [0, 1], {
                   extrapolateLeft: "clamp",
                   extrapolateRight: "clamp",
                 }),
               }}
             >
-              СЛЕДИМ ЗА ЛЬДОМ КАЖДУЮ НЕДЕЛЮ
+              ПЕРВЫЙ ЛЁД · 21 НОЯБРЯ
             </div>
           </Center>
         </>
