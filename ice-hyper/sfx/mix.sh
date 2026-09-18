@@ -52,7 +52,10 @@ for cue in "${CUES[@]}"; do
   i=$((i + 1))
 done
 
-FILTER+="${MIX}amix=inputs=${i}:normalize=0:dropout_transition=0,alimiter=limit=0.94[aout]"
+# The phone source runs about 25 dB under broadcast level, so the mix is
+# brought to the streaming target (-14 LUFS) after the cues are summed.
+# Normalising the whole mix keeps the voice-to-effects ratio intact.
+FILTER+="${MIX}amix=inputs=${i}:normalize=0:dropout_transition=0,loudnorm=I=-14:TP=-1.5:LRA=11,alimiter=limit=0.97[aout]"
 
 ffmpeg -y -i "$IN" "${INPUTS[@]}" \
   -filter_complex "$FILTER" \
