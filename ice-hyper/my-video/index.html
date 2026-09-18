@@ -52,7 +52,7 @@
         --ice: #7fd3ff;
         --gold: #f0c46a;
         --danger: #ff6b5a;
-        --muted: #9fb4c6;
+        --muted: #cfdde8;
       }
 
       #root {
@@ -81,6 +81,7 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        filter: brightness(1.2) contrast(1.05) saturate(1.12);
       }
 
       /* colour grades, painted over the footage inside the same wrapper */
@@ -89,38 +90,41 @@
         inset: 0;
         pointer-events: none;
         mix-blend-mode: soft-light;
+        opacity: 0;
+        z-index: 30;
       }
       .grade.cold {
         background: linear-gradient(
           180deg,
-          rgba(40, 110, 170, 0.55) 0%,
-          rgba(10, 30, 50, 0.25) 55%,
-          rgba(0, 12, 26, 0.6) 100%
+          rgba(60, 130, 190, 0.3) 0%,
+          rgba(20, 45, 70, 0.1) 55%,
+          rgba(0, 14, 30, 0.28) 100%
         );
       }
       .grade.punch {
         background: linear-gradient(
           200deg,
-          rgba(240, 196, 106, 0.4) 0%,
-          rgba(20, 60, 96, 0.3) 50%,
-          rgba(0, 10, 22, 0.7) 100%
+          rgba(240, 196, 106, 0.22) 0%,
+          rgba(30, 70, 105, 0.12) 50%,
+          rgba(0, 12, 26, 0.3) 100%
         );
       }
       .grade.teaser {
         background: linear-gradient(
           160deg,
-          rgba(127, 211, 255, 0.45) 0%,
-          rgba(8, 20, 34, 0.5) 60%,
-          rgba(0, 6, 14, 0.8) 100%
+          rgba(150, 215, 255, 0.28) 0%,
+          rgba(12, 28, 46, 0.18) 60%,
+          rgba(0, 8, 18, 0.38) 100%
         );
       }
       .lift {
         position: absolute;
         inset: 0;
         pointer-events: none;
+        z-index: 31;
         background: radial-gradient(
           ellipse at 50% 38%,
-          rgba(180, 225, 255, 0.14) 0%,
+          rgba(190, 230, 255, 0.08) 0%,
           rgba(0, 0, 0, 0) 62%
         );
       }
@@ -167,16 +171,25 @@
         background: currentColor;
       }
 
+      .ov-in.scrimmed.hard::before {
+        background: linear-gradient(
+          180deg,
+          rgba(3, 8, 14, 0) 0%,
+          rgba(3, 8, 14, 0.74) 26%,
+          rgba(3, 8, 14, 0.74) 76%,
+          rgba(3, 8, 14, 0) 100%
+        );
+      }
       .ov-in.scrimmed::before {
         content: "";
         position: absolute;
         inset: 0;
         background: linear-gradient(
           180deg,
-          rgba(3, 8, 14, 0.2) 0%,
-          rgba(3, 8, 14, 0.66) 34%,
-          rgba(3, 8, 14, 0.66) 70%,
-          rgba(3, 8, 14, 0.2) 100%
+          rgba(3, 8, 14, 0) 0%,
+          rgba(3, 8, 14, 0.58) 30%,
+          rgba(3, 8, 14, 0.58) 72%,
+          rgba(3, 8, 14, 0) 100%
         );
         z-index: -1;
       }
@@ -347,8 +360,8 @@
         z-index: 90;
         background: radial-gradient(
           ellipse at center,
-          transparent 42%,
-          rgba(0, 0, 0, 0.72) 100%
+          transparent 48%,
+          rgba(0, 0, 0, 0.5) 100%
         );
       }
       #grain {
@@ -410,8 +423,6 @@
             muted
             playsinline
           ></video>
-          <div class="grade teaser"></div>
-          <div class="lift"></div>
         </div>
       </div>
 
@@ -429,8 +440,6 @@
             muted
             playsinline
           ></video>
-          <div class="grade teaser"></div>
-          <div class="lift"></div>
         </div>
       </div>
 
@@ -448,8 +457,6 @@
             muted
             playsinline
           ></video>
-          <div class="grade cold"></div>
-          <div class="lift"></div>
         </div>
       </div>
 
@@ -467,8 +474,6 @@
             muted
             playsinline
           ></video>
-          <div class="grade cold"></div>
-          <div class="lift"></div>
         </div>
       </div>
 
@@ -486,8 +491,6 @@
             muted
             playsinline
           ></video>
-          <div class="grade cold"></div>
-          <div class="lift"></div>
         </div>
       </div>
 
@@ -505,8 +508,6 @@
             muted
             playsinline
           ></video>
-          <div class="grade punch"></div>
-          <div class="lift"></div>
         </div>
       </div>
 
@@ -525,8 +526,6 @@
             muted
             playsinline
           ></video>
-          <div class="grade punch"></div>
-          <div class="lift"></div>
         </div>
       </div>
 
@@ -544,8 +543,6 @@
             muted
             playsinline
           ></video>
-          <div class="grade punch"></div>
-          <div class="lift"></div>
         </div>
       </div>
 
@@ -563,8 +560,6 @@
             muted
             playsinline
           ></video>
-          <div class="grade cold"></div>
-          <div class="lift"></div>
         </div>
       </div>
 
@@ -582,8 +577,6 @@
             muted
             playsinline
           ></video>
-          <div class="grade teaser"></div>
-          <div class="lift"></div>
         </div>
       </div>
 
@@ -821,7 +814,7 @@
       <!-- reveal -->
       <div class="ov clip" id="ov18" data-start="19.4" data-duration="3.4" data-track-index="20">
         <div
-          class="ov-in scrimmed"
+          class="ov-in scrimmed hard"
           id="o8"
           style="align-items: center; justify-content: flex-start; padding-top: 250px; gap: 32px"
         >
@@ -873,6 +866,12 @@
         </div>
       </div>
 
+      <!-- global grade stack: one layer per look, switched at each cut -->
+      <div class="grade cold" id="grade-cold"></div>
+      <div class="grade punch" id="grade-punch"></div>
+      <div class="grade teaser" id="grade-teaser"></div>
+      <div class="lift"></div>
+
       <!-- atmosphere -->
       <div id="flash"></div>
       <div id="vignette"></div>
@@ -897,6 +896,31 @@
         { id: "s9-in", t: 23.26, d: 3.65, z: [1.1, 1.24], y: [0, -16] },
         { id: "s10-in", t: 26.91, d: 2.7, z: [1.02, 1.18], y: [0, -10] },
       ];
+
+      // one grade layer is lit per shot; the rest sit at zero
+      const GRADE = [
+        "teaser",
+        "teaser",
+        "cold",
+        "cold",
+        "cold",
+        "punch",
+        "punch",
+        "punch",
+        "cold",
+        "teaser",
+      ];
+      const GRADE_LEVEL = { cold: 0.85, punch: 0.8, teaser: 0.9 };
+
+      SHOTS.forEach((s, i) => {
+        ["cold", "punch", "teaser"].forEach((g) => {
+          tl.set(
+            "#grade-" + g,
+            { opacity: GRADE[i] === g ? GRADE_LEVEL[g] : 0 },
+            s.t,
+          );
+        });
+      });
 
       SHOTS.forEach((s, i) => {
         // slow push / pull for the whole shot
