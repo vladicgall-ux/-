@@ -215,36 +215,33 @@
       }
       .title.gold .g {
         display: inline-block;
-        /* ocean sweep: deep water through cyan to a white crest and back,
-           wide enough that only part of it sits on a letter at a time */
-        background-image: linear-gradient(
+background-image: linear-gradient(
           100deg,
-          #06405f 0%,
-          #0d6f99 12%,
-          #2bb4de 24%,
-          #8fe9ff 34%,
-          #ffffff 42%,
-          #9ff0ff 50%,
-          #35c0e8 62%,
-          #0f7ea8 76%,
-          #06405f 100%
+          #dfe8f1 0%,
+          #f2f7fb 14%,
+          #ffffff 26%,
+          #ffffff 40%,
+          #f7fafd 52%,
+          #e6eef6 66%,
+          #ffffff 82%,
+          #dfe8f1 100%
         );
         background-size: 320% 100%;
         background-position: var(--wave) 0;
         -webkit-background-clip: text;
         background-clip: text;
+        filter:
+          drop-shadow(0 1px 0 rgb(80, 139, 184))
+          drop-shadow(0 2px 0 rgb(74, 129, 172))
+          drop-shadow(0 3px 0 rgb(68, 119, 160))
+          drop-shadow(0 4px 0 rgb(62, 109, 148))
+          drop-shadow(0 5px 0 rgb(56, 98, 136))
+          drop-shadow(0 6px 0 rgb(50, 88, 124))
+          drop-shadow(0 7px 0 rgb(44, 78, 112))
+          drop-shadow(0 8px 0 rgb(38, 68, 100))
+          drop-shadow(0 12px 18px rgba(2, 16, 30, 0.55));
         -webkit-text-fill-color: transparent;
         color: transparent;
-        text-shadow:
-          0 1px 0 rgb(80, 139, 184),
-          0 2px 0 rgb(74, 129, 172),
-          0 3px 0 rgb(68, 119, 160),
-          0 4px 0 rgb(62, 109, 148),
-          0 5px 0 rgb(56, 98, 136),
-          0 6px 0 rgb(50, 88, 124),
-          0 7px 0 rgb(44, 78, 112),
-          0 8px 0 rgb(38, 68, 100),
-          0 12px 20px rgba(2, 16, 30, 0.6);
       }
 
       /* caption group: a small grey lead-in, one glowing hero word, a small
@@ -303,35 +300,34 @@
         /* face: light at the crown, deep ice at the base */
         /* ocean sweep: deep water through cyan to a white crest and back,
            wide enough that only part of it sits on a letter at a time */
-        background-image: linear-gradient(
+background-image: linear-gradient(
           100deg,
-          #06405f 0%,
-          #0d6f99 12%,
-          #2bb4de 24%,
-          #8fe9ff 34%,
-          #ffffff 42%,
-          #9ff0ff 50%,
-          #35c0e8 62%,
-          #0f7ea8 76%,
-          #06405f 100%
+          #dfe8f1 0%,
+          #f2f7fb 14%,
+          #ffffff 26%,
+          #ffffff 40%,
+          #f7fafd 52%,
+          #e6eef6 66%,
+          #ffffff 82%,
+          #dfe8f1 100%
         );
         background-size: 320% 100%;
         background-position: var(--wave) 0;
         -webkit-background-clip: text;
         background-clip: text;
+        filter:
+          drop-shadow(0 1px 0 rgb(80, 139, 184))
+          drop-shadow(0 2px 0 rgb(74, 129, 172))
+          drop-shadow(0 3px 0 rgb(68, 119, 160))
+          drop-shadow(0 4px 0 rgb(62, 109, 148))
+          drop-shadow(0 5px 0 rgb(56, 98, 136))
+          drop-shadow(0 6px 0 rgb(50, 88, 124))
+          drop-shadow(0 7px 0 rgb(44, 78, 112))
+          drop-shadow(0 8px 0 rgb(38, 68, 100))
+          drop-shadow(0 12px 18px rgba(2, 16, 30, 0.55));
         -webkit-text-fill-color: transparent;
         color: transparent;
         /* the side wall of the letter, stacked and darkening with depth */
-        text-shadow:
-          0 1px 0 rgb(80, 139, 184),
-          0 2px 0 rgb(74, 129, 172),
-          0 3px 0 rgb(68, 119, 160),
-          0 4px 0 rgb(62, 109, 148),
-          0 5px 0 rgb(56, 98, 136),
-          0 6px 0 rgb(50, 88, 124),
-          0 7px 0 rgb(44, 78, 112),
-          0 8px 0 rgb(38, 68, 100),
-          0 12px 20px rgba(2, 16, 30, 0.6);
         will-change: transform, opacity;
       }
 
@@ -576,14 +572,6 @@
         background: linear-gradient(90deg, var(--ice) 0%, #ffffff 100%);
         box-shadow: 0 0 14px rgba(127, 211, 255, 0.8);
         z-index: 110;
-      }
-      #flash {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        z-index: 95;
-        background: #eaf6ff;
-        opacity: 0;
       }
     </style>
   </head>
@@ -1079,26 +1067,9 @@
           ></video>
         </div>
       </div>
-      <div class="matte">
-        <div class="matte-in" id="m9-in" data-layout-allow-overflow>
-          <video
-            id="m9"
-            class="clip"
-            src="assets/person-matte.webm"
-            data-start="23.26"
-            data-duration="3.65"
-            data-media-start="4.2"
-            data-track-index="5"
-            muted
-            playsinline
-          ></video>
-        </div>
-      </div>
-
       <!-- atmosphere -->
       <div id="frost"><div class="flake" id="fl0" style="left: 0%; top: 0%; width: 4px; height: 4px"></div><div class="flake" id="fl1" style="left: 37%; top: 73%; width: 6px; height: 6px"></div><div class="flake" id="fl2" style="left: 74%; top: 46%; width: 8px; height: 8px"></div><div class="flake" id="fl3" style="left: 11%; top: 19%; width: 10px; height: 10px"></div><div class="flake" id="fl4" style="left: 48%; top: 92%; width: 4px; height: 4px"></div><div class="flake" id="fl5" style="left: 85%; top: 65%; width: 6px; height: 6px"></div><div class="flake" id="fl6" style="left: 22%; top: 38%; width: 8px; height: 8px"></div><div class="flake" id="fl7" style="left: 59%; top: 11%; width: 10px; height: 10px"></div><div class="flake" id="fl8" style="left: 96%; top: 84%; width: 4px; height: 4px"></div><div class="flake" id="fl9" style="left: 33%; top: 57%; width: 6px; height: 6px"></div><div class="flake" id="fl10" style="left: 70%; top: 30%; width: 8px; height: 8px"></div><div class="flake" id="fl11" style="left: 7%; top: 3%; width: 10px; height: 10px"></div><div class="flake" id="fl12" style="left: 44%; top: 76%; width: 4px; height: 4px"></div><div class="flake" id="fl13" style="left: 81%; top: 49%; width: 6px; height: 6px"></div><div class="flake" id="fl14" style="left: 18%; top: 22%; width: 8px; height: 8px"></div><div class="flake" id="fl15" style="left: 55%; top: 95%; width: 10px; height: 10px"></div></div>
-      <div id="flash"></div>
-      <div id="vignette"></div>
+            <div id="vignette"></div>
       <div id="grain"></div>
       <div id="bar"></div>
     </div>
@@ -1175,8 +1146,8 @@
         // whip-blur on entry, so every cut lands instead of just changing
         tl.fromTo(
           "#" + s.id,
-          { filter: "blur(16px) brightness(1.5)" },
-          { filter: "blur(0px) brightness(1)", duration: 0.2, ease: "power3.out" },
+          { filter: "blur(10px) brightness(1.06)" },
+          { filter: "blur(0px) brightness(1)", duration: 0.45, ease: "power2.out" },
           s.t,
         );
         // handheld float — a slow, deterministic drift
@@ -1193,7 +1164,6 @@
       // the silhouette drifts off the man underneath
       const MATTE = [
         { id: "m8-in", t: 19.06, d: 4.2, z: [1.26, 1.1], y: [-20, 0], x: [0.6, -0.6] },
-        { id: "m9-in", t: 23.26, d: 3.65, z: [1.1, 1.24], y: [0, -16], x: [-0.6, 0.6] },
       ];
       MATTE.forEach((m) => {
         tl.fromTo(
@@ -1210,22 +1180,12 @@
         );
         tl.fromTo(
           "#" + m.id,
-          { filter: "blur(16px) brightness(1.5)" },
-          { filter: "blur(0px) brightness(1)", duration: 0.2, ease: "power3.out" },
+          { filter: "blur(10px) brightness(1.06)" },
+          { filter: "blur(0px) brightness(1)", duration: 0.45, ease: "power2.out" },
           m.t,
         );
       });
 
-      // ---- cut flashes -----------------------------------------------------
-      tl.set("#flash", { opacity: 0 }, 0);
-      [0, 1.4, 15.5, 19.06].forEach((t) => {
-        tl.fromTo(
-          "#flash",
-          { opacity: 0.34 },
-          { opacity: 0, duration: 0.18, ease: "power2.out", immediateRender: false },
-          t,
-        );
-      });
 
       // ---- progress bar ----------------------------------------------------
       tl.fromTo("#bar", { scaleX: 0 }, { scaleX: 1, duration: 29.6, ease: "none" }, 0);
