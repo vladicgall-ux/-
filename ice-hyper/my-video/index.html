@@ -270,16 +270,24 @@
         line-height: 0.98;
         letter-spacing: -2px;
         text-transform: uppercase;
-        /* polished ice, not ribbing: at playback size the stripes read as
-           slits cut through the letters, so the fill is a clean vertical
-           gradient in the piece's own palette */
-        background-image: linear-gradient(
-          177deg,
-          #ffffff 0%,
-          #eaf8ff 34%,
-          #bfe6ff 64%,
-          #8ec9ef 100%
-        );
+        /* ribbing over a graded base: the stripes are the texture the
+           reference uses, but they sit on the ice gradient instead of
+           replacing it, so the letters keep their depth */
+        background-image:
+          repeating-linear-gradient(
+            91deg,
+            rgba(255, 255, 255, 0.92) 0px,
+            rgba(255, 255, 255, 0.92) 2px,
+            rgba(255, 255, 255, 0) 2px,
+            rgba(255, 255, 255, 0) 5px
+          ),
+          linear-gradient(
+            177deg,
+            #eaf8ff 0%,
+            #cdebff 32%,
+            #9fd6f5 66%,
+            #71b8e0 100%
+          );
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
