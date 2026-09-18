@@ -150,6 +150,7 @@
 
       /* window chrome shared by the browser and terminal mocks */
       .win {
+        position: relative;
         width: 100%;
         border-radius: 16px;
         background: linear-gradient(180deg, #151a24 0%, #0c1018 100%);
@@ -321,6 +322,9 @@
           transparent
         );
       }
+      .price {
+        transform-style: preserve-3d;
+      }
       .price .plan {
         font-family: "Unbounded", sans-serif;
         font-weight: 700;
@@ -386,6 +390,260 @@
       .headline em {
         font-style: normal;
         color: var(--amber);
+      }
+
+      /* ---- 3D stage for the graphic panels ------------------------------- */
+      .scene3d {
+        perspective: 1500px;
+        perspective-origin: 50% 42%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+      .deck {
+        position: relative;
+        transform-style: preserve-3d;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 18px;
+        will-change: transform, opacity;
+      }
+      .deck.steps {
+        gap: 16px;
+        align-items: stretch;
+      }
+      .deck.steps .step {
+        width: 100%;
+      }
+
+      /* the real product icon, given physical depth */
+      .cicon {
+        width: 152px;
+        height: 152px;
+        border-radius: 32px;
+        display: block;
+        box-shadow:
+          0 24px 60px rgba(0, 0, 0, 0.7),
+          0 0 0 1px rgba(255, 255, 255, 0.08);
+      }
+      .cicon.sm {
+        width: 62px;
+        height: 62px;
+        border-radius: 14px;
+      }
+      .cicon.xs {
+        width: 52px;
+        height: 52px;
+        border-radius: 12px;
+        position: absolute;
+        top: 26px;
+        right: 30px;
+      }
+      .icon-slab {
+        position: relative;
+        transform-style: preserve-3d;
+        will-change: transform, opacity;
+      }
+      .icon-glow {
+        position: absolute;
+        inset: -40px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(232, 149, 90, 0.34) 0%, transparent 68%);
+        z-index: -1;
+      }
+
+      /* ---- the example site inside the browser mock ---------------------- */
+      .site {
+        background: linear-gradient(180deg, #14100d 0%, #0b0e14 100%);
+        padding: 0;
+      }
+      .site-nav {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        padding: 16px 22px;
+        border-bottom: 1px solid rgba(246, 242, 236, 0.08);
+      }
+      .site-nav .logo {
+        font-family: "Unbounded", sans-serif;
+        font-weight: 900;
+        font-size: 22px;
+        letter-spacing: 4px;
+        color: var(--amber);
+      }
+      .site-nav .nav-links {
+        display: flex;
+        gap: 12px;
+        flex: 1;
+      }
+      .site-nav .nav-links span {
+        width: 54px;
+        height: 8px;
+        border-radius: 4px;
+        background: rgba(246, 242, 236, 0.34);
+      }
+      .site-nav .nav-cta {
+        font-family: "Unbounded", sans-serif;
+        font-weight: 700;
+        font-size: 14px;
+        letter-spacing: 2px;
+        color: #140c06;
+        background: var(--amber);
+        padding: 8px 16px;
+        border-radius: 999px;
+      }
+      .site-hero {
+        display: flex;
+        gap: 20px;
+        padding: 22px;
+        align-items: center;
+      }
+      .hero-copy {
+        flex: 1;
+      }
+      .hero-h {
+        font-family: "PlayfairDisplay", serif;
+        font-style: italic;
+        font-weight: 900;
+        font-size: 44px;
+        line-height: 1.02;
+        color: var(--paper);
+      }
+      .hero-btns {
+        display: flex;
+        gap: 10px;
+        margin-top: 16px;
+      }
+      .hero-btns .btn-a,
+      .hero-btns .btn-b {
+        font-family: "Unbounded", sans-serif;
+        font-weight: 700;
+        font-size: 15px;
+        letter-spacing: 2px;
+        padding: 10px 20px;
+        border-radius: 999px;
+      }
+      .hero-btns .btn-a {
+        background: var(--amber);
+        color: #140c06;
+      }
+      .hero-btns .btn-b {
+        border: 1px solid rgba(246, 242, 236, 0.28);
+        color: var(--paper);
+      }
+      .hero-art {
+        width: 210px;
+        height: 160px;
+        border-radius: 14px;
+        background:
+          radial-gradient(circle at 34% 34%, rgba(255, 210, 160, 0.5), transparent 58%),
+          linear-gradient(150deg, #a8622f 0%, #3a2418 100%);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+        transform-origin: center;
+      }
+      .site-cards {
+        display: flex;
+        gap: 12px;
+        padding: 0 22px 22px;
+      }
+      .scard {
+        flex: 1;
+        border-radius: 12px;
+        padding: 14px 16px;
+        background: rgba(246, 242, 236, 0.06);
+        border: 1px solid rgba(246, 242, 236, 0.1);
+        transform-origin: center bottom;
+      }
+      .scard b {
+        display: block;
+        font-family: "Unbounded", sans-serif;
+        font-weight: 900;
+        font-size: 26px;
+        color: var(--paper);
+      }
+      .scard span {
+        font-family: "Unbounded", sans-serif;
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 2px;
+        color: #e9eef6;
+      }
+
+      /* the finished site sits on top of the terminal at the end */
+      .overlay-win {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        margin-left: -400px;
+        width: 800px;
+      }
+
+      /* ---- login screen bits --------------------------------------------- */
+      .login-head {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+      .login-title {
+        font-family: "Unbounded", sans-serif;
+        font-weight: 700;
+        font-size: 24px;
+        letter-spacing: 2px;
+        color: var(--paper);
+      }
+      .field {
+        height: 56px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        font-family: "DejaVu Sans Mono", monospace;
+        font-size: 21px;
+        color: var(--muted);
+      }
+      .btn-primary {
+        margin-top: 16px;
+        height: 56px;
+        border-radius: 10px;
+        background: linear-gradient(100deg, var(--amber), #c8743f);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Unbounded", sans-serif;
+        font-weight: 700;
+        font-size: 23px;
+        letter-spacing: 4px;
+        color: #140c06;
+      }
+      .okline {
+        margin-top: 18px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-family: "Unbounded", sans-serif;
+        font-weight: 700;
+        font-size: 21px;
+        letter-spacing: 3px;
+        color: var(--ok);
+        opacity: 0;
+      }
+      .plan-rows {
+        margin-top: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .prow {
+        font-family: "Unbounded", sans-serif;
+        font-weight: 700;
+        font-size: 18px;
+        letter-spacing: 2px;
+        color: var(--muted);
       }
 
       /* ---- captions ----------------------------------------------------- */
@@ -593,29 +851,43 @@
 
       <!-- ====================== GRAPHIC PANEL ============================ -->
 
-      <!-- 1 · the page assembles itself -->
+      <!-- 1 · a real landing page assembles itself in 3D -->
       <div class="panel clip" id="p1" data-start="0.15" data-duration="3.45" data-track-index="20">
         <div class="panel-in" id="p1-in">
           <div class="kicker" id="p1-k"><i></i>с нуля<i></i></div>
-          <div class="headline" id="p1-h">КАК СДЕЛАТЬ<br /><em>САЙТ</em></div>
-          <div class="win" id="p1-win" style="max-width: 760px">
-            <div class="win-bar">
-              <div class="dot"></div>
-              <div class="dot"></div>
-              <div class="dot"></div>
-              <div class="url">your-site.ru</div>
-            </div>
-            <div class="win-body" style="min-height: 190px">
-              <div class="wf">
-                <div class="wf-row"><div class="blk" id="b1" style="height: 46px; flex: 1"></div></div>
-                <div class="wf-row">
-                  <div class="blk" id="b2" style="height: 92px; flex: 2"></div>
-                  <div class="blk" id="b3" style="height: 92px; flex: 1"></div>
+          <div class="headline" id="p1-h" style="font-size: 76px">
+            КАК СДЕЛАТЬ <em>САЙТ</em>
+          </div>
+          <div class="scene3d">
+            <div class="deck" id="p1-deck">
+              <div class="win" id="p1-win" style="max-width: 800px">
+                <div class="win-bar">
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="url">zerno-coffee.ru</div>
                 </div>
-                <div class="wf-row">
-                  <div class="blk" id="b4" style="height: 34px; flex: 1"></div>
-                  <div class="blk" id="b5" style="height: 34px; flex: 1"></div>
-                  <div class="blk" id="b6" style="height: 34px; flex: 1"></div>
+                <div class="site" id="site1">
+                  <div class="site-nav" id="s1-nav">
+                    <div class="logo">ЗЕРНО</div>
+                    <div class="nav-links"><span></span><span></span><span></span></div>
+                    <div class="nav-cta">Заказать</div>
+                  </div>
+                  <div class="site-hero">
+                    <div class="hero-copy">
+                      <div class="hero-h" id="s1-h">Кофе,<br />обжаренный<br />сегодня</div>
+                      <div class="hero-btns" id="s1-btn">
+                        <div class="btn-a">Меню</div>
+                        <div class="btn-b">Доставка</div>
+                      </div>
+                    </div>
+                    <div class="hero-art" id="s1-art"></div>
+                  </div>
+                  <div class="site-cards">
+                    <div class="scard" id="s1-c1"><b>12</b><span>сортов</span></div>
+                    <div class="scard" id="s1-c2"><b>25м</b><span>обжарка</span></div>
+                    <div class="scard" id="s1-c3"><b>4.9</b><span>рейтинг</span></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -623,148 +895,174 @@
         </div>
       </div>
 
-      <!-- 2 · the tool -->
+      <!-- 2 · the tool: the real Claude icon turns in space -->
       <div class="panel clip" id="p2" data-start="3.65" data-duration="2.7" data-track-index="20">
         <div class="panel-in" id="p2-in">
           <div class="kicker" id="p2-k"><i></i>инструмент<i></i></div>
-          <div class="win" id="p2-win" style="max-width: 820px">
-            <div class="win-bar">
-              <div class="dot"></div>
-              <div class="dot"></div>
-              <div class="dot"></div>
-              <div class="url">terminal — zsh</div>
-            </div>
-            <div class="term" style="min-height: 220px">
-              <div><span class="c">$</span> <span class="p" id="t2a"></span><span class="caret" id="t2c"></span></div>
-              <div id="t2b" style="opacity: 0; color: var(--muted); font-size: 22px">
-                Welcome to Claude Code
+          <div class="scene3d">
+            <div class="deck" id="p2-deck">
+              <div class="icon-slab" id="p2-icon">
+                <img src="assets/claude-icon.png" alt="Claude" class="cicon" />
+                <div class="icon-glow"></div>
+              </div>
+              <div class="win" id="p2-win" style="max-width: 720px">
+                <div class="win-bar">
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="url">terminal — zsh</div>
+                </div>
+                <div class="term" style="min-height: 168px">
+                  <div>
+                    <span class="c">$</span> <span class="p" id="t2a"></span
+                    ><span class="caret" id="t2c"></span>
+                  </div>
+                  <div id="t2b" style="opacity: 0; color: var(--muted); font-size: 21px">
+                    ✻ Welcome to Claude Code
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <div class="headline" id="p2-h" style="font-size: 62px">
+          <div class="headline" id="p2-h" style="font-size: 58px">
             НА <em>CLAUDE CODE</em>
           </div>
         </div>
       </div>
 
-      <!-- 3 · the checklist appears empty -->
+      <!-- 3 · the checklist flies in on three planes -->
       <div class="panel clip" id="p3" data-start="6.45" data-duration="2.8" data-track-index="20">
         <div class="panel-in" id="p3-in">
           <div class="kicker" id="p3-k"><i></i>что нужно<i></i></div>
-          <div class="steps">
-            <div class="step" id="s1"><div class="n">01</div><div class="tx">авторизация</div><div class="tick">✓</div></div>
-            <div class="step" id="s2"><div class="n">02</div><div class="tx">подписка</div><div class="tick">✓</div></div>
-            <div class="step" id="s3"><div class="n">03</div><div class="tx">код</div><div class="tick">✓</div></div>
+          <div class="scene3d">
+            <div class="deck steps" id="p3-deck">
+              <div class="step" id="st1">
+                <div class="n">01</div>
+                <div class="tx">авторизация</div>
+                <div class="tick">✓</div>
+              </div>
+              <div class="step" id="st2">
+                <div class="n">02</div>
+                <div class="tx">подписка</div>
+                <div class="tick">✓</div>
+              </div>
+              <div class="step" id="st3">
+                <div class="n">03</div>
+                <div class="tx">код</div>
+                <div class="tick">✓</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- 4 · step 01 -->
+      <!-- 4 · step 01 — the login screen -->
       <div class="panel clip" id="p4" data-start="9.35" data-duration="2.7" data-track-index="20">
         <div class="panel-in" id="p4-in">
           <div class="kicker" id="p4-k"><i></i>шаг 01<i></i></div>
-          <div class="win" id="p4-win" style="max-width: 720px">
-            <div class="win-bar">
-              <div class="dot"></div>
-              <div class="dot"></div>
-              <div class="dot"></div>
-              <div class="url">claude.ai — вход</div>
-            </div>
-            <div class="win-body" style="min-height: 210px">
-              <div
-                id="f1"
-                style="
-                  height: 58px;
-                  border-radius: 10px;
-                  background: rgba(255, 255, 255, 0.06);
-                  border: 1px solid var(--line);
-                  display: flex;
-                  align-items: center;
-                  padding: 0 20px;
-                  font-family: 'DejaVu Sans Mono', monospace;
-                  font-size: 22px;
-                  color: var(--muted);
-                "
-              >
-                you@mail.ru
-              </div>
-              <div
-                id="f2"
-                style="
-                  margin-top: 18px;
-                  height: 58px;
-                  border-radius: 10px;
-                  background: linear-gradient(100deg, var(--amber), #c8743f);
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  font-family: 'Unbounded', sans-serif;
-                  font-weight: 700;
-                  font-size: 24px;
-                  letter-spacing: 4px;
-                  color: #140c06;
-                "
-              >
-                ВОЙТИ
-              </div>
-              <div
-                id="f3"
-                style="
-                  margin-top: 20px;
-                  display: flex;
-                  align-items: center;
-                  gap: 12px;
-                  font-family: 'Unbounded', sans-serif;
-                  font-weight: 700;
-                  font-size: 22px;
-                  letter-spacing: 3px;
-                  color: var(--ok);
-                  opacity: 0;
-                "
-              >
-                ✓ АККАУНТ ГОТОВ
+          <div class="scene3d">
+            <div class="deck" id="p4-deck">
+              <div class="win" id="p4-win" style="max-width: 700px">
+                <div class="win-bar">
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="url">claude.ai — вход</div>
+                </div>
+                <div class="win-body" style="min-height: 240px">
+                  <div class="login-head">
+                    <img src="assets/claude-icon.png" alt="Claude" class="cicon sm" id="p4-ic" />
+                    <div class="login-title">Вход в аккаунт</div>
+                  </div>
+                  <div class="field" id="f1">you@mail.ru</div>
+                  <div class="btn-primary" id="f2">ВОЙТИ</div>
+                  <div class="okline" id="f3">✓ АККАУНТ ГОТОВ</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- 5 · step 02 -->
+      <!-- 5 · step 02 — the plan card flips over -->
       <div class="panel clip" id="p5" data-start="12.15" data-duration="3.2" data-track-index="20">
         <div class="panel-in" id="p5-in">
           <div class="kicker" id="p5-k"><i></i>шаг 02<i></i></div>
-          <div class="price" id="p5-card">
-            <div class="sweep" id="p5-sweep"></div>
-            <div class="plan">подписка</div>
-            <div class="val" id="p5-val">Pro</div>
-            <div class="sub">доступ к claude code</div>
+          <div class="scene3d">
+            <div class="deck" id="p5-deck">
+              <div class="price" id="p5-card">
+                <div class="sweep" id="p5-sweep"></div>
+                <img src="assets/claude-icon.png" alt="Claude" class="cicon xs" id="p5-ic" />
+                <div class="plan">подписка</div>
+                <div class="val" id="p5-val">Pro</div>
+                <div class="sub">доступ к claude code</div>
+                <div class="plan-rows">
+                  <div class="prow" id="pr1">✓ безлимитные проекты</div>
+                  <div class="prow" id="pr2">✓ работа в терминале</div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="headline" id="p5-h" style="font-size: 54px">
-            ВЗЯТЬ <em>ЗДЕСЬ</em>
-          </div>
+          <div class="headline" id="p5-h" style="font-size: 50px">ВЗЯТЬ <em>ЗДЕСЬ</em></div>
         </div>
       </div>
 
-      <!-- 6 · step 03 + the finished site -->
+      <!-- 6 · step 03 — the prompt ships the site -->
       <div class="panel clip" id="p6" data-start="15.45" data-duration="3.18" data-track-index="20">
         <div class="panel-in" id="p6-in">
           <div class="kicker" id="p6-k"><i></i>шаг 03<i></i></div>
-          <div class="win" id="p6-win" style="max-width: 820px">
-            <div class="win-bar">
-              <div class="dot"></div>
-              <div class="dot"></div>
-              <div class="dot"></div>
-              <div class="url" id="p6-url">terminal — claude</div>
+          <div class="headline" id="p6-h" style="font-size: 54px">И <em>ПРОГРАММИРУЙ</em></div>
+          <div class="scene3d">
+            <div class="deck" id="p6-deck">
+              <div class="win" id="p6-term-win" style="max-width: 760px">
+                <div class="win-bar">
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="url">terminal — claude</div>
+                </div>
+                <div class="term" style="min-height: 210px; font-size: 21px">
+                  <div>
+                    <span class="c">&gt;</span> <span class="p" id="t6a"></span
+                    ><span class="caret" id="t6c"></span>
+                  </div>
+                  <div class="c" id="t6l1" style="opacity: 0">✓ создаю страницы</div>
+                  <div class="c" id="t6l2" style="opacity: 0">✓ подключаю стили</div>
+                  <div class="c" id="t6l3" style="opacity: 0; color: var(--ok)">✓ сайт готов</div>
+                </div>
+              </div>
+
+              <div class="win overlay-win" id="p6-site-win" style="max-width: 800px">
+                <div class="win-bar">
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="url">zerno-coffee.ru</div>
+                </div>
+                <div class="site">
+                  <div class="site-nav">
+                    <div class="logo">ЗЕРНО</div>
+                    <div class="nav-links"><span></span><span></span><span></span></div>
+                    <div class="nav-cta">Заказать</div>
+                  </div>
+                  <div class="site-hero">
+                    <div class="hero-copy">
+                      <div class="hero-h">Кофе,<br />обжаренный<br />сегодня</div>
+                      <div class="hero-btns">
+                        <div class="btn-a">Меню</div>
+                        <div class="btn-b">Доставка</div>
+                      </div>
+                    </div>
+                    <div class="hero-art"></div>
+                  </div>
+                  <div class="site-cards">
+                    <div class="scard"><b>12</b><span>сортов</span></div>
+                    <div class="scard"><b>25м</b><span>обжарка</span></div>
+                    <div class="scard"><b>4.9</b><span>рейтинг</span></div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="term" id="p6-term" style="min-height: 250px; font-size: 22px">
-              <div><span class="c">&gt;</span> <span class="p" id="t6a"></span><span class="caret" id="t6c"></span></div>
-              <div class="c" id="t6l1" style="opacity: 0">✓ создаю страницы</div>
-              <div class="c" id="t6l2" style="opacity: 0">✓ подключаю стили</div>
-              <div class="c" id="t6l3" style="opacity: 0; color: var(--ok)">✓ сайт готов</div>
-            </div>
-          </div>
-          <div class="headline" id="p6-h" style="font-size: 58px">
-            И <em>ПРОГРАММИРУЙ</em>
           </div>
         </div>
       </div>
@@ -899,27 +1197,35 @@
         );
       };
 
-      // ---- panel 1: the page builds itself --------------------------------
+      // ---- panel 1: a real landing page builds itself ----------------------
       panelIn("#p1-in", 0.15);
       riseIn("#p1-k", 0.2, 14, 0.36);
       tl.fromTo(
         "#p1-h",
-        { opacity: 0, scale: 1.16, filter: "blur(14px)" },
+        { opacity: 0, scale: 1.18, filter: "blur(16px)" },
         { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.42, ease: "power4.out" },
-        0.42,
+        0.4,
       );
+      // the browser hinges in on its own axis, then settles level
       tl.fromTo(
-        "#p1-win",
-        { opacity: 0, y: 40, rotationX: -22 },
-        { opacity: 1, y: 0, rotationX: 0, duration: 0.6, ease: "power3.out" },
-        1.0,
+        "#p1-deck",
+        { opacity: 0, rotationX: -34, rotationY: 16, z: -420, y: 60 },
+        { opacity: 1, rotationX: 8, rotationY: -6, z: 0, y: 0, duration: 0.75, ease: "power3.out" },
+        0.9,
       );
-      ["#b1", "#b2", "#b3", "#b4", "#b5", "#b6"].forEach((b, i) => {
+      tl.to("#p1-deck", { rotationX: 2, rotationY: 3, duration: 1.8, ease: "sine.inOut" }, 1.7);
+
+      // page parts land one by one, each on its own plane
+      tl.fromTo("#s1-nav", { opacity: 0, y: -22 }, { opacity: 1, y: 0, duration: 0.26, ease: "power3.out" }, 1.45);
+      tl.fromTo("#s1-h", { opacity: 0, x: -34 }, { opacity: 1, x: 0, duration: 0.3, ease: "power3.out" }, 1.68);
+      tl.fromTo("#s1-art", { opacity: 0, scale: 0.7, rotationY: 40 }, { opacity: 1, scale: 1, rotationY: 0, duration: 0.42, ease: "back.out(1.6)" }, 1.9);
+      tl.fromTo("#s1-btn", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.26, ease: "power3.out" }, 2.16);
+      ["#s1-c1", "#s1-c2", "#s1-c3"].forEach((c, i) => {
         tl.fromTo(
-          b,
-          { opacity: 0, scaleY: 0.2 },
-          { opacity: 1, scaleY: 1, duration: 0.3, ease: "back.out(2)" },
-          1.5 + i * 0.16,
+          c,
+          { opacity: 0, y: 26, rotationX: -40 },
+          { opacity: 1, y: 0, rotationX: 0, duration: 0.3, ease: "back.out(2)" },
+          2.4 + i * 0.16,
         );
       });
 
@@ -927,30 +1233,48 @@
       panelIn("#p2-in", 3.65);
       riseIn("#p2-k", 3.7, 14, 0.34);
       tl.fromTo(
-        "#p2-win",
-        { opacity: 0, scale: 0.9, rotationY: -16 },
-        { opacity: 1, scale: 1, rotationY: 0, duration: 0.5, ease: "power3.out" },
-        3.72,
+        "#p2-icon",
+        { opacity: 0, rotationY: -180, z: -300, scale: 0.5 },
+        { opacity: 1, rotationY: 0, z: 0, scale: 1, duration: 0.8, ease: "power3.out" },
+        3.75,
       );
-      typeOut("#t2a", "claude", 4.1, 0.6);
-      tl.fromTo("#t2c", { opacity: 1 }, { opacity: 0.15, duration: 0.25, repeat: 7, yoyo: true, ease: "none" }, 4.2);
-      tl.to("#t2b", { opacity: 1, duration: 0.3, ease: "power2.out" }, 4.9);
+      tl.to("#p2-icon", { rotationY: 14, duration: 2.0, ease: "sine.inOut" }, 4.6);
+      tl.fromTo(
+        "#p2-win",
+        { opacity: 0, rotationX: -26, y: 50 },
+        { opacity: 1, rotationX: 4, y: 0, duration: 0.55, ease: "power3.out" },
+        4.0,
+      );
+      typeOut("#t2a", "claude", 4.35, 0.5);
+      tl.fromTo(
+        "#t2c",
+        { opacity: 1 },
+        { opacity: 0.15, duration: 0.25, repeat: 7, yoyo: true, ease: "none" },
+        4.35,
+      );
+      tl.to("#t2b", { opacity: 1, duration: 0.3, ease: "power2.out" }, 4.95);
       tl.fromTo(
         "#p2-h",
-        { opacity: 0, scale: 1.14 },
+        { opacity: 0, scale: 1.16 },
         { opacity: 1, scale: 1, duration: 0.36, ease: "power4.out" },
-        5.05,
+        5.1,
       );
 
-      // ---- panel 3: the empty checklist ------------------------------------
+      // ---- panel 3: the checklist ------------------------------------------
       panelIn("#p3-in", 6.45);
       riseIn("#p3-k", 6.5, 14, 0.34);
-      ["#s1", "#s2", "#s3"].forEach((s, i) => {
+      tl.fromTo(
+        "#p3-deck",
+        { rotationY: -14, rotationX: 10 },
+        { rotationY: 6, rotationX: -3, duration: 2.6, ease: "sine.inOut" },
+        6.6,
+      );
+      ["#st1", "#st2", "#st3"].forEach((s, i) => {
         tl.fromTo(
           s,
-          { opacity: 0, x: -60, rotationY: -34 },
-          { opacity: 1, x: 0, rotationY: 0, duration: 0.45, ease: "power3.out" },
-          6.85 + i * 0.22,
+          { opacity: 0, x: -90, z: -260, rotationY: -46 },
+          { opacity: 1, x: 0, z: 0, rotationY: 0, duration: 0.48, ease: "power3.out" },
+          6.82 + i * 0.24,
         );
       });
 
@@ -958,65 +1282,95 @@
       panelIn("#p4-in", 9.35);
       riseIn("#p4-k", 9.4, 14, 0.34);
       tl.fromTo(
-        "#p4-win",
-        { opacity: 0, y: 40, rotationX: -18 },
-        { opacity: 1, y: 0, rotationX: 0, duration: 0.5, ease: "power3.out" },
+        "#p4-deck",
+        { opacity: 0, rotationX: -28, rotationY: -12, z: -320 },
+        { opacity: 1, rotationX: 6, rotationY: 4, z: 0, duration: 0.6, ease: "power3.out" },
         9.42,
       );
-      riseIn("#f1", 9.8, 18, 0.32);
-      riseIn("#f2", 10.05, 18, 0.32);
-      tl.to("#f2", { scale: 0.95, duration: 0.1, ease: "power2.in" }, 10.75);
-      tl.to("#f2", { scale: 1, duration: 0.2, ease: "back.out(3)" }, 10.85);
+      tl.to("#p4-deck", { rotationX: 1, rotationY: -3, duration: 1.8, ease: "sine.inOut" }, 10.1);
+      tl.fromTo(
+        "#p4-ic",
+        { opacity: 0, rotationY: -120, scale: 0.6 },
+        { opacity: 1, rotationY: 0, scale: 1, duration: 0.5, ease: "back.out(1.8)" },
+        9.7,
+      );
+      riseIn("#f1", 9.92, 18, 0.3);
+      riseIn("#f2", 10.16, 18, 0.3);
+      tl.to("#f2", { scale: 0.94, duration: 0.1, ease: "power2.in" }, 10.72);
+      tl.to("#f2", { scale: 1, duration: 0.24, ease: "back.out(3)" }, 10.82);
       tl.fromTo(
         "#f3",
-        { opacity: 0, y: 14 },
-        { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" },
-        11.0,
+        { opacity: 0, y: 14, scale: 0.9 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.32, ease: "back.out(2)" },
+        11.02,
       );
 
       // ---- panel 5: step 02 -------------------------------------------------
       panelIn("#p5-in", 12.15);
       riseIn("#p5-k", 12.2, 14, 0.34);
       tl.fromTo(
-        "#p5-card",
-        { opacity: 0, scale: 0.9, rotationX: -16 },
-        { opacity: 1, scale: 1, rotationX: 0, duration: 0.5, ease: "power3.out" },
-        12.24,
+        "#p5-deck",
+        { opacity: 0, rotationY: -92, z: -260 },
+        { opacity: 1, rotationY: 6, z: 0, duration: 0.7, ease: "power3.out" },
+        12.22,
+      );
+      tl.to("#p5-deck", { rotationY: -5, rotationX: 3, duration: 2.0, ease: "sine.inOut" }, 12.95);
+      tl.fromTo(
+        "#p5-ic",
+        { opacity: 0, scale: 0.4, rotationZ: -40 },
+        { opacity: 1, scale: 1, rotationZ: 0, duration: 0.45, ease: "back.out(2)" },
+        12.7,
       );
       tl.fromTo(
         "#p5-sweep",
         { xPercent: 0 },
-        { xPercent: 380, duration: 1.1, ease: "power2.inOut" },
-        12.6,
+        { xPercent: 380, duration: 1.0, ease: "power2.inOut" },
+        12.85,
       );
+      riseIn("#pr1", 13.3, 14, 0.26);
+      riseIn("#pr2", 13.5, 14, 0.26);
       tl.fromTo(
         "#p5-h",
-        { opacity: 0, scale: 1.12 },
+        { opacity: 0, scale: 1.14 },
         { opacity: 1, scale: 1, duration: 0.36, ease: "power4.out" },
-        13.6,
+        13.75,
       );
-      tl.to("#p5-card", { y: -10, duration: 1.4, ease: "sine.inOut" }, 13.7);
+      tl.to("#p5-card", { y: -10, duration: 1.3, ease: "sine.inOut" }, 13.9);
 
       // ---- panel 6: step 03, the site ships ---------------------------------
       panelIn("#p6-in", 15.45);
       riseIn("#p6-k", 15.5, 14, 0.34);
+      tl.set("#p6-site-win", { opacity: 0, scale: 0.86, rotationY: 34, z: -420 }, 15.45);
       tl.fromTo(
-        "#p6-win",
-        { opacity: 0, scale: 0.92, rotationY: 14 },
-        { opacity: 1, scale: 1, rotationY: 0, duration: 0.5, ease: "power3.out" },
-        15.52,
+        "#p6-term-win",
+        { opacity: 0, rotationY: 20, z: -300 },
+        { opacity: 1, rotationY: -5, z: 0, duration: 0.55, ease: "power3.out" },
+        15.5,
       );
-      typeOut("#t6a", "сделай мне сайт", 15.9, 0.85);
-      tl.fromTo("#t6c", { opacity: 1 }, { opacity: 0.15, duration: 0.25, repeat: 9, yoyo: true, ease: "none" }, 15.95);
-      riseIn("#t6l1", 16.85, 12, 0.24);
-      riseIn("#t6l2", 17.15, 12, 0.24);
-      riseIn("#t6l3", 17.45, 12, 0.24);
+      typeOut("#t6a", "сделай мне сайт", 15.85, 0.8);
+      tl.fromTo(
+        "#t6c",
+        { opacity: 1 },
+        { opacity: 0.15, duration: 0.25, repeat: 9, yoyo: true, ease: "none" },
+        15.9,
+      );
+      riseIn("#t6l1", 16.78, 12, 0.22);
+      riseIn("#t6l2", 17.02, 12, 0.22);
+      riseIn("#t6l3", 17.26, 12, 0.22);
       tl.fromTo(
         "#p6-h",
         { opacity: 0, scale: 1.12 },
         { opacity: 1, scale: 1, duration: 0.36, ease: "power4.out" },
-        16.45,
+        16.4,
       );
+      // the finished site swings forward over the terminal
+      tl.to("#p6-term-win", { opacity: 0, z: -200, duration: 0.35, ease: "power2.in" }, 17.5);
+      tl.to(
+        "#p6-site-win",
+        { opacity: 1, scale: 1, rotationY: -4, z: 0, duration: 0.55, ease: "power3.out" },
+        17.52,
+      );
+      tl.to("#p6-site-win", { rotationY: 3, duration: 0.9, ease: "sine.inOut" }, 18.05);
 
       // ---- captions: slam in, drift, out -----------------------------------
       document.querySelectorAll(".cap").forEach((clip) => {
