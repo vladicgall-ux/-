@@ -1,4 +1,5 @@
 import { AbsoluteFill, staticFile } from "remotion";
+import { SwipeArrow } from "../Arrow";
 import { PhotoBackground } from "../Background";
 import { fontFamily } from "../fonts";
 import { HookTitle, PageDots, PillTag, SubText } from "../ui";
@@ -30,6 +31,8 @@ export const Slide1: React.FC = () => {
           <SubText>Сохрани — пригодится 📌</SubText>
         </div>
       </AbsoluteFill>
+
+      <SwipeArrow />
     </AbsoluteFill>
   );
 };

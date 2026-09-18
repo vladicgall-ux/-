@@ -1,4 +1,5 @@
 import { AbsoluteFill } from "remotion";
+import { SwipeArrow } from "../Arrow";
 import { GoldBackground } from "../Background";
 import { fontFamily } from "../fonts";
 import { GoldCard, HookTitle, IconBadge, PageDots, PillTag, SubText } from "../ui";
@@ -10,7 +11,8 @@ export const ItemSlide: React.FC<{
   label: string;
   title: string;
   subtitle: string;
-}> = ({ index, total, icon, label, title, subtitle }) => {
+  showArrow?: boolean;
+}> = ({ index, total, icon, label, title, subtitle, showArrow = true }) => {
   return (
     <AbsoluteFill style={{ fontFamily }}>
       <GoldBackground />
@@ -40,6 +42,8 @@ export const ItemSlide: React.FC<{
           </div>
         </GoldCard>
       </AbsoluteFill>
+
+      {showArrow ? <SwipeArrow /> : null}
     </AbsoluteFill>
   );
 };
