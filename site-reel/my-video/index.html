@@ -103,7 +103,7 @@
         width: 1080px;
         height: 1920px;
         object-fit: cover;
-        filter: brightness(1.1) contrast(1.06) saturate(1.05);
+        filter: brightness(1.12) contrast(1.05) saturate(1.02);
       }
       #footage-grade {
         position: absolute;
@@ -114,10 +114,11 @@
         pointer-events: none;
         z-index: 25;
         border-radius: 34px 34px 0 0;
+        /* only a top scrim for caption legibility and a neutral bottom
+           falloff — no colour cast over the speaker */
         background:
-          linear-gradient(180deg, rgba(10, 4, 24, 0.88) 0%, rgba(10, 4, 24, 0) 22%),
-          linear-gradient(190deg, rgba(162, 116, 255, 0.16) 0%, rgba(26, 11, 53, 0.2) 58%,
-            rgba(8, 3, 20, 0.55) 100%);
+          linear-gradient(180deg, rgba(10, 4, 24, 0.88) 0%, rgba(10, 4, 24, 0) 20%),
+          linear-gradient(180deg, rgba(0, 0, 0, 0) 62%, rgba(4, 3, 10, 0.4) 100%);
       }
       #footage-edge {
         position: absolute;
@@ -426,6 +427,7 @@
       .deck.steps {
         gap: 16px;
         align-items: stretch;
+        max-width: 700px;
       }
       .deck.steps .step {
         width: 100%;
@@ -531,6 +533,61 @@
         font-size: 15px;
         letter-spacing: 2px;
         color: var(--paper);
+      }
+
+      /* ---- demo screens: the user's own reference designs ---------------- */
+      .shot {
+        position: absolute;
+        border-radius: 14px;
+        overflow: hidden;
+        border: 1px solid rgba(200, 170, 255, 0.34);
+        box-shadow:
+          0 30px 70px rgba(0, 0, 0, 0.7),
+          0 0 50px rgba(150, 100, 255, 0.3);
+        background: #140a2a;
+        will-change: transform, opacity;
+      }
+      .shot img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .shot .tag {
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: rgba(12, 5, 28, 0.82);
+        font-family: "Unbounded", sans-serif;
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 2px;
+        color: var(--amber-hi);
+      }
+      /* the hero slot inside the mock now carries a real design */
+      .hero-art.shotfill {
+        overflow: hidden;
+        background: #140a2a;
+      }
+      .hero-art.shotfill img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      /* full-bleed design in the closing window */
+      .sitefull {
+        height: 336px;
+        overflow: hidden;
+        background: #140a2a;
+      }
+      .sitefull img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
       }
 
       /* ---- the example site inside the browser mock ---------------------- */
@@ -968,7 +1025,7 @@
                         <div class="btn-b">Доставка</div>
                       </div>
                     </div>
-                    <div class="hero-art" id="s1-art"></div>
+                    <div class="hero-art shotfill" id="s1-art"><img src="assets/demo-1.webp" alt="" /></div>
                   </div>
                   <div class="site-cards">
                     <div class="scard" id="s1-c1"><b>12</b><span>сортов</span></div>
@@ -1053,6 +1110,12 @@
                 <div class="tick">✓</div>
               </div>
             </div>
+          </div>
+          <div class="shot" id="sh1" style="left: 10px; top: 150px; width: 188px; height: 118px">
+            <img src="assets/demo-2.webp" alt="" />
+          </div>
+          <div class="shot" id="sh2" style="right: 10px; top: 320px; width: 198px; height: 128px">
+            <img src="assets/demo-3.webp" alt="" />
           </div>
         </div>
       </div>
@@ -1154,7 +1217,7 @@
                         <div class="btn-b">Доставка</div>
                       </div>
                     </div>
-                    <div class="hero-art"></div>
+                    <div class="hero-art shotfill"><img src="assets/demo-1.webp" alt="" /></div>
                   </div>
                   <div class="site-cards">
                     <div class="scard"><b>12</b><span>сортов</span></div>
@@ -1164,6 +1227,13 @@
                 </div>
               </div>
             </div>
+          </div>
+          <div class="shot" id="sh3" style="left: 0px; top: 452px; width: 152px; height: 98px">
+            <img src="assets/demo-2.webp" alt="" />
+            <div class="tag">и такие</div>
+          </div>
+          <div class="shot" id="sh4" style="right: 0px; top: 300px; width: 172px; height: 110px">
+            <img src="assets/demo-3.webp" alt="" />
           </div>
         </div>
       </div>
@@ -1438,6 +1508,22 @@
         );
       });
 
+      // the user's own reference designs fan in as proof of what gets built
+      tl.fromTo(
+        "#sh1",
+        { opacity: 0, x: -80, rotationZ: -10, scale: 0.75 },
+        { opacity: 1, x: 0, rotationZ: -5, scale: 1, duration: 0.5, ease: "back.out(1.4)" },
+        6.95,
+      );
+      tl.to("#sh1", { y: -12, rotationZ: -3, duration: 1.8, ease: "sine.inOut" }, 7.45);
+      tl.fromTo(
+        "#sh2",
+        { opacity: 0, x: 80, rotationZ: 10, scale: 0.75 },
+        { opacity: 1, x: 0, rotationZ: 5, scale: 1, duration: 0.5, ease: "back.out(1.4)" },
+        7.35,
+      );
+      tl.to("#sh2", { y: 10, rotationZ: 3, duration: 1.6, ease: "sine.inOut" }, 7.85);
+
       // ---- panel 4: step 01 -------------------------------------------------
       panelIn("#p4-in", 9.35);
       riseIn("#p4-k", 9.4, 14, 0.34);
@@ -1531,6 +1617,21 @@
         17.52,
       );
       tl.to("#p6-site-win", { rotationY: 3, duration: 0.9, ease: "sine.inOut" }, 18.05);
+
+      tl.set(["#sh3", "#sh4"], { opacity: 0 }, 15.45);
+      tl.fromTo(
+        "#sh3",
+        { opacity: 0, x: -70, rotationZ: -12, scale: 0.7 },
+        { opacity: 1, x: 0, rotationZ: -6, scale: 1, duration: 0.42, ease: "back.out(1.5)" },
+        17.86,
+      );
+      tl.fromTo(
+        "#sh4",
+        { opacity: 0, x: 70, rotationZ: 12, scale: 0.7 },
+        { opacity: 1, x: 0, rotationZ: 6, scale: 1, duration: 0.42, ease: "back.out(1.5)" },
+        18.02,
+      );
+
 
       // ---- captions: slam in, drift, out -----------------------------------
       document.querySelectorAll(".cap").forEach((clip) => {

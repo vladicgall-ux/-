@@ -7,6 +7,9 @@ IN="${1:?input video}"
 OUT="${2:?output video}"
 S="$(dirname "$0")/wav"
 
+# master trim for the whole kit — these cues are background texture, not events
+MASTER="${MASTER:-0.3}"
+
 # time_seconds file volume
 CUES=(
   # opening: title slams, browser hinges in, the page builds block by block
@@ -89,6 +92,7 @@ i=1
 for cue in "${CUES[@]}"; do
   read -r time file vol <<<"$cue"
   ms=$(python3 -c "print(int(float('$time')*1000))")
+  vol=$(python3 -c "print(round(float('$vol')*float('$MASTER'), 4))")
   INPUTS+=(-i "$S/$file")
   FILTER+="[$i]adelay=${ms}|${ms},volume=${vol}[a$i];"
   MIX+="[a$i]"
