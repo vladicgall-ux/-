@@ -1,4 +1,11 @@
-import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from "remotion";
+import { Audio } from "@remotion/media";
+import {
+  AbsoluteFill,
+  Easing,
+  interpolate,
+  staticFile,
+  useCurrentFrame,
+} from "remotion";
 import { AppBackground } from "./Background";
 import { Captions } from "./Captions";
 import { fontFamily } from "./fonts";
@@ -35,6 +42,7 @@ export const CardScene: React.FC<{
 
   return (
     <AbsoluteFill style={{ fontFamily }}>
+      <Audio src={staticFile(`audio/${segmentId}.m4a`)} />
       <AppBackground />
 
       <AbsoluteFill
