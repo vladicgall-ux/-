@@ -3,21 +3,21 @@ import { theme } from "./brand";
 import { Grid3D, IceParticles } from "./effects/Atmosphere";
 import { fontFamily } from "./fonts";
 import { Chip, ProgressRing, StatCard3D } from "./overlays/Hud";
-import { KineticCaption, Title3D, extrude } from "./overlays/Text3D";
+import { KineticCaption, Title3D } from "./overlays/Text3D";
 import { Shot, shotDuration, wordsForShot } from "./timeline";
 
-const Center: React.FC<{
+const Stack: React.FC<{
   children: React.ReactNode;
   top?: number;
   gap?: number;
-}> = ({ children, top, gap = 24 }) => (
+}> = ({ children, top, gap = 26 }) => (
   <AbsoluteFill
     style={{
       alignItems: "center",
       justifyContent: top === undefined ? "center" : "flex-start",
       paddingTop: top,
-      paddingLeft: 60,
-      paddingRight: 60,
+      paddingLeft: 70,
+      paddingRight: 70,
       flexDirection: "column",
       gap,
     }}
@@ -35,35 +35,42 @@ export const ShotOverlays: React.FC<{ shot: Shot }> = ({ shot }) => {
     case "hook_drill":
       return (
         <>
-          <IceParticles intensity={1.5} />
-          <Center>
-            <Title3D text={"ПЕРВЫЙ" + "\n" + "ЛЁД"} fontSize={172} />
-          </Center>
+          <IceParticles intensity={1.3} />
+          <Stack>
+            <Title3D
+              text={"ПЕРВЫЙ" + "\n" + "ЛЁД"}
+              kicker="21 НОЯБРЯ"
+              fontSize={158}
+            />
+          </Stack>
         </>
       );
 
     case "hook_wide":
       return (
         <>
-          <IceParticles intensity={1.2} />
-          <Grid3D opacity={0.22} />
-          <Center gap={30}>
-            <Chip tone="ice">21 НОЯБРЯ · ПЕРВЫЙ ВЫХОД</Chip>
-            <Title3D text={"500 МЕТРОВ" + "\n" + "ОТ БЕРЕГА"} fontSize={104} />
-            <Chip tone="danger" delay={10} fontSize={34}>
-              А ЛЬДА — 8 СМ 😳
+          <IceParticles intensity={1.1} />
+          <Grid3D opacity={0.2} />
+          <Stack gap={34}>
+            <Title3D
+              text={"500 МЕТРОВ" + "\n" + "ОТ БЕРЕГА"}
+              kicker="ВЫШЛИ НА ПРОВЕРКУ"
+              fontSize={96}
+            />
+            <Chip tone="danger" delay={7} fontSize={30}>
+              ПОД НОГАМИ — 8 СМ
             </Chip>
-          </Center>
+          </Stack>
         </>
       );
 
     case "intro":
       return (
         <>
-          <IceParticles intensity={0.5} />
-          <div style={{ position: "absolute", top: 48, left: 48 }}>
-            <Chip tone="gold" fontSize={26}>
-              ❄️ ПЕРВЫЙ ЛЁД 2025
+          <IceParticles intensity={0.45} />
+          <div style={{ position: "absolute", top: 54, left: 56 }}>
+            <Chip tone="gold" fontSize={22}>
+              ПЕРВЫЙ ЛЁД
             </Chip>
           </div>
           <KineticCaption words={words} />
@@ -73,75 +80,55 @@ export const ShotOverlays: React.FC<{ shot: Shot }> = ({ shot }) => {
     case "date":
       return (
         <>
-          <IceParticles intensity={0.5} />
-          <div style={{ position: "absolute", top: 300, right: 60 }}>
-            <StatCard3D
-              value="21.11"
-              label="ПЕРВЫЙ ВЫХОД"
-              icon="❄️"
-              delay={14}
-            />
+          <IceParticles intensity={0.45} />
+          <div style={{ position: "absolute", top: 320, left: 70 }}>
+            <StatCard3D value="21.11" label="ПЕРВЫЙ ВЫХОД" delay={8} align="left" />
           </div>
           <KineticCaption words={words} />
         </>
       );
 
-    case "distance": {
+    case "distance":
       return (
         <>
-          <IceParticles intensity={0.6} />
-          <Grid3D opacity={0.3} />
-          <div
-            style={{
-              position: "absolute",
-              top: 1290,
-              left: 0,
-              right: 0,
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <StatCard3D value="500 м" label="ОТ БЕРЕГА" icon="📍" delay={12} />
+          <IceParticles intensity={0.55} />
+          <Grid3D opacity={0.26} />
+          <div style={{ position: "absolute", top: 1330, left: 90 }}>
+            <StatCard3D value="500 м" label="ДО БЕРЕГА" delay={7} align="left" />
           </div>
-          <KineticCaption words={words} top={960} />
+          <KineticCaption words={words} top={980} />
         </>
       );
-    }
 
-    case "question": {
-      const pulse = interpolate(frame % 40, [0, 20, 40], [1, 1.08, 1], {
-        easing: Easing.inOut(Easing.sin),
-      });
+    case "question":
       return (
         <>
-          <IceParticles intensity={0.7} />
+          <IceParticles intensity={0.65} />
           <div
             style={{
               position: "absolute",
-              top: 250,
+              top: 270,
               left: 0,
               right: 0,
               display: "flex",
               justifyContent: "center",
-              transform: `scale(${pulse})`,
             }}
           >
-            <Chip tone="danger" fontSize={38} delay={6}>
-              ТОЛЩИНА ЛЬДА = ЖИЗНЬ
+            <Chip tone="danger" fontSize={32} delay={4}>
+              ТОЛЩИНА РЕШАЕТ ВСЁ
             </Chip>
           </div>
           <KineticCaption words={words} />
         </>
       );
-    }
 
     case "drill":
       return (
         <>
-          <IceParticles intensity={1.1} />
-          <div style={{ position: "absolute", top: 60, right: 56 }}>
-            <Chip tone="gold" fontSize={26}>
-              ×3.6 УСКОРЕНО
+          <IceParticles intensity={1.0} />
+          <div style={{ position: "absolute", top: 70, right: 70 }}>
+            <Chip tone="gold" fontSize={22}>
+              ×3.6
             </Chip>
           </div>
           <div
@@ -160,37 +147,38 @@ export const ShotOverlays: React.FC<{ shot: Shot }> = ({ shot }) => {
       );
 
     case "reveal": {
-      const shake = interpolate(frame, [18, 24, 30], [0, 8, 0], {
+      const drop = interpolate(frame, [8, 13, 18], [0, 7, 0], {
         extrapolateLeft: "clamp",
         extrapolateRight: "clamp",
       });
       return (
         <>
-          <IceParticles intensity={1.3} />
+          <IceParticles intensity={1.2} />
           <div
             style={{
               position: "absolute",
-              top: 210,
+              top: 240,
               left: 0,
               right: 0,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              gap: 30,
-              transform: `translateY(${shake}px)`,
+              gap: 34,
+              transform: `translateY(${drop}px)`,
             }}
           >
-            <Chip tone="ice" fontSize={30}>
-              ТОЛЩИНА ЛЬДА
+            <Title3D
+              text="8–10 СМ"
+              kicker="ТОЛЩИНА ЛЬДА"
+              fontSize={132}
+              delay={5}
+              tone="gold"
+            />
+            <Chip tone="danger" fontSize={32} delay={30}>
+              ЕЩЁ РАНОВАТО
             </Chip>
-            <Title3D text="8–10 СМ" fontSize={138} delay={10} tone="gold" />
-            <div style={{ marginTop: 18 }}>
-              <Chip tone="danger" fontSize={36} delay={54}>
-                ⚠️ ЕЩЁ РАНОВАТО
-              </Chip>
-            </div>
           </div>
-          <KineticCaption words={words} top={1530} />
+          <KineticCaption words={words} top={1540} />
         </>
       );
     }
@@ -198,35 +186,32 @@ export const ShotOverlays: React.FC<{ shot: Shot }> = ({ shot }) => {
     case "weekend":
       return (
         <>
-          <IceParticles intensity={0.8} />
+          <IceParticles intensity={0.7} />
           <KineticCaption words={words} />
         </>
       );
 
-    case "outro": {
+    case "outro":
       return (
         <>
-          <IceParticles intensity={1.4} />
-          <Grid3D opacity={0.26} />
-          <Center gap={40}>
+          <IceParticles intensity={1.25} />
+          <Grid3D opacity={0.24} />
+          <Stack gap={40}>
             <Title3D
               text={"К ВЫХОДНЫМ" + "\n" + "БУДЕТ САМОЕ ТО"}
-              fontSize={72}
+              kicker="ЖДЁМ ЛЁД"
+              fontSize={76}
               tone="gold"
             />
             <div
               style={{
                 fontFamily,
-                fontSize: 30,
-                fontWeight: 800,
-                color: theme.frost,
-                letterSpacing: 4,
-                backgroundColor: "rgba(5,9,14,0.7)",
-                border: `1px solid ${theme.ice}55`,
-                borderRadius: 999,
-                padding: "13px 34px",
-                textShadow: extrude(3),
-                opacity: interpolate(frame, [34, 52], [0, 1], {
+                fontSize: 24,
+                fontWeight: 700,
+                color: theme.muted,
+                letterSpacing: 8,
+                opacity: interpolate(frame, [22, 36], [0, 1], {
+                  easing: Easing.out(Easing.cubic),
                   extrapolateLeft: "clamp",
                   extrapolateRight: "clamp",
                 }),
@@ -234,10 +219,9 @@ export const ShotOverlays: React.FC<{ shot: Shot }> = ({ shot }) => {
             >
               ПЕРВЫЙ ЛЁД · 21 НОЯБРЯ
             </div>
-          </Center>
+          </Stack>
         </>
       );
-    }
 
     default:
       return <KineticCaption words={words} />;

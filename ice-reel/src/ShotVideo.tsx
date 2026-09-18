@@ -7,6 +7,7 @@ import {
   useCurrentFrame,
 } from "remotion";
 import { theme } from "./brand";
+import { FilmGrade } from "./effects/FilmGrade";
 import { FPS, Shot, shotDuration } from "./timeline";
 
 const GRADES: Record<string, string> = {
@@ -33,7 +34,10 @@ const useKenBurns = (shot: Shot) => {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  return { scale, x, y };
+  // Handheld breathing so locked-off crops still feel operated.
+  const floatX = Math.sin(frame / 37) * 5 + Math.sin(frame / 11) * 1.6;
+  const floatY = Math.cos(frame / 43) * 6 + Math.cos(frame / 13) * 1.4;
+  return { scale, x: x + floatX, y: y + floatY };
 };
 
 const RawVideo: React.FC<{
@@ -42,7 +46,7 @@ const RawVideo: React.FC<{
   muted?: boolean;
 }> = ({ shot, blur, muted }) => (
   <Video
-    src={staticFile("video/source.mp4")}
+    src={staticFile("video/source_ai.mp4")}
     trimBefore={Math.round(shot.srcIn * FPS)}
     trimAfter={Math.round(shot.srcOut * FPS)}
     playbackRate={shot.speed}
@@ -58,37 +62,18 @@ const RawVideo: React.FC<{
   />
 );
 
-const ColorWash: React.FC = () => (
-  <>
-    <AbsoluteFill
-      style={{
-        background:
-          "linear-gradient(180deg, rgba(20,60,95,0.20) 0%, rgba(0,0,0,0) 38%, rgba(0,0,0,0) 62%, rgba(4,10,16,0.55) 100%)",
-        mixBlendMode: "multiply",
-      }}
-    />
-    <AbsoluteFill
-      style={{
-        background:
-          "radial-gradient(ellipse 70% 60% at 50% 45%, rgba(159,220,255,0.10) 0%, rgba(0,0,0,0) 70%)",
-        mixBlendMode: "screen",
-      }}
-    />
-  </>
-);
-
 export const ShotVideo: React.FC<{ shot: Shot }> = ({ shot }) => {
   const frame = useCurrentFrame();
   const { scale, x, y } = useKenBurns(shot);
 
   if (shot.treatment === "card3d") {
-    const rotY = interpolate(frame % 220, [0, 110, 220], [-13, 13, -13], {
+    const rotY = interpolate(frame % 110, [0, 55, 110], [-13, 13, -13], {
       easing: Easing.inOut(Easing.sin),
     });
-    const rotX = interpolate(frame % 170, [0, 85, 170], [7, -5, 7], {
+    const rotX = interpolate(frame % 85, [0, 42, 85], [7, -5, 7], {
       easing: Easing.inOut(Easing.sin),
     });
-    const entry = interpolate(frame, [0, 22], [0.72, 1], {
+    const entry = interpolate(frame, [0, 11], [0.72, 1], {
       easing: Easing.out(Easing.back(1.5)),
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
@@ -132,7 +117,7 @@ export const ShotVideo: React.FC<{ shot: Shot }> = ({ shot }) => {
             </div>
           </div>
         </AbsoluteFill>
-        <ColorWash />
+        <FilmGrade />
       </AbsoluteFill>
     );
   }
@@ -162,13 +147,13 @@ export const ShotVideo: React.FC<{ shot: Shot }> = ({ shot }) => {
             }}
           />
         </div>
-        <ColorWash />
+        <FilmGrade />
       </AbsoluteFill>
     );
   }
 
   if (shot.treatment === "frame") {
-    const inset = interpolate(frame, [0, 18], [0, 34], {
+    const inset = interpolate(frame, [0, 9], [0, 34], {
       easing: Easing.out(Easing.cubic),
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
@@ -190,7 +175,7 @@ export const ShotVideo: React.FC<{ shot: Shot }> = ({ shot }) => {
           style={{
             border: `2px solid rgba(159,220,255,${interpolate(
               frame,
-              [10, 30],
+              [5, 15],
               [0, 0.5],
               { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
             )})`,
@@ -198,7 +183,7 @@ export const ShotVideo: React.FC<{ shot: Shot }> = ({ shot }) => {
             boxSizing: "border-box",
           }}
         />
-        <ColorWash />
+        <FilmGrade />
       </AbsoluteFill>
     );
   }
@@ -210,7 +195,7 @@ export const ShotVideo: React.FC<{ shot: Shot }> = ({ shot }) => {
       >
         <RawVideo shot={shot} />
       </AbsoluteFill>
-      <ColorWash />
+      <FilmGrade />
     </AbsoluteFill>
   );
 };
