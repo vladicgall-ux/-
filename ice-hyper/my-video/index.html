@@ -261,13 +261,15 @@
         line-height: 0.98;
         letter-spacing: -2px;
         text-transform: uppercase;
-        /* fine ribbing inside the letters, clipped to the glyph shapes */
-        background-image: repeating-linear-gradient(
-          92deg,
-          #ffffff 0px,
-          #ffffff 2px,
-          #a9deff 2px,
-          #a9deff 5px
+        /* polished ice, not ribbing: at playback size the stripes read as
+           slits cut through the letters, so the fill is a clean vertical
+           gradient in the piece's own palette */
+        background-image: linear-gradient(
+          177deg,
+          #ffffff 0%,
+          #eaf8ff 34%,
+          #bfe6ff 64%,
+          #8ec9ef 100%
         );
         -webkit-background-clip: text;
         background-clip: text;

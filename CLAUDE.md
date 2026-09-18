@@ -12,6 +12,14 @@ command -v graphify >/dev/null || uv tool install graphifyy
 The tool-call hooks are written to no-op while the CLI is absent, so a session
 never blocks on this.
 
+## Working preferences
+
+- **Font colour follows the piece.** Pick caption and title colours from the
+  video's own palette, never a default accent. One coherent line beats a warm
+  and a cold accent competing in the same frame.
+- **Instagram posts go to @slyshal74** unless told otherwise.
+- Answer briefly; ask before doing something substantial.
+
 ## graphify
 
 This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
