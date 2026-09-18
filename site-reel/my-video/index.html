@@ -785,6 +785,50 @@
         color: var(--muted);
       }
 
+      /* ---- pointer beam: drawn from his fingertip up to the plan card ---- */
+      #beam {
+        position: absolute;
+        inset: 0;
+        z-index: 45;
+        pointer-events: none;
+      }
+      #beam svg {
+        width: 1080px;
+        height: 1920px;
+        display: block;
+        overflow: visible;
+      }
+      #beam-line {
+        fill: none;
+        stroke: var(--magenta);
+        stroke-width: 4;
+        stroke-linecap: round;
+        stroke-dasharray: 14 12;
+        filter: drop-shadow(0 0 10px rgba(216, 107, 255, 0.9));
+      }
+      #beam-head {
+        fill: var(--amber-hi);
+        filter: drop-shadow(0 0 14px rgba(216, 107, 255, 1));
+      }
+      #beam-ring {
+        fill: none;
+        stroke: var(--amber-hi);
+        stroke-width: 3;
+      }
+      /* the card answers the point */
+      .price .flare {
+        position: absolute;
+        inset: 0;
+        border-radius: 18px;
+        background: radial-gradient(
+          ellipse at 18% 100%,
+          rgba(255, 220, 255, 0.55) 0%,
+          transparent 62%
+        );
+        opacity: 0;
+        pointer-events: none;
+      }
+
       /* ---- captions ----------------------------------------------------- */
       .cap {
         position: absolute;
@@ -1156,6 +1200,7 @@
             <div class="deck" id="p5-deck">
               <div class="price" id="p5-card">
                 <div class="sweep" id="p5-sweep"></div>
+                <div class="flare" id="p5-flare"></div>
                 <img src="assets/claude-icon.png" alt="Claude" class="cicon xs" id="p5-ic" />
                 <div class="plan">подписка</div>
                 <div class="val" id="p5-val">Pro</div>
@@ -1236,6 +1281,15 @@
             <img src="assets/demo-3.webp" alt="" />
           </div>
         </div>
+      </div>
+
+      <!-- pointer beam — he raises his finger at 14.1s and holds to ~14.8s -->
+      <div id="beam" class="clip" data-start="14.1" data-duration="1.5" data-track-index="25">
+        <svg viewBox="0 0 1080 1920">
+          <path id="beam-line" d="M 86 832 C 100 744, 120 612, 150 502" />
+          <circle id="beam-head" cx="150" cy="502" r="9" />
+          <circle id="beam-ring" cx="150" cy="502" r="9" />
+        </svg>
       </div>
 
       <!-- ====================== CAPTIONS ================================= -->
@@ -1409,7 +1463,7 @@
           c,
           { opacity: 0, y: 26, rotationX: -40 },
           { opacity: 1, y: 0, rotationX: 0, duration: 0.3, ease: "back.out(2)" },
-          2.4 + i * 0.16,
+          2.55 + i * 0.16,
         );
       });
 
@@ -1490,6 +1544,10 @@
       );
       tl.to("#fc4", { y: 10, duration: 1.2, ease: "sine.inOut" }, 5.0);
 
+      // the icon flares on the words "Claude Code"
+      tl.to("#p2-icon", { scale: 1.12, duration: 0.16, ease: "power3.out" }, 5.23);
+      tl.to("#p2-icon", { scale: 1, duration: 0.45, ease: "power2.out" }, 5.39);
+
       // ---- panel 3: the checklist ------------------------------------------
       panelIn("#p3-in", 6.45);
       riseIn("#p3-k", 6.5, 14, 0.34);
@@ -1531,7 +1589,7 @@
         "#p4-deck",
         { opacity: 0, rotationX: -28, rotationY: -12, z: -320 },
         { opacity: 1, rotationX: 6, rotationY: 4, z: 0, duration: 0.6, ease: "power3.out" },
-        9.42,
+        9.47,
       );
       tl.to("#p4-deck", { rotationX: 1, rotationY: -3, duration: 1.8, ease: "sine.inOut" }, 10.1);
       tl.fromTo(
@@ -1573,15 +1631,57 @@
         { xPercent: 380, duration: 1.0, ease: "power2.inOut" },
         12.85,
       );
+      tl.fromTo(
+        "#p5-val",
+        { scale: 1.3, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.34, ease: "back.out(2)" },
+        12.63,
+      );
       riseIn("#pr1", 13.3, 14, 0.26);
       riseIn("#pr2", 13.5, 14, 0.26);
       tl.fromTo(
         "#p5-h",
         { opacity: 0, scale: 1.14 },
         { opacity: 1, scale: 1, duration: 0.36, ease: "power4.out" },
-        13.75,
+        14.91,
       );
       tl.to("#p5-card", { y: -10, duration: 1.3, ease: "sine.inOut" }, 13.9);
+
+
+      // ---- the point: the beam leaves his fingertip on "взять" and lands on
+      // "здесь", where the card answers --------------------------------------
+      const beamLen = 350;
+      tl.set("#beam-line", { strokeDasharray: "14 12", strokeDashoffset: beamLen }, 14.1);
+      tl.set(["#beam-head", "#beam-ring"], { opacity: 0 }, 14.1);
+      tl.fromTo(
+        "#beam-line",
+        { strokeDashoffset: beamLen, opacity: 0 },
+        { strokeDashoffset: 0, opacity: 1, duration: 0.62, ease: "power2.out", immediateRender: false },
+        14.13,
+      );
+      tl.fromTo(
+        "#beam-head",
+        { opacity: 0, scale: 0 },
+        { opacity: 1, scale: 1, duration: 0.2, ease: "back.out(3)", immediateRender: false },
+        14.88,
+      );
+      tl.fromTo(
+        "#beam-ring",
+        { opacity: 0.9, scale: 1 },
+        { opacity: 0, scale: 4.5, duration: 0.5, ease: "power2.out", immediateRender: false },
+        14.91,
+      );
+      tl.to("#beam-line", { opacity: 0, duration: 0.3, ease: "power2.in" }, 15.15);
+      // the card takes the hit
+      tl.fromTo(
+        "#p5-flare",
+        { opacity: 0 },
+        { opacity: 1, duration: 0.14, ease: "power2.out", immediateRender: false },
+        14.9,
+      );
+      tl.to("#p5-flare", { opacity: 0, duration: 0.55, ease: "power2.in" }, 15.04);
+      tl.to("#p5-card", { scale: 1.045, duration: 0.14, ease: "power3.out" }, 14.9);
+      tl.to("#p5-card", { scale: 1, duration: 0.4, ease: "power2.out" }, 15.04);
 
       // ---- panel 6: step 03, the site ships ---------------------------------
       panelIn("#p6-in", 15.45);
@@ -1610,26 +1710,26 @@
         16.4,
       );
       // the finished site swings forward over the terminal
-      tl.to("#p6-term-win", { opacity: 0, z: -200, duration: 0.35, ease: "power2.in" }, 17.5);
+      tl.to("#p6-term-win", { opacity: 0, z: -200, duration: 0.35, ease: "power2.in" }, 17.33);
       tl.to(
         "#p6-site-win",
         { opacity: 1, scale: 1, rotationY: -4, z: 0, duration: 0.55, ease: "power3.out" },
-        17.52,
+        17.35,
       );
-      tl.to("#p6-site-win", { rotationY: 3, duration: 0.9, ease: "sine.inOut" }, 18.05);
+      tl.to("#p6-site-win", { rotationY: 3, duration: 0.9, ease: "sine.inOut" }, 17.9);
 
       tl.set(["#sh3", "#sh4"], { opacity: 0 }, 15.45);
       tl.fromTo(
         "#sh3",
         { opacity: 0, x: -70, rotationZ: -12, scale: 0.7 },
         { opacity: 1, x: 0, rotationZ: -6, scale: 1, duration: 0.42, ease: "back.out(1.5)" },
-        17.86,
+        17.7,
       );
       tl.fromTo(
         "#sh4",
         { opacity: 0, x: 70, rotationZ: 12, scale: 0.7 },
         { opacity: 1, x: 0, rotationZ: 6, scale: 1, duration: 0.42, ease: "back.out(1.5)" },
-        18.02,
+        17.86,
       );
 
 
