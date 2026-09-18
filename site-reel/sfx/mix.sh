@@ -8,7 +8,7 @@ OUT="${2:?output video}"
 S="$(dirname "$0")/wav"
 
 # master trim for the whole kit — these cues are background texture, not events
-MASTER="${MASTER:-0.3}"
+MASTER="${MASTER:-0.05}"
 
 # time_seconds file volume
 CUES=(
