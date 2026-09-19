@@ -30,6 +30,7 @@ moderation/log.jsonl so a wrong call can be found and the rule fixed.
 """
 
 import argparse
+import time
 import datetime as dt
 import json
 import os
@@ -43,6 +44,11 @@ except ImportError:
     sys.exit("python3 -m pip install requests")
 
 API = "https://api.vk.com/method"
+# VK allows three calls a second on a user token and answers error 9 —
+# "Flood control" — to anything brisker. The gap is cheap here: a post is
+# five calls, a sweep is three.
+MIN_GAP = 0.4
+_last_call = 0.0
 VERSION = "5.199"
 ROOT = pathlib.Path(__file__).resolve().parents[4]
 STATE = ROOT / "moderation" / "state.json"
@@ -99,7 +105,12 @@ SELL = re.compile(
 
 def call(method, token, **params):
     params.update(access_token=token, v=VERSION)
+    global _last_call
+    gap = MIN_GAP - (time.monotonic() - _last_call)
+    if gap > 0:
+        time.sleep(gap)
     r = requests.post(f"{API}/{method}", data=params, timeout=60)
+    _last_call = time.monotonic()
     r.raise_for_status()
     body = r.json()
     if "error" in body:
