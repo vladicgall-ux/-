@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<title>Обложка А</title>
+<style>
+  @font-face { font-family: Unbounded; font-weight: 900;
+    src: url("../fishing/public/fonts/Unbounded900.ttf") format("truetype"); }
+  @font-face { font-family: Unbounded; font-weight: 700;
+    src: url("../fishing/public/fonts/Unbounded700.ttf") format("truetype"); }
+
+  :root {
+    --bg: #050d10; --deep: #0a1a20; --panel: #0e2027;
+    --accent: #f0b23c; --accent-light: #ffe1a6; --water: #3d8c96;
+    --text: #f3f8f8; --muted: #9fb6bc; --border: #27454f;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1920px; height: 768px; overflow: hidden; }
+  body {
+    background: var(--bg);
+    font-family: Unbounded, sans-serif;
+    position: relative;
+    display: grid; place-items: center;
+  }
+
+  /* The water: a cold gradient with the sun's gold pushed into the middle,
+     so the type sits on the brightest part and still reads. */
+  .sky {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(120% 150% at 50% 118%, #1d4a52 0%, #0d232b 45%, var(--bg) 78%),
+      radial-gradient(38% 60% at 50% 96%, rgba(240,178,60,.30), transparent 70%);
+  }
+  svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  .plate {
+    position: relative; text-align: center;
+    padding: 0 40px; margin-bottom: 92px;
+  }
+  .eyebrow {
+    font-weight: 700; font-size: 25px; letter-spacing: .44em;
+    color: var(--accent); text-transform: uppercase;
+    margin-bottom: 30px;
+  }
+  h1 {
+    font-weight: 900; font-size: 134px; line-height: .92;
+    letter-spacing: -.012em; color: var(--text);
+    text-shadow: 0 8px 46px rgba(0,0,0,.72);
+  }
+  h1 .gold { color: var(--accent); }
+  .rule {
+    width: 190px; height: 3px; margin: 34px auto 30px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  }
+  .where {
+    font-weight: 700; font-size: 27px; letter-spacing: .16em;
+    color: var(--accent-light); text-transform: uppercase;
+  }
+  .coords {
+    margin-top: 16px; font-weight: 700; font-size: 19px;
+    letter-spacing: .2em; color: var(--muted);
+  }
+</style>
+
+<div class="sky"></div>
+
+<!-- Reeds and a sounder trace: drawn, so nothing here needs a licence. -->
+<svg viewBox="0 0 1920 768" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="trace" x1="0" x2="1">
+      <stop offset="0"   stop-color="#3d8c96" stop-opacity="0"/>
+      <stop offset=".28" stop-color="#3d8c96" stop-opacity=".85"/>
+      <stop offset=".72" stop-color="#3d8c96" stop-opacity=".85"/>
+      <stop offset="1"   stop-color="#3d8c96" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- the bottom the echo sounder draws -->
+  <path d="M0 640 C 210 612, 330 676, 470 654 S 742 586, 900 620
+           S 1180 682, 1330 648 S 1660 592, 1920 634"
+        fill="none" stroke="url(#trace)" stroke-width="3"/>
+  <path d="M0 640 C 210 612, 330 676, 470 654 S 742 586, 900 620
+           S 1180 682, 1330 648 S 1660 592, 1920 634 L1920 768 L0 768 Z"
+        fill="#3d8c96" opacity=".07"/>
+
+  <!-- reeds, left and right, out of the way of the type -->
+  <g stroke="#0a1a20" stroke-width="7" stroke-linecap="round" opacity=".95">
+    <path d="M96 768 C 90 640, 118 566, 104 498"/>
+    <path d="M150 768 C 146 654, 168 592, 158 540"/>
+    <path d="M38 768 C 34 668, 52 614, 44 572"/>
+    <path d="M1824 768 C 1830 640, 1802 566, 1816 498"/>
+    <path d="M1770 768 C 1774 654, 1752 592, 1762 540"/>
+    <path d="M1882 768 C 1886 668, 1868 614, 1876 572"/>
+  </g>
+  <g fill="#0a1a20" opacity=".95">
+    <ellipse cx="104" cy="488" rx="8" ry="27"/>
+    <ellipse cx="158" cy="530" rx="7" ry="23"/>
+    <ellipse cx="44"  cy="562" rx="7" ry="22"/>
+    <ellipse cx="1816" cy="488" rx="8" ry="27"/>
+    <ellipse cx="1762" cy="530" rx="7" ry="23"/>
+    <ellipse cx="1876" cy="562" rx="7" ry="22"/>
+  </g>
+</svg>
+
+<div class="plate">
+  <div class="eyebrow">клуб охотников и рыболовов</div>
+  <h1>ФЕРМЕР <span class="gold">УЕЛГИ</span></h1>
+  <div class="rule"></div>
+  <div class="where">Челябинская область · Кунашак · озеро Уелги</div>
+  <div class="coords">55.790520, 61.611172</div>
+</div>
+</html>
