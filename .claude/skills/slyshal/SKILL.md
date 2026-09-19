@@ -199,6 +199,25 @@ container instead.
 
 ## Publishing to VK
 
+**A carousel needs `VK_USER_TOKEN`, not `VK_TOKEN`.** The community token
+cannot put a photo on a wall. `groups.getTokenPermissions` lists `photos`,
+and VK still answers error 27 to `photos.getWallUploadServer` on every API
+version tried (5.199, 5.131, 5.103, 5.81), the same to
+`photos.getUploadServer`, error 15 to `docs.getWallUploadServer`, and an
+empty `photo` field from the one upload server it does hand over
+(`photos.getMessagesUploadServer`). Only `stories.getPhotoUploadServer`
+works, which is no use for the wall. So a community token posts text and
+nothing else.
+
+The way through is a personal token of a community admin, scope
+`photos,wall,offline`: dev.vk.com → Мои приложения → Standalone-приложение,
+then `https://oauth.vk.com/authorize?client_id=<ID>&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=photos,wall,offline&response_type=token&v=5.199`,
+and the `access_token=` out of the address bar goes into `VK_USER_TOKEN`.
+The post is still signed by the community, because `wall.post` carries
+`from_group=1`. `vk_post.py` prefers this token and warns when it is
+missing. Such a token grants the person's whole account — it belongs in an
+environment variable, never in a chat message or the repo.
+
 Needs `VK_TOKEN` (community token with **wall**, **photos**, **docs**) and
 `VK_GROUP_ID`, set as environment variables on the cloud environment — the
 owner configures them at claude.ai/code via the cloud icon above the
