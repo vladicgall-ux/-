@@ -26,7 +26,9 @@ except ImportError:
 API = "https://api.vk.com/method"
 VERSION = "5.199"
 TZ_OFFSET = dt.timedelta(hours=5)  # Chelyabinsk
-MAX_ATTACHMENTS = 10
+# VK itself accepts ten, but the owner's rule for this account is three:
+# a wall post never carries more.
+MAX_ATTACHMENTS = 3
 
 
 def call(method, token, **params):
@@ -82,7 +84,7 @@ def main():
         sys.exit("VK_GROUP_ID is not set (numeric id, no minus sign)")
 
     if len(args.photos) > MAX_ATTACHMENTS:
-        sys.exit(f"VK allows at most {MAX_ATTACHMENTS} attachments, got {len(args.photos)}")
+        sys.exit(f"a post carries at most {MAX_ATTACHMENTS} photos, got {len(args.photos)}")
     missing = [p for p in args.photos if not os.path.isfile(p)]
     if missing:
         sys.exit("no such file: " + ", ".join(missing))

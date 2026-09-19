@@ -74,9 +74,13 @@ Rules that hold across every set built so far:
   summer's phone photos only read as one set when colour is pulled most of
   the way out and a single tone pushed back in. `CityPhoto` takes an
   `archive` prop that adds grain and a heavier cast for old scans.
-- **Slide 1 is the hook**, the last slide asks a question and carries
-  `ПОДРОБНОСТИ В ШАПКЕ ПРОФИЛЯ` with the up arrow. Every middle slide gets
-  the swipe arrow.
+- **Slide count follows the platform.** A VK post carries **three** photos
+  — hook, substance, ask — because that is the owner's rule; an Instagram
+  carousel runs to seven. Slide 1 is always the hook and the last always
+  asks something. On Instagram the closing plate is
+  `ПОДРОБНОСТИ В ШАПКЕ ПРОФИЛЯ` with the up arrow; VK has no bio link, so
+  there it asks for a comment and a follow. Every middle slide gets the
+  swipe arrow.
 - **Two lines of headline, maximum.** Three lines overrun the plate; the
   fix is shorter copy, not a smaller size.
 
@@ -200,7 +204,13 @@ environment, and the proxy and CA bundle are already wired into `requests`.
 `--at` takes local Chelyabinsk time and uses VK's own scheduling, so no
 session has to be awake for it — prefer it over `send_later` for VK.
 
-VK allows up to 10 attachments per post. The script prints the post URL.
+**A post carries at most three photos.** VK's own limit is ten; three is
+the owner's rule for this account, and `vk_post.py` enforces it. So a post
+is three slides — hook, the substance, the ask — and everything that does
+not fit goes into the wall text, which has room for all of it. The fishing
+feed is already built this way.
+
+The script prints the post URL.
 **Never echo the token** into output or commit it.
 
 ## The daily fishing feed (`fishing/`)
