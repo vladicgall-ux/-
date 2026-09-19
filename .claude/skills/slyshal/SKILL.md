@@ -234,6 +234,18 @@ through the community's own **Отложенные записи**. `vk_post.py` 
 prefers `VK_USER_TOKEN` if one ever becomes usable, and warns when it is
 missing.
 
+**Error 9, "Flood control", on a user token is the account, not you.**
+It was hit on 19 Sep 2026 after a run of VK ID token issues, and it
+answered *every* method — `users.get` as readily as the upload server —
+so it is not about pace and slowing down does not lift it. Nor does
+anything about where the request comes from: the same token, the same
+method, from this datacenter and from the owner's own phone at home,
+got the same refusal. A fresh token gets it too. So a Russian VPS is
+not worth buying for it, and neither is an hour of shell-piping from a
+phone; the only thing that clears it is time. Meanwhile the community
+token is untouched — covers, description and chat moderation all keep
+working — so anything that does not need a personal token still runs.
+
 Two more things that bite. A community token cannot delete what it creates
 — `wall.delete`, `wall.edit` and `docs.delete` are all error 27 — so a test
 post or an uploaded file has to be removed by hand in the VK interface. And
