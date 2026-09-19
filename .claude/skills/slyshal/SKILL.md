@@ -1,13 +1,27 @@
 ---
 name: slyshal
-description: "Publishing pipeline for the @slyshal74 Instagram and VK accounts (Чебаркуль/Челябинск news): build an N-slide carousel or story frames as Remotion stills, source freely-licensed photos from Wikimedia Commons, render at 2x, host them on raw.githubusercontent, and publish to Instagram via Composio or to VK via its API. Use for any request to make a post, carousel, stories, or to publish/schedule something for slyshal74."
+description: "Publishing pipeline for the @slyshal74 Instagram and VK accounts (Чебаркуль/Челябинск news): build an N-slide carousel or story frames as Remotion stills, source freely-licensed photos from Wikimedia Commons, render at 2x, host them on raw.githubusercontent, and publish to Instagram via Composio or to VK via its API. VK posts go to «Фермер Уелги Рыбалка» (id 200569417), which is also where the daily fishing feed lives. Use for any request to make a post, carousel, stories, or to publish/schedule something for slyshal74 or the fishing feed."
 ---
 
 # slyshal — posting pipeline for @slyshal74
 
 The account is **«Слышал?74 — Новости Челябинска без прикрас»**. Posts go to
-Instagram `@slyshal74` unless told otherwise; VK goes to the group whose
-token is in `VK_TOKEN`.
+Instagram `@slyshal74` unless told otherwise.
+
+**VK is a different community.** The `VK_TOKEN` in this environment belongs
+to **«Фермер Уелги Рыбалка»** — `id 200569417`, `@fermeryelgi`, which is
+what `VK_GROUP_ID` is set to. That is the home of the fishing feed
+(`fishing/`), not of the Чебаркуль/Челябинск news. Check whose token it is
+before publishing anything:
+
+```bash
+curl -sS -X POST "https://api.vk.com/method/groups.getById" \
+  -d "access_token=$VK_TOKEN" -d "v=5.199"
+```
+
+If it comes back as **«Dr.Fermer Товары для животных»** (`id 212674044`),
+stop and ask the owner — that is a different community and a post there
+cannot be taken back (see the deletion limit below).
 
 Read this whole file before building a post. The parts that look like fussy
 detail — the Commons download quirks, the scrim, the credit line — are each
@@ -213,11 +227,19 @@ feed is already built this way.
 The script prints the post URL.
 **Never echo the token** into output or commit it.
 
+**A published post cannot be removed through the API.** The community token
+can `wall.post` and nothing else on the wall: `wall.delete`, `wall.edit`,
+`wall.get`, `wall.getById` and `groups.search` all answer error 27,
+*"unavailable with group auth"*. So there is no undo and no way to read
+back what went out — show the owner every caption and wait for an explicit
+yes before posting, scheduled posts included.
+
 ## The daily fishing feed (`fishing/`)
 
 Three VK posts a day — **09:00 «клёв»**, **16:00 «снасть»**,
-**21:00 «на кухню»** — about fishing in the Chelyabinsk region. Sourcing
-and topics are ours; the owner does not supply material.
+**21:00 «на кухню»** — about fishing in the Chelyabinsk region, published
+to **«Фермер Уелги Рыбалка»** (`200569417`), not to the news account.
+Sourcing and topics are ours; the owner does not supply material.
 
 A day costs one data file, not new components. `src/post.ts` defines the
 slide kinds (`hook`, `fact`, `steps`, `cta`), `src/Slide.tsx` renders any
