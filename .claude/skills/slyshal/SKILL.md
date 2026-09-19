@@ -203,6 +203,45 @@ session has to be awake for it — prefer it over `send_later` for VK.
 VK allows up to 10 attachments per post. The script prints the post URL.
 **Never echo the token** into output or commit it.
 
+## The daily fishing feed (`fishing/`)
+
+Three VK posts a day — **09:00 «клёв»**, **16:00 «снасть»**,
+**21:00 «на кухню»** — about fishing in the Chelyabinsk region. Sourcing
+and topics are ours; the owner does not supply material.
+
+A day costs one data file, not new components. `src/post.ts` defines the
+slide kinds (`hook`, `fact`, `steps`, `cta`), `src/Slide.tsx` renders any
+of them, and `src/posts/<day>.ts` holds the three posts. `Root.tsx`
+generates one Still per slide, named `<slot>-<n>`. A slide with
+`photo: { src: null }` falls back to a drawn echo-sounder trace, which is
+how a day survives when nothing suitable is free to use.
+
+**Nothing repeats — this is the rule the whole thing hangs on.**
+`TOPICS.md` is the topic bank with a stable key per subject; `POSTED.json`
+records what has gone out. Every session, in this order:
+
+1. Read `POSTED.json` first, before choosing anything.
+2. Pick three unused keys from `TOPICS.md` that suit the season — do not
+   post about jerkbaits through the ice in September.
+3. Build, render, publish.
+4. Append `{id, date, slot, topic, title}` to `POSTED.json` **after** the
+   post succeeds, mark the row in `TOPICS.md`, and commit. An unrecorded
+   post will be written again next week.
+
+Top up `TOPICS.md` when it runs low rather than reusing a key.
+
+**What may be claimed.** Nobody here has been to the lake this week, so
+seasonal patterns are written as patterns ("осенью щука выходит
+кормиться"), never as a report ("на Увильдах сейчас берёт"). Legal
+specifics — нерестовый запрет, разрешённые снасти, нормы вылова — are
+checked against the current rules for the Западно-Сибирский
+рыбохозяйственный бассейн before they go on a slide, or left out. A photo
+of a fish taken elsewhere illustrates the species, never the place, and
+says whose photograph it is.
+
+VK has no "link in bio", so the closing plate asks for a comment and a
+follow instead.
+
 ## Captions
 
 Russian, and structured: hook line with 👇 → the facts in short paragraphs
