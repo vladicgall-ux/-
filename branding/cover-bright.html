@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<title>Обложка — светлая</title>
+<style>
+  @font-face { font-family: Playfair; font-weight: 900;
+    src: url("../fishing/public/fonts/PlayfairDisplay900.ttf") format("truetype"); }
+  @font-face { font-family: Unbounded; font-weight: 700;
+    src: url("../fishing/public/fonts/Unbounded700.ttf") format("truetype"); }
+
+  /* Same restraint as the dark card, inverted: morning mist off the water
+     instead of night on it. Light does the work, so there is nothing to
+     light up — no glow, no halo, one deep ink and one bronze. */
+  :root {
+    --mist:   #eef2f1;
+    --mist-2: #dbe5e3;
+    --water:  #b9cbc8;
+    --ink:    #0d1a1e;
+    --ink-2:  #3c4f54;
+    --bronze: #9a6c28;
+    --rule:   rgba(13,26,30,.22);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1920px; height: 768px; overflow: hidden; }
+  body {
+    font-family: Playfair, serif; position: relative;
+    display: grid; place-items: center;
+    background:
+      linear-gradient(180deg, var(--mist) 0%, var(--mist) 46%, var(--mist-2) 62%, var(--water) 100%);
+  }
+
+  /* the far shore, and the light haze sitting on it */
+  .haze {
+    position: absolute; left: 0; right: 0; top: 0; height: 100%;
+    background: radial-gradient(60% 52% at 50% 24%, rgba(255,255,255,.95), transparent 70%);
+  }
+  .shore {
+    position: absolute; left: 0; right: 0; bottom: 176px; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(13,26,30,.3) 18%,
+                rgba(13,26,30,.3) 82%, transparent);
+  }
+  .grain {
+    position: absolute; inset: 0; opacity: .045; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'>\
+<filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/></filter>\
+<rect width='180' height='180' filter='url(%23n)'/></svg>");
+  }
+
+  .plate { position: relative; text-align: center; padding: 0 90px; margin-top: -18px; }
+
+  .label {
+    display: flex; align-items: center; justify-content: center;
+    gap: 28px; margin-bottom: 34px;
+  }
+  .label span {
+    font-family: Unbounded, sans-serif; font-weight: 700;
+    font-size: 16px; letter-spacing: .56em; padding-left: .56em;
+    color: var(--bronze); text-transform: uppercase; white-space: nowrap;
+  }
+  .label i { display: block; width: 150px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--rule)); }
+  .label i.r { background: linear-gradient(90deg, var(--rule), transparent); }
+
+  h1 {
+    font-weight: 900; font-size: 112px; line-height: 1;
+    letter-spacing: .05em; padding-left: .05em; color: var(--ink);
+  }
+  h1 .bronze { color: var(--bronze); }
+
+  /* the hook: the one line that has to stop a thumb */
+  .hook {
+    margin-top: 30px; font-weight: 900; font-size: 40px;
+    font-style: italic; letter-spacing: .01em; color: var(--ink-2);
+  }
+
+  .under {
+    margin-top: 38px;
+    font-family: Unbounded, sans-serif; font-weight: 700;
+    font-size: 17px; letter-spacing: .32em; padding-left: .32em;
+    color: var(--ink-2); text-transform: uppercase;
+  }
+</style>
+
+<div class="haze"></div>
+<div class="shore"></div>
+<div class="grain"></div>
+
+<div class="plate">
+  <div class="label"><i></i><span>клуб рыболовов</span><i class="r"></i></div>
+  <h1>ФЕРМЕР <span class="bronze">УЕЛГИ</span></h1>
+  <div class="hook">Сюда едут не за компанию, а за рыбой</div>
+  <div class="under">Челябинская область · Кунашак · озеро Уелги</div>
+</div>
+</html>
