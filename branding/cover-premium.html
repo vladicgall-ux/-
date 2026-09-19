@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<title>Обложка — премиальная</title>
+<style>
+  @font-face { font-family: Playfair; font-weight: 900;
+    src: url("../fishing/public/fonts/PlayfairDisplay900.ttf") format("truetype"); }
+  @font-face { font-family: Unbounded; font-weight: 700;
+    src: url("../fishing/public/fonts/Unbounded700.ttf") format("truetype"); }
+
+  /* Restraint is the whole brief. No glow, no shafts, no accent fighting
+     another accent: one near-black ground, one warm off-white, one muted
+     champagne, and air. The interest comes from the type and the space
+     around it, which is how a title card works. */
+  :root {
+    --ink:      #07090b;
+    --ink-lift: #101619;
+    --cold:     #16242a;
+    --paper:    #ece7df;
+    --champ:    #c2a675;
+    --champ-lo: #8d7a55;
+    --muted:    #7c8a8e;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1920px; height: 768px; overflow: hidden; }
+  body {
+    font-family: Playfair, serif; position: relative;
+    display: grid; place-items: center;
+    background:
+      radial-gradient(86% 150% at 50% 112%, var(--cold) 0%, var(--ink-lift) 40%, var(--ink) 74%),
+      var(--ink);
+  }
+
+  .vignette {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(78% 128% at 50% 52%, transparent 34%, rgba(7,9,11,.9) 100%),
+      linear-gradient(180deg, rgba(7,9,11,.7) 0%, transparent 22%, transparent 74%, rgba(7,9,11,.85) 100%);
+  }
+  .grain {
+    position: absolute; inset: 0; opacity: .05; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'>\
+<filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/></filter>\
+<rect width='180' height='180' filter='url(%23n)'/></svg>");
+  }
+
+  .plate { position: relative; text-align: center; padding: 0 90px; }
+
+  /* a hairline with the label set into it */
+  .label {
+    display: flex; align-items: center; justify-content: center;
+    gap: 30px; margin-bottom: 44px;
+  }
+  .label span {
+    font-family: Unbounded, sans-serif; font-weight: 700;
+    font-size: 17px; letter-spacing: .58em; padding-left: .58em;
+    color: var(--champ); text-transform: uppercase; white-space: nowrap;
+  }
+  .label i { display: block; width: 168px; height: 1px; background:
+    linear-gradient(90deg, transparent, rgba(194,166,117,.55)); }
+  .label i.r { background:
+    linear-gradient(90deg, rgba(194,166,117,.55), transparent); }
+
+  h1 {
+    font-weight: 900; font-size: 116px; line-height: 1;
+    letter-spacing: .055em; padding-left: .055em;
+    color: var(--paper);
+  }
+  h1 .champ { color: var(--champ); }
+
+  .under {
+    margin-top: 46px;
+    font-family: Unbounded, sans-serif; font-weight: 700;
+    font-size: 18px; letter-spacing: .34em; padding-left: .34em;
+    color: var(--muted); text-transform: uppercase;
+  }
+  .coords {
+    margin-top: 18px; font-family: Unbounded, sans-serif; font-weight: 700;
+    font-size: 14px; letter-spacing: .3em; padding-left: .3em;
+    color: #4e5c60;
+  }
+
+  /* the only drawn thing left: the far shore, barely there */
+  .horizon {
+    position: absolute; left: 0; right: 0; bottom: 118px; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(124,138,142,.22) 22%,
+                rgba(124,138,142,.22) 78%, transparent);
+  }
+</style>
+
+<div class="horizon"></div>
+<div class="vignette"></div>
+<div class="grain"></div>
+
+<div class="plate">
+  <div class="label"><i></i><span>клуб рыболовов</span><i class="r"></i></div>
+  <h1>ФЕРМЕР <span class="champ">УЕЛГИ</span></h1>
+  <div class="under">Челябинская область · Кунашак · озеро Уелги</div>
+  <div class="coords">55.790520 · 61.611172</div>
+</div>
+</html>
