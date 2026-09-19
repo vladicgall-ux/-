@@ -199,24 +199,47 @@ container instead.
 
 ## Publishing to VK
 
-**A carousel needs `VK_USER_TOKEN`, not `VK_TOKEN`.** The community token
-cannot put a photo on a wall. `groups.getTokenPermissions` lists `photos`,
-and VK still answers error 27 to `photos.getWallUploadServer` on every API
-version tried (5.199, 5.131, 5.103, 5.81), the same to
-`photos.getUploadServer`, error 15 to `docs.getWallUploadServer`, and an
-empty `photo` field from the one upload server it does hand over
-(`photos.getMessagesUploadServer`). Only `stories.getPhotoUploadServer`
-works, which is no use for the wall. So a community token posts text and
-nothing else.
+**A carousel cannot be published through the API at all.** This was worked
+end to end on 19 Sep 2026 and every route is closed. Do not spend another
+evening rediscovering it.
 
-The way through is a personal token of a community admin, scope
-`photos,wall,offline`: dev.vk.com → Мои приложения → Standalone-приложение,
-then `https://oauth.vk.com/authorize?client_id=<ID>&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=photos,wall,offline&response_type=token&v=5.199`,
-and the `access_token=` out of the address bar goes into `VK_USER_TOKEN`.
-The post is still signed by the community, because `wall.post` carries
-`from_group=1`. `vk_post.py` prefers this token and warns when it is
-missing. Such a token grants the person's whole account — it belongs in an
-environment variable, never in a chat message or the repo.
+The community token posts text and nothing else. `groups.getTokenPermissions`
+lists `photos`, `wall`, `docs`, `manage`, `stories` and `market`, and the
+whole `photos` namespace still answers error 27, *"method is unavailable
+with group auth"* — `getWallUploadServer` (with and without `group_id`, on
+5.199, 5.131, 5.103 and 5.81 alike), `getUploadServer`,
+`getMarketUploadServer`, `get`, `getAlbums`, `createAlbum`. The community's
+sections are not the cause: Посты, Фото and Файлы are all switched on, and
+turning Файлы on did change `docs.getWallUploadServer` from error 15 to a
+working upload server, which proves the settings reach the API and that
+`photos` is refused on top of them. `photos.getMessagesUploadServer` hands
+over a URL and then returns an empty `photo`. `stories.getPhotoUploadServer`
+works, which no wall post can use. Documents upload and attach, but a JPEG
+saved that way is a doc (`type: 4`, `ext: jpg`) with a thumbnail — a file on
+the post, not a carousel.
+
+A personal token does not rescue it either. VK closed the implicit flow to
+the application types dev.vk.ru now offers (`response_type=token` answers
+`Security Error`), so the only way in is VK ID's OAuth 2.1 with PKCE, which
+`scripts/vk_id_token.py` performs. It works — and VK ID grants
+`vkid.personal_info offline` and silently drops `photos`, `wall` and
+`groups`, because a scope is only granted when the application is allowed
+to hold it, and VK ID does not offer the photo scopes to these apps at all.
+`photos.getWallUploadServer` then answers error 15/1133, *"cannot be called
+with current scopes"*.
+
+So until VK changes something: the wall text is automatable, the carousel
+is not. Build and render the slides here, and let the owner post them
+through the community's own **Отложенные записи**. `vk_post.py` still
+prefers `VK_USER_TOKEN` if one ever becomes usable, and warns when it is
+missing.
+
+Two more things that bite. A community token cannot delete what it creates
+— `wall.delete`, `wall.edit` and `docs.delete` are all error 27 — so a test
+post or an uploaded file has to be removed by hand in the VK interface. And
+`id.vk.ru` is blocked by this environment's proxy while `id.vk.com` is not,
+so the token exchange must use the `.com` host, and `redirect_uri` must
+match the application's trusted URL exactly, `.com` for `.com`.
 
 Needs `VK_TOKEN` (community token with **wall**, **photos**, **docs**) and
 `VK_GROUP_ID`, set as environment variables on the cloud environment — the
