@@ -14,17 +14,16 @@ of a lure — and full of words a naive job filter trips over: "в день",
 "набирает", "выходишь". Deleting on a bare link would cost more good
 messages than bad ones, and a deleted message cannot be brought back.
 
-A message goes when it carries obscenity, and otherwise when it shows
-intent — a link alone never deletes:
+A link alone never deletes. What deletes is intent:
 
   * a messenger or shortener link (t.me, wa.me, vk.cc, bit.ly …), which in
     this chat is never an accident;
   * money-work language AND a way to make contact — the shape of every
     "удалённая подработка, пишите в личку" post;
-  * a sales pitch AND a link;
-  * Russian obscenity, matched by root so the usual dodges (a latin a, a
-    zero, a star for the vowel) do not slip past, and bounded so that
-    хребет, бляха and блесна do not.
+  * a sales pitch AND a link.
+
+Obscenity is matched too, by root, but only when `--mat` asks for it: the
+chat is allowed to swear.
 
 Everything else is left alone, and everything the sweep does is written to
 moderation/log.jsonl so a wrong call can be found and the rule fixed.
@@ -109,8 +108,14 @@ def call(method, token, **params):
     return body["response"]
 
 
-def verdict(text, mat=True):
-    """Return a reason to delete, or None to leave the message alone."""
+def verdict(text, mat=False):
+    """Return a reason to delete, or None to leave the message alone.
+
+    Obscenity is off unless `--mat` asks for it. The owner looked at what
+    it would take out and decided the chat can swear: among the six it
+    found in four hundred messages, three were one man warning the others
+    about a fraud, and the rule cannot tell that from an insult.
+    """
     if not text:
         return None
     if mat and MAT.search(text):
@@ -144,7 +149,7 @@ def record(entries):
             fh.write(json.dumps(e, ensure_ascii=False) + "\n")
 
 
-def sweep(peer_id, token, window, apply_, state):
+def sweep(peer_id, token, window, apply_, state, mat=False):
     """Look at the recent messages of one chat and act on the spam."""
     history = call("messages.getHistory", token, peer_id=peer_id, count=window)
     seen = state.get(str(peer_id), {}).get("last_cmid", 0)
@@ -160,7 +165,7 @@ def sweep(peer_id, token, window, apply_, state):
         highest = max(highest, cmid)
         if cmid <= seen or m["from_id"] in admins:
             continue
-        why = verdict(m.get("text") or "")
+        why = verdict(m.get("text") or "", mat)
         if why:
             hits.append({
                 "peer_id": peer_id,
@@ -194,6 +199,8 @@ def main():
                     help="delete for real; without it nothing is touched")
     ap.add_argument("--peer", type=int, action="append",
                     help="limit to one chat (repeatable)")
+    ap.add_argument("--mat", action="store_true",
+                    help="also delete obscenity; off by default")
     ap.add_argument("--window", type=int, default=200,
                     help="how many recent messages to look at (default 200)")
     args = ap.parse_args()
@@ -206,7 +213,7 @@ def main():
     peers = args.peer or list(CHATS)
     total = []
     for peer_id in peers:
-        hits = sweep(peer_id, token, args.window, args.apply, state)
+        hits = sweep(peer_id, token, args.window, args.apply, state, args.mat)
         total += hits
         name = CHATS.get(peer_id, peer_id)
         print(f"{name}: найдено {len(hits)}"
