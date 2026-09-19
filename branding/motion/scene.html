@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<title>Живая обложка</title>
+<style>
+  @font-face { font-family: Unbounded; font-weight: 900;
+    src: url("../../fishing/public/fonts/Unbounded900.ttf") format("truetype"); }
+  @font-face { font-family: Unbounded; font-weight: 700;
+    src: url("../../fishing/public/fonts/Unbounded700.ttf") format("truetype"); }
+
+  :root {
+    --bg-far: #040f13; --bg-near: #0b2730; --glow: #2f7d88;
+    --gold: #f0b23c; --gold-light: #ffe1a6; --text: #f3f8f8; --muted: #9fb6bc;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--bg-far); }
+  body { font-family: Unbounded, sans-serif; position: relative; }
+
+  #glow {
+    position: absolute; inset: 0;
+    background: radial-gradient(52% 34% at 50% 50%, var(--glow) 0%, var(--bg-near) 46%, var(--bg-far) 78%);
+    will-change: opacity, transform;
+  }
+  svg { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+
+  /* Story safe area: VK puts its own chrome over the top and the bottom,
+     so everything that must be read lives in the middle third. */
+  #words {
+    position: absolute; left: 0; right: 0; top: 700px;
+    text-align: center; padding: 0 70px; will-change: transform;
+  }
+  .eyebrow {
+    font-weight: 700; font-size: 34px; letter-spacing: .44em;
+    color: var(--gold); text-transform: uppercase;
+    margin-bottom: 34px; padding-left: .44em;
+  }
+  h1 {
+    font-weight: 900; font-size: 148px; line-height: .94;
+    letter-spacing: -.02em; color: var(--text);
+    text-shadow: 0 14px 60px rgba(0,0,0,.75);
+  }
+  h1 .gold { color: var(--gold); position: relative; }
+  .rule { width: 230px; height: 4px; margin: 46px auto 38px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+  .where { font-weight: 700; font-size: 33px; letter-spacing: .14em;
+    color: var(--gold-light); text-transform: uppercase; }
+  .where2 { margin-top: 12px; }
+  .coords { margin-top: 20px; font-weight: 700; font-size: 23px;
+    letter-spacing: .22em; color: var(--muted); }
+
+</style>
+
+<div id="glow"></div>
+
+<svg viewBox="0 0 1080 1920">
+  <defs>
+    <linearGradient id="trace" x1="0" x2="1">
+      <stop offset="0"   stop-color="#2f7d88" stop-opacity="0"/>
+      <stop offset=".5"  stop-color="#2f7d88" stop-opacity=".85"/>
+      <stop offset="1"   stop-color="#2f7d88" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="clipTrace"><rect x="0" y="1380" width="1080" height="300"/></clipPath>
+  </defs>
+
+  <!-- the sounder trace, drawn twice and slid one width so it repeats
+       without a seam -->
+  <g clip-path="url(#clipTrace)">
+    <g id="traceG">
+      <path id="t1" d="M0 1500 C 140 1476, 260 1528, 400 1506 S 680 1458, 820 1492
+                       S 1000 1520, 1080 1498"
+            fill="none" stroke="url(#trace)" stroke-width="4"/>
+      <path d="M1080 1500 C 1220 1476, 1340 1528, 1480 1506 S 1760 1458, 1900 1492
+               S 2080 1520, 2160 1498"
+            fill="none" stroke="url(#trace)" stroke-width="4"/>
+    </g>
+  </g>
+
+  <!-- ripples on the water -->
+  <g id="ripples" stroke="#2f7d88" stroke-linecap="round" opacity=".3" fill="none">
+    <path d="M150 1246 h210" stroke-width="5"/>
+    <path d="M720 1246 h210" stroke-width="5"/>
+    <path d="M250 1318 h260" stroke-width="5"/>
+    <path d="M600 1318 h260" stroke-width="5"/>
+    <path d="M120 1392 h300" stroke-width="6"/>
+    <path d="M660 1392 h300" stroke-width="6"/>
+  </g>
+
+  <!-- reeds; each sways about its own foot -->
+  <g stroke="#04090c" stroke-width="16" stroke-linecap="round" fill="none">
+    <g class="reed" data-x="86"  data-y="1920"><path d="M86 1920 C 76 1700, 112 1570, 92 1444"/></g>
+    <g class="reed" data-x="180" data-y="1920"><path d="M180 1920 C 172 1742, 202 1628, 188 1530"/></g>
+    <g class="reed" data-x="26"  data-y="1920"><path d="M26 1920 C 14 1764, 44 1650, 32 1580"/></g>
+    <g class="reed" data-x="994" data-y="1920"><path d="M994 1920 C 1004 1700, 968 1570, 988 1444"/></g>
+    <g class="reed" data-x="900" data-y="1920"><path d="M900 1920 C 908 1742, 878 1628, 892 1530"/></g>
+    <g class="reed" data-x="1054" data-y="1920"><path d="M1054 1920 C 1066 1764, 1036 1650, 1048 1580"/></g>
+  </g>
+  <g fill="#04090c">
+    <g class="reed" data-x="86"  data-y="1920"><ellipse cx="92"   cy="1428" rx="16" ry="46"/></g>
+    <g class="reed" data-x="180" data-y="1920"><ellipse cx="188"  cy="1516" rx="14" ry="38"/></g>
+    <g class="reed" data-x="26"  data-y="1920"><ellipse cx="32"   cy="1566" rx="13" ry="34"/></g>
+    <g class="reed" data-x="994" data-y="1920"><ellipse cx="988"  cy="1428" rx="16" ry="46"/></g>
+    <g class="reed" data-x="900" data-y="1920"><ellipse cx="892"  cy="1516" rx="14" ry="38"/></g>
+    <g class="reed" data-x="1054" data-y="1920"><ellipse cx="1048" cy="1566" rx="13" ry="34"/></g>
+  </g>
+</svg>
+
+<div id="words">
+  <div class="eyebrow">клуб рыболовов</div>
+  <h1>ФЕРМЕР <span class="gold">УЕЛГИ</span></h1>
+  <div class="rule"></div>
+  <div class="where">Челябинская область</div>
+  <div class="where where2">Кунашак · озеро Уелги</div>
+  <div class="coords">55.790520, 61.611172</div>
+</div>
+
+<script>
+// Every motion is a whole number of cycles over the loop, so frame 0 and
+// frame N meet exactly and the clip repeats without a jump. seek(t) takes
+// t in [0,1) and is the only way state is set — no wall-clock timers, so
+// the render is deterministic.
+const TAU = Math.PI * 2;
+const reeds   = [...document.querySelectorAll('.reed')];
+const ripples = [...document.querySelectorAll('#ripples path')];
+const glow    = document.getElementById('glow');
+const words   = document.getElementById('words');
+const traceG  = document.getElementById('traceG');
+
+function seek(t) {
+  // reeds lean, each a little out of step with its neighbours
+  reeds.forEach((g, i) => {
+    const phase = i * 0.37;
+    const a = Math.sin(TAU * (t + phase)) * 1.5 + Math.sin(TAU * 2 * (t + phase * 1.7)) * 0.5;
+    g.setAttribute('transform',
+      `rotate(${a.toFixed(3)} ${g.dataset.x} ${g.dataset.y})`);
+  });
+
+  // ripples breathe sideways
+  ripples.forEach((p, i) => {
+    const dir = i % 2 ? -1 : 1;
+    const dx = Math.sin(TAU * (t + i * 0.16)) * 13 * dir;
+    p.setAttribute('transform', `translate(${dx.toFixed(2)} 0)`);
+  });
+
+  // the trace crawls exactly one tile per loop
+  traceG.setAttribute('transform', `translate(${(-1080 * t).toFixed(2)} 0)`);
+
+  // the light behind the words swells and settles
+  glow.style.opacity = (0.82 + 0.18 * Math.sin(TAU * t)).toFixed(3);
+  glow.style.transform = `scale(${(1 + 0.02 * Math.sin(TAU * t)).toFixed(4)})`;
+
+  // the block drifts a few pixels, so nothing is dead still
+  words.style.transform = `translateY(${(Math.sin(TAU * t) * 7).toFixed(2)}px)`;
+}
+window.seek = seek;
+seek(0);
+</script>
+</html>
