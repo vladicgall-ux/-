@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<title>Обложка — вода, насыщенная</title>
+<style>
+  @font-face { font-family: Unbounded; font-weight: 900;
+    src: url("../fishing/public/fonts/Unbounded900.ttf") format("truetype"); }
+  @font-face { font-family: Unbounded; font-weight: 700;
+    src: url("../fishing/public/fonts/Unbounded700.ttf") format("truetype"); }
+
+  /* The quiet version sat almost entirely in the near-black. This one
+     keeps the same two temperatures but lets the water hold real colour,
+     and earns the contrast back with a vignette rather than by draining
+     the middle. */
+  :root {
+    --abyss:  #02090d;
+    --deep:   #07222c;
+    --water:  #0e4453;
+    --lit:    #1c7f93;
+    --spark:  #46c2d4;
+    --gold:      #ffc247;
+    --gold-hi:   #ffe9b4;
+    --gold-deep: #e39a1e;
+    --text:   #f6fcfc;
+    --muted:  #a9c6cd;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1920px; height: 768px; overflow: hidden; }
+  body {
+    font-family: Unbounded, sans-serif; position: relative;
+    display: grid; place-items: center;
+    background:
+      radial-gradient(62% 104% at 50% 40%, var(--lit) 0%, var(--water) 34%, var(--deep) 62%, var(--abyss) 88%),
+      var(--abyss);
+  }
+
+  /* shafts of light coming down through the water */
+  .shafts {
+    position: absolute; inset: -20% -10%;
+    background:
+      linear-gradient(103deg, transparent 38%, rgba(70,194,212,.16) 43%, transparent 48%),
+      linear-gradient(97deg,  transparent 52%, rgba(70,194,212,.12) 56%, transparent 60%),
+      linear-gradient(108deg, transparent 62%, rgba(70,194,212,.10) 66%, transparent 70%);
+    filter: blur(2px);
+  }
+  .vignette {
+    position: absolute; inset: 0;
+    background: radial-gradient(74% 122% at 50% 46%, transparent 42%, rgba(2,9,13,.82) 100%);
+  }
+  /* a little grain, so the gradients do not band on a phone screen */
+  .grain {
+    position: absolute; inset: 0; opacity: .055; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'>\
+<filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/></filter>\
+<rect width='160' height='160' filter='url(%23n)'/></svg>");
+  }
+  svg.deco { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  .words { position: relative; text-align: center; padding: 0 80px; margin-top: -28px; }
+  .eyebrow {
+    font-weight: 700; font-size: 27px; letter-spacing: .46em;
+    color: var(--gold); text-transform: uppercase; margin-bottom: 26px;
+    padding-left: .46em;
+    text-shadow: 0 0 26px rgba(255,194,71,.5);
+  }
+  h1 {
+    font-weight: 900; font-size: 154px; line-height: .92;
+    letter-spacing: -.018em; color: var(--text);
+    text-shadow: 0 14px 56px rgba(2,9,13,.85), 0 0 90px rgba(70,194,212,.28);
+  }
+  /* the gold word is a gradient, not a flat fill — it catches light like
+     the metal it is named after */
+  h1 .gold {
+    background: linear-gradient(174deg, #fff2d0 2%, var(--gold-hi) 22%, var(--gold) 58%, var(--gold-deep) 96%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 8px 30px rgba(255,194,71,.28));
+  }
+  .rule {
+    width: 300px; height: 3px; margin: 34px auto 28px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    box-shadow: 0 0 22px rgba(255,194,71,.55);
+  }
+  .where {
+    font-weight: 700; font-size: 29px; letter-spacing: .15em;
+    color: var(--gold-hi); text-transform: uppercase;
+    text-shadow: 0 4px 22px rgba(2,9,13,.9);
+  }
+  .coords {
+    margin-top: 16px; font-weight: 700; font-size: 19px;
+    letter-spacing: .22em; color: var(--muted);
+  }
+</style>
+
+<div class="shafts"></div>
+
+<svg class="deco" viewBox="0 0 1920 768" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="wl" x1="0" x2="1">
+      <stop offset="0"   stop-color="#46c2d4" stop-opacity="0"/>
+      <stop offset=".5"  stop-color="#46c2d4" stop-opacity=".95"/>
+      <stop offset="1"   stop-color="#46c2d4" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0"   stop-color="#46c2d4" stop-opacity=".0"/>
+      <stop offset="1"   stop-color="#46c2d4" stop-opacity=".55"/>
+    </linearGradient>
+  </defs>
+
+  <!-- the sounder trace, brighter now, with its own glow under it -->
+  <path d="M0 700 C 260 674, 470 726, 700 706 S 1140 654, 1350 690 S 1700 718, 1920 694"
+        fill="none" stroke="url(#wl)" stroke-width="10" opacity=".22" filter="blur(6px)"/>
+  <path d="M0 700 C 260 674, 470 726, 700 706 S 1140 654, 1350 690 S 1700 718, 1920 694"
+        fill="none" stroke="url(#wl)" stroke-width="3"/>
+  <path d="M0 700 C 260 674, 470 726, 700 706 S 1140 654, 1350 690
+           S 1700 718, 1920 694 L1920 768 L0 768 Z"
+        fill="#46c2d4" opacity=".14"/>
+
+  <!-- ripples, now readable instead of implied -->
+  <g stroke="#46c2d4" stroke-linecap="round" opacity=".32" fill="none">
+    <path d="M300 612 h250" stroke-width="4"/>
+    <path d="M1370 612 h250" stroke-width="4"/>
+    <path d="M180 664 h330" stroke-width="4"/>
+    <path d="M1410 664 h330" stroke-width="4"/>
+  </g>
+
+  <!-- reeds: black silhouettes with a cold rim, so they read as objects
+       standing in light rather than as scratches on the background -->
+  <g stroke="#02090d" stroke-width="15" stroke-linecap="round" fill="none">
+    <path d="M104 768 C 96 626, 132 534, 114 452"/>
+    <path d="M176 768 C 170 650, 198 566, 186 500"/>
+    <path d="M44  768 C 34  662, 58  582, 48  534"/>
+    <path d="M244 768 C 242 680, 262 612, 254 568"/>
+    <path d="M1816 768 C 1824 626, 1788 534, 1806 452"/>
+    <path d="M1744 768 C 1750 650, 1722 566, 1734 500"/>
+    <path d="M1876 768 C 1886 662, 1862 582, 1872 534"/>
+    <path d="M1676 768 C 1678 680, 1658 612, 1666 568"/>
+  </g>
+  <g stroke="url(#rim)" stroke-width="3" stroke-linecap="round" fill="none">
+    <path d="M110 768 C 102 626, 138 534, 120 452"/>
+    <path d="M182 768 C 176 650, 204 566, 192 500"/>
+    <path d="M1810 768 C 1818 626, 1782 534, 1800 452"/>
+    <path d="M1738 768 C 1744 650, 1716 566, 1728 500"/>
+  </g>
+  <g stroke="#02090d" stroke-width="9" stroke-linecap="round" fill="none">
+    <path d="M104 768 C 150 690, 186 640, 250 606"/>
+    <path d="M176 768 C 132 694, 96 648, 40 618"/>
+    <path d="M1816 768 C 1770 690, 1734 640, 1670 606"/>
+    <path d="M1744 768 C 1788 694, 1824 648, 1880 618"/>
+  </g>
+  <g fill="#02090d">
+    <ellipse cx="114"  cy="438" rx="10" ry="46"/>
+    <ellipse cx="186"  cy="486" rx="9"  ry="40"/>
+    <ellipse cx="48"   cy="520" rx="9"  ry="35"/>
+    <ellipse cx="254"  cy="554" rx="8"  ry="30"/>
+    <ellipse cx="1806" cy="438" rx="10" ry="46"/>
+    <ellipse cx="1734" cy="486" rx="9"  ry="40"/>
+    <ellipse cx="1872" cy="520" rx="9"  ry="35"/>
+    <ellipse cx="1666" cy="554" rx="8"  ry="30"/>
+  </g>
+</svg>
+
+<div class="vignette"></div>
+<div class="grain"></div>
+
+<div class="words">
+  <div class="eyebrow">клуб рыболовов</div>
+  <h1>ФЕРМЕР <span class="gold">УЕЛГИ</span></h1>
+  <div class="rule"></div>
+  <div class="where">Челябинская область · Кунашак · озеро Уелги</div>
+  <div class="coords">55.790520, 61.611172</div>
+</div>
+</html>
