@@ -23,49 +23,61 @@
   body {
     font-family: Unbounded, sans-serif;
     background:
-      radial-gradient(58% 116% at 24% 50%, var(--glow) 0%, var(--bg-near) 40%, var(--bg-far) 78%),
+      radial-gradient(56% 112% at 26% 46%, var(--glow) 0%, var(--bg-near) 42%, var(--bg-far) 80%),
       var(--bg-far);
     position: relative;
     display: flex; align-items: center;
-    padding: 0 130px; gap: 78px;
+    padding: 0 120px; gap: 76px;
   }
   svg.deco { position: absolute; inset: 0; width: 100%; height: 100%; }
 
-  /* The emblem arrives as a disc on white, so a circular mask is all it
-     needs — the white corners fall outside it. */
+  /* The emblem carries its own name along the bottom, which the cover
+     already says in type. Cropping it out took the carp's tail with it,
+     so instead the disc is shown whole and the lettering is covered by a
+     wash in the disc's own green — the disc already darkens towards its
+     rim, so the wash reads as that shading rather than as a patch. */
   .mark {
     position: relative; flex: 0 0 auto;
-    width: 404px; height: 404px; border-radius: 50%;
-    box-shadow: 0 0 0 5px var(--gold), 0 0 0 14px rgba(0,0,0,.55),
-                0 28px 78px rgba(0,0,0,.65);
+    width: 440px; height: 440px; border-radius: 50%;
+    box-shadow: 0 0 0 6px var(--gold), 0 0 0 16px rgba(0,0,0,.5),
+                0 30px 84px rgba(0,0,0,.66);
     overflow: hidden;
   }
   .mark img {
-    width: 122%; height: 122%; margin: -11%; object-fit: cover; display: block;
-    filter: hue-rotate(28deg) saturate(1.25);
+    position: absolute; width: 536px; height: 536px;
+    left: -48px; top: -48px;
+    object-fit: cover; display: block;
+    filter: none;
+  }
+  .mark::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0;
+    height: 62%;
+    background:
+      radial-gradient(128% 128% at 50% 128%, #2f7f1e 0%, #2f7f1e 62%, rgba(47,127,30,0) 84%);
+    filter: blur(9px);
   }
 
-  .words { position: relative; }
+  .words { position: relative; padding-bottom: 8px; }
   .eyebrow {
-    font-weight: 700; font-size: 25px; letter-spacing: .4em;
-    color: var(--gold); text-transform: uppercase; margin-bottom: 20px;
+    font-weight: 700; font-size: 26px; letter-spacing: .42em;
+    color: var(--gold); text-transform: uppercase; margin-bottom: 22px;
   }
   h1 {
-    font-weight: 900; font-size: 112px; line-height: .94;
-    letter-spacing: -.015em; color: var(--text);
-    text-shadow: 0 10px 44px rgba(0,0,0,.6);
+    font-weight: 900; font-size: 118px; line-height: .94;
+    letter-spacing: -.016em; color: var(--text);
+    text-shadow: 0 10px 44px rgba(0,0,0,.62);
   }
   h1 .gold { color: var(--gold); }
   .rule {
-    width: 740px; height: 3px; margin: 28px 0 24px;
+    width: 780px; height: 3px; margin: 30px 0 26px;
     background: linear-gradient(90deg, var(--gold), transparent);
   }
   .where {
-    font-weight: 700; font-size: 26px; letter-spacing: .13em;
+    font-weight: 700; font-size: 27px; letter-spacing: .13em;
     color: var(--gold-light); text-transform: uppercase;
   }
   .coords {
-    margin-top: 13px; font-weight: 700; font-size: 18px;
+    margin-top: 14px; font-weight: 700; font-size: 19px;
     letter-spacing: .2em; color: var(--muted);
   }
 </style>
@@ -74,32 +86,32 @@
   <defs>
     <linearGradient id="wl" x1="0" x2="1">
       <stop offset="0"   stop-color="var(--glow)" stop-opacity="0"/>
-      <stop offset=".4"  stop-color="var(--glow)" stop-opacity=".6"/>
+      <stop offset=".42" stop-color="var(--glow)" stop-opacity=".6"/>
       <stop offset="1"   stop-color="var(--glow)" stop-opacity="0"/>
     </linearGradient>
   </defs>
-  <path d="M0 690 C 300 664, 540 716, 840 696 S 1400 648, 1920 684"
+  <path d="M0 696 C 300 670, 540 722, 840 702 S 1400 654, 1920 690"
         fill="none" stroke="url(#wl)" stroke-width="3"/>
-  <path d="M0 690 C 300 664, 540 716, 840 696 S 1400 648, 1920 684 L1920 768 L0 768 Z"
+  <path d="M0 696 C 300 670, 540 722, 840 702 S 1400 654, 1920 690 L1920 768 L0 768 Z"
         fill="var(--glow)" opacity=".1"/>
-  <g stroke="var(--reed)" stroke-width="11" stroke-linecap="round">
-    <path d="M1832 768 C 1840 652, 1812 580, 1826 520"/>
-    <path d="M1770 768 C 1776 670, 1754 614, 1764 570"/>
-    <path d="M1888 768 C 1894 684, 1876 630, 1884 594"/>
-    <path d="M1702 768 C 1706 700, 1690 656, 1698 626"/>
+  <g stroke="var(--reed)" stroke-width="12" stroke-linecap="round">
+    <path d="M1828 768 C 1836 646, 1808 568, 1822 500"/>
+    <path d="M1762 768 C 1768 664, 1746 604, 1756 552"/>
+    <path d="M1886 768 C 1892 678, 1874 622, 1882 580"/>
+    <path d="M1692 768 C 1696 696, 1680 650, 1688 616"/>
   </g>
   <g fill="var(--reed)">
-    <ellipse cx="1826" cy="508" rx="11" ry="32"/>
-    <ellipse cx="1764" cy="560" rx="10" ry="27"/>
-    <ellipse cx="1884" cy="586" rx="9"  ry="23"/>
-    <ellipse cx="1698" cy="618" rx="8"  ry="19"/>
+    <ellipse cx="1822" cy="488" rx="12" ry="34"/>
+    <ellipse cx="1756" cy="542" rx="11" ry="28"/>
+    <ellipse cx="1882" cy="572" rx="10" ry="24"/>
+    <ellipse cx="1688" cy="608" rx="9"  ry="20"/>
   </g>
 </svg>
 
 <div class="mark"><img src="logo.png" alt=""></div>
 
 <div class="words">
-  <div class="eyebrow">клуб охотников и рыболовов</div>
+  <div class="eyebrow">клуб рыболовов</div>
   <h1>ФЕРМЕР <span class="gold">УЕЛГИ</span></h1>
   <div class="rule"></div>
   <div class="where">Челябинская область · Кунашак · озеро Уелги</div>
