@@ -21,7 +21,7 @@
     --gold:      #ffc247;
     --gold-hi:   #ffe9b4;
     --gold-deep: #e39a1e;
-    --text:   #f6fcfc;
+    --text:   #cfe2e6;
     --muted:  #a9c6cd;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -42,6 +42,13 @@
       linear-gradient(97deg,  transparent 52%, rgba(70,194,212,.12) 56%, transparent 60%),
       linear-gradient(108deg, transparent 62%, rgba(70,194,212,.10) 66%, transparent 70%);
     filter: blur(2px);
+  }
+  /* the glow sits right where the name does, which is what was eating
+     the gold; this puts a soft shadow under the words only */
+  .textbed {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: 1500px; height: 460px;
+    background: radial-gradient(52% 58% at 50% 50%, rgba(2,9,13,.62), transparent 72%);
   }
   .vignette {
     position: absolute; inset: 0;
@@ -71,10 +78,14 @@
   }
   /* the gold word is a gradient, not a flat fill — it catches light like
      the metal it is named after */
+  /* Flat, not graduated. At this size a gradient plus a dark halo muddied
+     the foot of every letter; one bright gold with a thin dark edge to
+     lift it off the water reads far harder. */
   h1 .gold {
-    background: linear-gradient(174deg, #fff2d0 2%, var(--gold-hi) 22%, var(--gold) 58%, var(--gold-deep) 96%);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    filter: drop-shadow(0 8px 30px rgba(255,194,71,.28));
+    color: #ffc84f;
+    text-shadow:
+      0 0 2px rgba(2,9,13,.95), 0 0 6px rgba(2,9,13,.8),
+      0 6px 20px rgba(2,9,13,.8), 0 0 40px rgba(255,190,64,.35);
   }
   .rule {
     width: 300px; height: 3px; margin: 34px auto 28px;
@@ -160,6 +171,7 @@
   </g>
 </svg>
 
+<div class="textbed"></div>
 <div class="vignette"></div>
 <div class="grain"></div>
 
