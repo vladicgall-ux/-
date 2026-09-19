@@ -7,6 +7,7 @@ import { Slide4 } from "./slides/Slide4";
 import { Slide5 } from "./slides/Slide5";
 import { Slide6 } from "./slides/Slide6";
 import { Slide7 } from "./slides/Slide7";
+import { Story1, Story2 } from "./stories/Story1";
 
 export const RemotionRoot: React.FC = () => (
   <>
@@ -17,5 +18,7 @@ export const RemotionRoot: React.FC = () => (
     <Still id="Slide5" component={Slide5} width={1080} height={1080} />
     <Still id="Slide6" component={Slide6} width={1080} height={1080} />
     <Still id="Slide7" component={Slide7} width={1080} height={1080} />
+    <Still id="Story1" component={Story1} width={1080} height={1920} />
+    <Still id="Story2" component={Story2} width={1080} height={1920} />
   </>
 );
