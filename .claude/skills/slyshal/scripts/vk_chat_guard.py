@@ -14,13 +14,17 @@ of a lure — and full of words a naive job filter trips over: "в день",
 "набирает", "выходишь". Deleting on a bare link would cost more good
 messages than bad ones, and a deleted message cannot be brought back.
 
-So a link alone never deletes. What deletes is intent:
+A message goes when it carries obscenity, and otherwise when it shows
+intent — a link alone never deletes:
 
   * a messenger or shortener link (t.me, wa.me, vk.cc, bit.ly …), which in
     this chat is never an accident;
   * money-work language AND a way to make contact — the shape of every
     "удалённая подработка, пишите в личку" post;
-  * a sales pitch AND a link.
+  * a sales pitch AND a link;
+  * Russian obscenity, matched by root so the usual dodges (a latin a, a
+    zero, a star for the vowel) do not slip past, and bounded so that
+    хребет, бляха and блесна do not.
 
 Everything else is left alone, and everything the sweep does is written to
 moderation/log.jsonl so a wrong call can be found and the rule fixed.
@@ -69,6 +73,25 @@ CONTACT = re.compile(
     r"@[a-zA-Z][a-zA-Z0-9_]{4,}|подробност\w*\s+в\s+лс|"
     r"кому\s+интересно|\+7\s*\(?\d{3})", re.I)
 
+# Obscenity, by root rather than by word: the roots are few and every
+# insult is built from them, while a list of words never ends. The
+# character classes absorb the usual dodges — a latin "a" for "а", a zero
+# for "о", a star for the vowel.
+_A = "[аa@4*]"
+_O = "[оo0*]"
+_E = "[еeё3*]"
+_I = "[иu1*]"
+_U = "[уy*]"
+MAT = re.compile(
+    rf"х{_U}[йjяию]|х{_U}[её]в|"                 # хуй, хуя, хуёво; не «хребет»
+    rf"п{_I}зд|"                                  # пизда, пиздец
+    rf"[еe]б{_A}[тлнк]|[еe]б{_U}ч|вы{_E}б{_A}|"   # ебать, ебал, выебать
+    rf"з{_A}[еe]б{_A}[лнт]|[оo]х{_U}{_E}|"
+    rf"(?<![оo])бл{_I}?[яa](?![хш])|бл[*]д|"               # бля, блядь; не «бляха»
+    rf"м{_U}д{_A}[кч]|"                           # мудак
+    rf"п{_I}д{_O}?р|г{_A}ндон|з{_A}л{_U}п",       # пидор, гандон
+    re.I)
+
 # A sales pitch. Only bites when a link comes with it.
 SELL = re.compile(
     r"(продаю|продам|предлага\w+\s+вам|заказ\w*\s+(тут|здесь|по\s+ссылк)|"
@@ -86,10 +109,12 @@ def call(method, token, **params):
     return body["response"]
 
 
-def verdict(text):
+def verdict(text, mat=True):
     """Return a reason to delete, or None to leave the message alone."""
     if not text:
         return None
+    if mat and MAT.search(text):
+        return "мат"
     if HARD_LINK.search(text):
         return "мессенджер/сокращатель ссылок"
     if WORK.search(text) and CONTACT.search(text):
