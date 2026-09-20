@@ -104,7 +104,9 @@ export const day: Post = {
   slides: [
     {
       kind: "hook",
-      photo: { src: "perch.jpg", focus: "50% 45%", scale: 1.08, credit: CREDIT_PERCH },
+      // Cropped in past the photographer's thumb in the top left corner,
+      // which reads as a stray shape once this slide stands on its own.
+      photo: { src: "perch.jpg", focus: "62% 58%", scale: 1.42, credit: CREDIT_PERCH },
       eyebrow: "осенний окунь",
       title: "ОН СОБИРАЕТСЯ В СТАИ",
       accent: "В СТАИ",

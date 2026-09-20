@@ -48,19 +48,23 @@ export const Slate: React.FC<{
     >
       {SLOTS[slot].label}
     </div>
-    <div
-      style={{
-        fontFamily: serifFontFamily,
-        fontStyle: "italic",
-        fontWeight: 900,
-        fontSize: 34,
-        color: "rgba(243,248,248,0.72)",
-        textShadow: "0 2px 14px rgba(0,0,0,0.95)",
-      }}
-    >
-      0{index}
-      <span style={{ fontSize: 20, opacity: 0.6 }}> / 0{total}</span>
-    </div>
+    {/* A single-slide post has nothing to count, so the slate drops the
+        numbering rather than reading "01 / 01". */}
+    {total > 1 ? (
+      <div
+        style={{
+          fontFamily: serifFontFamily,
+          fontStyle: "italic",
+          fontWeight: 900,
+          fontSize: 34,
+          color: "rgba(243,248,248,0.72)",
+          textShadow: "0 2px 14px rgba(0,0,0,0.95)",
+        }}
+      >
+        0{index}
+        <span style={{ fontSize: 20, opacity: 0.6 }}> / 0{total}</span>
+      </div>
+    ) : null}
   </div>
 );
 
@@ -276,10 +280,12 @@ export const Source: React.FC<{ children: React.ReactNode }> = ({
   </div>
 );
 
+/** Nothing to page through on a single-slide post, so it draws nothing. */
 export const PageDots: React.FC<{ total: number; active: number }> = ({
   total,
   active,
-}) => (
+}) =>
+  total < 2 ? null : (
   <div
     style={{
       position: "absolute",
