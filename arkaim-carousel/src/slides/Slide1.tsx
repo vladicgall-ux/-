@@ -9,10 +9,10 @@ export const Slide1: React.FC = () => (
     <CityPhoto src="dawn.jpg" focus="50% 38%" scale={1.1} />
     <Slate index={1} total={7} label="Челябинская область" />
     <Lower>
-      <Headline size={78}>
-        ОН СТАРШЕ,
+      <Headline size={72}>
+        РОВЕСНИК
         <br />
-        ЧЕМ <Accent>ЕГИПЕТСКИЕ ПИРАМИДЫ</Accent>
+        <Accent>ЕГИПЕТСКИХ ПИРАМИД</Accent>
       </Headline>
       <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
         <div style={{ width: 6, height: 58, background: theme.accent }} />
